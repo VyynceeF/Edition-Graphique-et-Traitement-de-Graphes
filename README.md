@@ -39,5 +39,5 @@ sprint. Ces retours permettent d’améliorer le produit.</br></p>
   <li>Documents ressources => Google Drive, GitHub</li>
   <li>Suivi de projet => Zenhub, GanttProject</li>
   <li>lien vers le drive => https://drive.google.com/drive/folders/1jVKNsP71N4GcIY4ljuXxzIdTeeBYWiqu?usp=sharing</li>
-  <li>lien vers le zenhub =></li>
+  <li>lien vers le zenhub => https://github.com/vyynceef/edition-graphique-et-traitement-de-graphes#workspaces/edition-graphique-et-traitement-de-graphes-634436bd45880ec9e28a7371/board</li>
   </ul>
