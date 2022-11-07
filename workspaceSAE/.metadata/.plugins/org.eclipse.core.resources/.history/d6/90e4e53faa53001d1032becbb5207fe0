@@ -1,0 +1,12 @@
+package graphe;
+
+public abstract class Noeud {
+	
+	String nom;
+	Point position ;
+	
+	Noeud(String nom , Point position){
+		
+	}
+
+}

@@ -1,0 +1,27 @@
+package editeur;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+public class Graphe {
+    
+    public List<Noeud> noeuds = new ArrayList<Noeud> ();
+
+    
+    public List<Arete> aretes = new ArrayList<Arete> ();
+
+    
+    public void ajouterNoeud(Noeud noeud) {
+    }
+
+    
+    public void ajouterArete(Arete arete) {
+    }
+
+    
+    public Graphe() {
+    }
+
+}

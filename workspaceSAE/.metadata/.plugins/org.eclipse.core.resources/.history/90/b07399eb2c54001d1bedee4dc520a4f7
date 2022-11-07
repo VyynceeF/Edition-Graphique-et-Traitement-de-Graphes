@@ -1,0 +1,5 @@
+package editeur.factory;
+
+public abstract class AbstractFactoryGraphe {
+
+}

@@ -1,0 +1,13 @@
+package graphe;
+
+public class GrapheNonOriente extends Graphe {
+	
+	Noeud ajouterNoeud(Noeud n ) {
+		return n;
+	}
+	
+	Lien ajouterLien(Lien l ) {
+		return l;
+		
+	}
+}

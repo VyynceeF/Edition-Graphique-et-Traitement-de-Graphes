@@ -1,0 +1,9 @@
+package graphe;
+
+public class NoeudGrapheNonOriente extends Noeud {
+
+	NoeudGrapheNonOriente(String nom, Point position) {
+		super(nom, position);
+	}
+
+}

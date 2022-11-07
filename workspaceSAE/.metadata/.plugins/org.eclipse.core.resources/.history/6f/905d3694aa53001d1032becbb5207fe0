@@ -1,0 +1,14 @@
+package graphe;
+
+public abstract class Noeud {
+	/* Identifiant du noeud*/ 
+	String nom;  
+	
+	Point position ;
+	
+	Noeud(String nom , Point position){
+		this.nom = nom;
+		this.position = position;
+	}
+
+}

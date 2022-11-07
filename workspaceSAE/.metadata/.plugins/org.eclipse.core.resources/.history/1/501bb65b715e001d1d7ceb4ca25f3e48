@@ -1,0 +1,5 @@
+package editeur;
+
+public class LienException {
+
+}

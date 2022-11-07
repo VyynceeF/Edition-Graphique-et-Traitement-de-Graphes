@@ -1,0 +1,10 @@
+package graphe;
+
+public abstract class Arete extends Lien {
+
+	public Arete(String nom, Noeud source, Noeud cible) {
+		super(nom, source, cible);
+		
+	}
+
+}

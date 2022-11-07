@@ -1,0 +1,14 @@
+package graphe;
+import java.util.*;
+public class NoeudGrapheNonOriente extends Noeud {
+	
+	ArrayList<Arete>aretes ;
+	
+	NoeudGrapheNonOriente(String nom, Point position) {
+		super(nom, position);
+	}
+	void ajouterArete(Arete a) {
+		this.aretes.add(a);
+	}
+
+}
