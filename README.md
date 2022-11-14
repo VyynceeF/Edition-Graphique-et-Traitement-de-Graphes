@@ -9,8 +9,8 @@ formaliser le besoin puis de développer une application communicante intégrant
 des données et respectant les paradigmes de qualité (ergonomie des IHM, qualité logicielle…).</i></p>
 
 <p>Cette applications sera développée au sein d'un groupe de 5 étudiants en informatique de l'IUT de Rodez </p>
-   <ul><li>Romain Courbaize</li>
-   <li>Vincent Faure ( Product Owner )</li>
+   <ul><li>Romain Courbaize ( Product Owner )</li>
+   <li>Vincent Faure</li>
    <li>Jules Blanchard ( Scrum Master )</li>
    <li>Thibauld Cosati</li>
    <li>Amine Daamouch</li></ul>
