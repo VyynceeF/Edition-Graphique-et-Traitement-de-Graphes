@@ -1,9 +1,0 @@
-package graphe;
-
-public abstract class Arete extends Lien {
-
-	public Arete(String nom, NoeudGrapheNonOriente source, NoeudGrapheNonOriente cible) {
-		super(nom, source, cible);
-	}
-
-}
