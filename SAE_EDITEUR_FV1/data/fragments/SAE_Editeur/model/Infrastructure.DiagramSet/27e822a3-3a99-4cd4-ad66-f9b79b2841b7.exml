@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="SAE_Editeur" version="4">
+  <OBJECT>
+    <ID name="SAE_Editeur" mc="Infrastructure.DiagramSet" uid="27e822a3-3a99-4cd4-ad66-f9b79b2841b7"/>
+    <PID name="SAE_Editeur" mc="Standard.Project" uid="232bf2de-b1fd-4cab-97a4-1b515ba41d16"/>
+    <ATTRIBUTES>
+      <ATT name="Name"><![CDATA[SAE_Editeur]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES></DEPENDENCIES>
+  </OBJECT>
+</EXT>

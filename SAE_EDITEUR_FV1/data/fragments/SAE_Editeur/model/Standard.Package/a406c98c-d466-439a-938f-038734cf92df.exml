@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="sae_editeur" version="4">
+  <OBJECT>
+    <ID name="sae_editeur" mc="Standard.Package" uid="a406c98c-d466-439a-938f-038734cf92df"/>
+    <PID name="SAE_Editeur" mc="Standard.Project" uid="232bf2de-b1fd-4cab-97a4-1b515ba41d16"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[sae_editeur]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="Noeud" mc="Standard.Class" uid="0289de12-7e21-44f9-8b17-f1d068641ae6"/>
+        <COMPID name="Point" mc="Standard.Class" uid="ac089b7e-da22-403e-ae3b-28c8797aa0e7"/>
+        <COMPID name="Graphe" mc="Standard.Class" uid="3fbe38e4-73d3-4949-85c3-32bdf3ce1a93"/>
+        <COMPID name="Arete" mc="Standard.Class" uid="ed8e51ba-bbd7-4329-936b-246f8238d5b7"/>
+        <COMPID name="NoeudException" mc="Standard.Class" uid="de9551e8-69de-4950-a598-82ad6db256db"/>
+        <COMPID name="AreteException" mc="Standard.Class" uid="aea6df75-c6d0-4399-abb5-378a670fe820"/>
+        <COMPID name="Exception" mc="Standard.Class" uid="c9fc2517-f064-420a-b215-61590c85c624"/>
+        <COMPID name="EditeurGraphique" mc="Standard.Class" uid="fa76f1ad-b089-42d0-9b07-c973d6502cd9"/>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="Diagramme de classe sae_editeur" mc="Standard.ClassDiagram" uid="b5d1a9d2-c93e-4c66-a2c2-ab6db63daaaa"/>
+        <COMPID name="Diagramme de classe sae_editeur (1)" mc="Standard.ClassDiagram" uid="f282e278-09d2-4f77-9b64-4ece378c4cb6"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
