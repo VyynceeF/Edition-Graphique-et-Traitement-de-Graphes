@@ -18,7 +18,7 @@ public class GrapheOriente extends Graphe{
     
     @Override
     public void ajouterNoeud(Noeud n){
-        if (n instanceof NoeudGrapheNonOriente){
+        if (n instanceof NoeudGrapheOriente){
             noeuds.add(n);
         }else{
             // thorw l'exception 

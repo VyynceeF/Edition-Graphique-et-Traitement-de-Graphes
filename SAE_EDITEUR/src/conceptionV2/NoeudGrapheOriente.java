@@ -6,8 +6,7 @@
 package conceptionV2;
 
 /**
- *
- * @author amine.daamouch
+ * 
  */
 public class NoeudGrapheOriente extends Noeud{
 

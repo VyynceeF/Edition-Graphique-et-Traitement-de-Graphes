@@ -35,8 +35,19 @@ public abstract class Noeud {
     /** Rayon du cercle représentant le noeud */
     public static final double RAYON = 50; 
     
+    /** Début de l'appelation du Noeud */
+    public final static String NOM = "N" ;
+    
+    /**
+     * noNoeud commence à 0 et qui est incrémenté de 1
+     * à chaque crétion de Noeud 
+     */
+    public static int noNoeud = 0 ;
+    
     public Noeud(double x, double y){
         position = new Point(x,y);
+        nom = NOM + noNoeud;
+        noNoeud++;
     }
     
     public Noeud(double x, double y, String nom){

@@ -5,8 +5,11 @@
  */
 package conceptionV2;
 
+import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.QuadCurve;
 
 /**
  *
@@ -24,16 +27,13 @@ public class Arc extends Lien{
    
     @Override
     public void dessiner(AnchorPane zoneDessin){
-        
-        /* distance en x des deux noeuds*/
-        double xDist ; 
-        /* distance en y des deux noeuds*/
-        double yDist ; 
         double xPrimeSource;
         double yPrimeSource;
         double xPrimeDes;
         double yPrimeDes;
-        double angle;
+        double xControl; 
+        double yControl; 
+        
         
         double distance;
         
@@ -59,12 +59,24 @@ public class Arc extends Lien{
         arrow2.setStartY(yPrimeDes);
         arrow2.setEndX(xPrimeDes + flecheLongueur * Math.cos(ligneAngle + angleFleche));
         arrow2.setEndY(yPrimeDes + flecheLongueur * Math.sin(ligneAngle + angleFleche));
-        zoneDessin.getChildren().addAll(new Line(xPrimeSource, 
-                                              yPrimeSource, 
-                                              xPrimeDes,
-                                              yPrimeDes
-                                              ), arrow1,arrow2); 
+        
+        
+        QuadCurve quadCurve = new QuadCurve();
+        quadCurve.setStartX(xPrimeSource); 
+        quadCurve.setStartY(yPrimeSource); 
+        quadCurve.setEndX(xPrimeDes); 
+        quadCurve.setEndY(yPrimeDes);
+        
+        xControl = yPrimeSource > yPrimeDes ? (xPrimeSource + xPrimeDes) / 2 + 50 : (xPrimeSource + xPrimeDes) / 2 - 50;
+        yControl = xPrimeSource > xPrimeDes ? (yPrimeSource + yPrimeDes) / 2 + 50 : (yPrimeSource + yPrimeDes) / 2 - 50;
+        
+        quadCurve.setControlX(xControl); 
+        quadCurve.setControlY(yControl);
+        quadCurve.setFill(null);
+        quadCurve.setStroke(Color.BLACK);
+        //Creating a Group object  
+        Group groupeFleche = new Group(quadCurve);
+        zoneDessin.getChildren().addAll(arrow1,arrow2, groupeFleche); 
     }
 
- 
 }

@@ -11,8 +11,6 @@ package conceptionV2;
  */
 public class FactoryGrapheOriente implements AbstractFactoryGraphe{
     
-    public static String type ="GrapheOrienté" ; 
-    
     public FactoryGrapheOriente(){
         
     }
