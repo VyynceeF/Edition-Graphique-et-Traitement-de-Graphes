@@ -23,6 +23,7 @@ public class FactoryManager {
     
     public FactoryManager() {
         factories.put("Graphe non orienté", new FactoryGrapheNonOriente());
+        factories.put("Graphe orienté", new FactoryGrapheOriente());
     }
     public Set<String> getTypes(){
        return factories.keySet();

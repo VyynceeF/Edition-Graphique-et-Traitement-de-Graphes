@@ -1,4 +1,8 @@
 package conceptionV2;
+
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
+
 /**
  *
  * @author amine.daamouch
@@ -21,10 +25,6 @@ public class NoeudGrapheNonOriente extends Noeud {
         noNoeud++;
     }
     
-//    @Override 
-//    public Circle dessiner(AnchorPane zoneDessin){
-//        return this.dessiner(zoneDessin);
-//    }
     
     
 }

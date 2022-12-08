@@ -38,6 +38,7 @@ public abstract class Noeud {
     public Noeud(double x, double y){
         position = new Point(x,y);
     }
+    
     public Noeud(double x, double y, String nom){
         position = new Point(x,y);
         this.nom = nom ; 
