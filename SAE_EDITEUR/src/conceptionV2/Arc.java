@@ -33,6 +33,10 @@ public class Arc extends Lien{
         double yPrimeDes;
         double xControl; 
         double yControl; 
+        double xVectDirect;
+        double yVectDirect; 
+        double xVectOrtho; 
+        double yVectOrtho; 
         
         
         double distance;
@@ -43,10 +47,28 @@ public class Arc extends Lien{
         xPrimeDes = destinataire.position.x - (destinataire.position.x - source.position.x) / distance * Noeud.RAYON;
         yPrimeDes = destinataire.position.y - (destinataire.position.y - source.position.y) / distance * Noeud.RAYON;
 
-        double pente = (yPrimeSource - yPrimeDes)/ (xPrimeSource- xPrimeDes);
+        
+        
+        QuadCurve quadCurve = new QuadCurve();
+        quadCurve.setStartX(xPrimeSource); 
+        quadCurve.setStartY(yPrimeSource); 
+        quadCurve.setEndX(xPrimeDes); 
+        quadCurve.setEndY(yPrimeDes);
+        
+        xVectDirect = xPrimeDes - xPrimeSource; 
+        yVectDirect = yPrimeDes - yPrimeSource; 
+        
+        xVectOrtho = - yVectDirect * (1 / Math.sqrt(yVectDirect * yVectDirect + xVectDirect * xVectDirect));
+        yVectOrtho =   xVectDirect* (1 / Math.sqrt(yVectDirect * yVectDirect + xVectDirect * xVectDirect));
+        
+        xControl = xVectOrtho * 80 + (xPrimeSource + xPrimeDes) / 2; 
+        yControl = yVectOrtho * 80 + (yPrimeSource + yPrimeDes) / 2;
+        
+        double pente = (yControl  - yPrimeDes)/ (xControl - xPrimeDes);
         double ligneAngle = Math.atan(pente);
-        double angleFleche = xPrimeSource > xPrimeDes ? Math.toRadians(45) : -Math.toRadians(225);
-        double flecheLongueur =  20;
+        double angleFleche = xPrimeSource > xPrimeDes ? Math.PI/8 : - Math.PI/8;
+        double flecheLongueur = 20;
+        
          /** Fleche coté Gauche */
         Line arrow1 = new Line();
         arrow1.setStartX(xPrimeDes);
@@ -60,18 +82,11 @@ public class Arc extends Lien{
         arrow2.setEndX(xPrimeDes + flecheLongueur * Math.cos(ligneAngle + angleFleche));
         arrow2.setEndY(yPrimeDes + flecheLongueur * Math.sin(ligneAngle + angleFleche));
         
-        
-        QuadCurve quadCurve = new QuadCurve();
-        quadCurve.setStartX(xPrimeSource); 
-        quadCurve.setStartY(yPrimeSource); 
-        quadCurve.setEndX(xPrimeDes); 
-        quadCurve.setEndY(yPrimeDes);
-        
-        xControl = yPrimeSource > yPrimeDes ? (xPrimeSource + xPrimeDes) / 2 + 50 : (xPrimeSource + xPrimeDes) / 2 - 50;
-        yControl = xPrimeSource > xPrimeDes ? (yPrimeSource + yPrimeDes) / 2 + 50 : (yPrimeSource + yPrimeDes) / 2 - 50;
-        
         quadCurve.setControlX(xControl); 
         quadCurve.setControlY(yControl);
+        
+        System.out.println(xPrimeSource + "   " + xPrimeDes+ "    " +  xControl + "   " + yControl );
+        System.out.println(xVectOrtho + "   " + yVectOrtho);
         quadCurve.setFill(null);
         quadCurve.setStroke(Color.BLACK);
         //Creating a Group object  
