@@ -71,8 +71,8 @@ public class Arc extends Lien{
         if ( xPrimeSource > xPrimeDes ) {
             angleFleche = Math.PI/6; 
         } else if ( xPrimeSource == xPrimeDes) {
-            angleFleche = yPrimeSource > yPrimeDes ? Math.PI / 6 : 7 * Math.PI / 6; 
-        } else {
+            angleFleche = yPrimeSource > yPrimeDes ? Math.PI / 10 : 11 * Math.PI / 10; 
+        } else if (xPrimeSource < xPrimeDes) {
             angleFleche = 7 * Math.PI / 6; 
         }
         double flecheLongueur = 20;

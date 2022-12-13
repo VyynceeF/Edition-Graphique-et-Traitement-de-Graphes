@@ -33,9 +33,7 @@ public class GrapheOriente extends Graphe{
         }
         for (Lien aTester : liens) {
             if ((l.destinataire == aTester.destinataire
-                   && l.source == aTester.source)
-                  || (l.destinataire == aTester.source
-                      && l.source == aTester.destinataire)) {      
+                   && l.source == aTester.source)) {      
                 throw new LienException("Impossible de créer un lien sur un lien");
             }
         }
