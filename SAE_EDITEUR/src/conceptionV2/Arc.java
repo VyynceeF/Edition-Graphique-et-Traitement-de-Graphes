@@ -66,10 +66,10 @@ public class Arc extends Lien{
         
         double pente = (yControl  - yPrimeDes)/ (xControl - xPrimeDes);
         double ligneAngle = Math.atan(pente);
-        double angleFleche = xPrimeSource > xPrimeDes ? Math.PI/8 : - Math.PI/8;
+        double angleFleche = xPrimeSource > xPrimeDes ? Math.PI/6 : 7 * Math.PI /6;
         double flecheLongueur = 20;
         
-         /** Fleche coté Gauche */
+        /** Fleche coté Gauche */
         Line arrow1 = new Line();
         arrow1.setStartX(xPrimeDes);
         arrow1.setStartY(yPrimeDes);
