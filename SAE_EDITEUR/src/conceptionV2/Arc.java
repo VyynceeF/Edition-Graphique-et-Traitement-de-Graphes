@@ -66,7 +66,15 @@ public class Arc extends Lien{
         
         double pente = (yControl  - yPrimeDes)/ (xControl - xPrimeDes);
         double ligneAngle = Math.atan(pente);
-        double angleFleche = xPrimeSource > xPrimeDes ? Math.PI/6 : 7 * Math.PI /6;
+        double angleFleche = 0;
+        
+        if ( xPrimeSource > xPrimeDes ) {
+            angleFleche = Math.PI/6; 
+        } else if ( xPrimeSource == xPrimeDes) {
+            angleFleche = yPrimeSource > yPrimeDes ? Math.PI / 6 : 7 * Math.PI / 6; 
+        } else {
+            angleFleche = 7 * Math.PI / 6; 
+        }
         double flecheLongueur = 20;
         
         /** Fleche coté Gauche */
