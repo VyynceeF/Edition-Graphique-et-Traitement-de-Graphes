@@ -6,12 +6,10 @@
 package conceptionV2;
 
 
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.*;
-import javafx.event.*;
 
 
 /**

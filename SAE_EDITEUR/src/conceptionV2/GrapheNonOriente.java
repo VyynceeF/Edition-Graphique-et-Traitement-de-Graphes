@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package conceptionV2;
-import java.util.*;
 /**
  *
  * @author amine.daamouch
@@ -17,7 +16,7 @@ public class GrapheNonOriente extends Graphe {
     }
     
     @Override
-    public void ajouterNoeud(Noeud n){
+    public void ajouterNoeud(Noeud n) throws NoeudException{
         if (n instanceof NoeudGrapheNonOriente){
             noeuds.add(n);
         }else{

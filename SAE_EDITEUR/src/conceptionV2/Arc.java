@@ -27,6 +27,7 @@ public class Arc extends Lien{
    
     @Override
     public void dessiner(AnchorPane zoneDessin){
+        final double EPSILON = 10E-15;
         double xPrimeSource;
         double yPrimeSource;
         double xPrimeDes;
@@ -36,16 +37,15 @@ public class Arc extends Lien{
         double xVectDirect;
         double yVectDirect; 
         double xVectOrtho; 
-        double yVectOrtho; 
-        
-        
+        double yVectOrtho;
         double distance;
         
+        
         distance = Math.sqrt(Math.pow(destinataire.position.x - source.position.x, 2) + Math.pow(destinataire.position.y - source.position.y, 2));
-        xPrimeSource = source.position.x + (destinataire.position.x - source.position.x) / distance * Noeud.RAYON;
-        yPrimeSource = source.position.y + (destinataire.position.y - source.position.y) / distance * Noeud.RAYON;
-        xPrimeDes = destinataire.position.x - (destinataire.position.x - source.position.x) / distance * Noeud.RAYON;
-        yPrimeDes = destinataire.position.y - (destinataire.position.y - source.position.y) / distance * Noeud.RAYON;
+        xPrimeSource = source.position.x + (destinataire.position.x - source.position.x) / (distance + EPSILON) * Noeud.RAYON;
+        yPrimeSource = source.position.y + (destinataire.position.y - source.position.y) / (distance+ EPSILON) * Noeud.RAYON;
+        xPrimeDes = destinataire.position.x - (destinataire.position.x - source.position.x) / (distance+ EPSILON) * Noeud.RAYON;
+        yPrimeDes = destinataire.position.y - (destinataire.position.y - source.position.y) / (distance + EPSILON) * Noeud.RAYON;
 
         
         
@@ -68,21 +68,29 @@ public class Arc extends Lien{
         double ligneAngle = Math.atan(pente);
         double angleFleche = 0;
         
-        if ( xPrimeSource > xPrimeDes ) {
-            angleFleche = Math.PI/6; 
+        if ( xPrimeSource > xPrimeDes) {
+            angleFleche = Math.PI/8; 
         } else if ( xPrimeSource == xPrimeDes) {
-            angleFleche = yPrimeSource > yPrimeDes ? Math.PI / 10 : 11 * Math.PI / 10; 
-        } else if (xPrimeSource < xPrimeDes) {
-            angleFleche = 7 * Math.PI / 6; 
+            angleFleche = yPrimeSource > yPrimeDes ? Math.PI / 8 : 9 * Math.PI / 8; 
+        } else {
+            angleFleche = 9 * Math.PI / 8; 
         }
         double flecheLongueur = 20;
+        
+        // dans le cas de la boucle 
+        if (distance == 0.0){
+            yPrimeSource = source.position.y + Noeud.RAYON; 
+            xPrimeSource = source.position.x; 
+            
+        }
+        
         
         /** Fleche coté Gauche */
         Line arrow1 = new Line();
         arrow1.setStartX(xPrimeDes);
         arrow1.setStartY(yPrimeDes);
-        arrow1.setEndX(xPrimeDes + flecheLongueur * Math.cos(ligneAngle - angleFleche)  );
-        arrow1.setEndY(yPrimeDes + flecheLongueur * Math.sin(ligneAngle - angleFleche)  );
+        arrow1.setEndX(xPrimeDes + flecheLongueur * Math.cos(ligneAngle - angleFleche));
+        arrow1.setEndY(yPrimeDes + flecheLongueur * Math.sin(ligneAngle - angleFleche));
         /** Fleche coté droit */
         Line arrow2 = new Line();
         arrow2.setStartX(xPrimeDes);
@@ -93,8 +101,13 @@ public class Arc extends Lien{
         quadCurve.setControlX(xControl); 
         quadCurve.setControlY(yControl);
         
-        System.out.println(xPrimeSource + "   " + xPrimeDes+ "    " +  xControl + "   " + yControl );
-        System.out.println(xVectOrtho + "   " + yVectOrtho);
+        System.out.println("xPrime Source : " + xPrimeSource + "  xPrimeDes : " + xPrimeDes);
+        System.out.println("yPrime Source : " + yPrimeSource + "  yPrimeDes : " + yPrimeDes);
+        System.out.println("Pente de la ligne : " + pente);
+        System.out.println("Ligne angle : " + ligneAngle);
+        System.out.println("Distance : " + distance);
+        
+        
         quadCurve.setFill(null);
         quadCurve.setStroke(Color.BLACK);
         //Creating a Group object  

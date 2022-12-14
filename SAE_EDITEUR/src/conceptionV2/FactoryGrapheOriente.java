@@ -26,7 +26,7 @@ public class FactoryGrapheOriente implements AbstractFactoryGraphe{
     }
 
     @Override
-    public Lien creerLien(Noeud source, Noeud destinataire){
+    public Lien creerLien(Noeud source, Noeud destinataire) throws LienException{
         return new Arc(source, destinataire);
     }
     

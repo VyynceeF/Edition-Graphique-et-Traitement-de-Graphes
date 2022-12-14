@@ -22,7 +22,7 @@ public abstract class Graphe {
         noeuds = new ArrayList<>();
     }
     
-    public abstract void ajouterNoeud(Noeud n);
+    public abstract void ajouterNoeud(Noeud n) throws NoeudException;
     
     public abstract Lien ajouterLien(Lien l ) throws LienException;
     
