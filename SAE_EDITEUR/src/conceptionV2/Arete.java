@@ -11,6 +11,8 @@ import javafx.scene.shape.Line;
 /**
  *
  * @author amine.daamouch
+ * @author jules.blanchard
+ * @author romain.courbaize
  */
 public class Arete extends Lien {
     

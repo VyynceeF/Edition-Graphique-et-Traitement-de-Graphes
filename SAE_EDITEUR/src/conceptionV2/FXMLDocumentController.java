@@ -24,6 +24,8 @@ import javafx.scene.text.Text;
 /**
  *
  * @author amine.daamouch
+ * @author jules.blanchard
+ * @author romain.courbaize
  */
 public class FXMLDocumentController implements Initializable {
     
