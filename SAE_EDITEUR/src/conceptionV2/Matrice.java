@@ -14,41 +14,75 @@ import java.util.ArrayList;
 public class Matrice {
     
     
-    public Graphe g;
-    public ArrayList<ArcProbabiliste> listeLiens ;
-    public ArrayList<NoeudGrapheProbabiliste> listeNoeuds ;
+    public GrapheProbabiliste g;
     
-    public Matrice(){
-        listeLiens = new ArrayList<>();
+    
+    public Matrice(GrapheProbabiliste g){
+        this.g = g ;
     }
     
-    public Matrice(ArrayList<ArcProbabiliste> liste){       
-        listeLiens = liste;
-    }
+ 
     
     public void afficherMatrice(){
-        if(listeLiens.isEmpty()){
+        if(g.liens.isEmpty()){
             System.out.println("La matrice est null");
         }else{
-            for (int i = 0; i < listeLiens.size() ;i++) {
-                System.out.println(listeLiens.get(i));
+            for (int i = 0; i < g.liens.size() ;i++) {
+                System.out.println(g.liens.get(i));
             }
         }
     }
-    public boolean estSuccesseur(){
-        
-    }
-    public boolean estPredecesseur(){
-        
+    
+    public double[][] matriceTransition(){
+        double [][] tab = new double[g.noeuds.size()][g.noeuds.size()]; 
+        for(int i = 0 ; i < g.noeuds.size() ; i++){
+            for(int y = 0 ; i < g.noeuds.size(); i++){
+                tab[i][y] = 0.0;
+                for(Lien lien : g.liens){
+                    ArcProbabiliste l = (ArcProbabiliste) lien;
+                    if(g.noeuds.get(i) == lien.source && g.noeuds.get(y) == lien.destinataire){
+                        tab[i][y] = l.coefficient;
+                    }
+                }        
+            } 
+        }     
+        return tab;
     }
     
-    public Noeud[][] estFinale(){
-        if(listeLiens.get(0).source){
-            
-            
+    
+    public boolean estUnSuccesseur(Noeud n ){
+        for(Lien l : g.liens){
+             if(l.source == n)
+                 return true;
         }
+       return false;
+    }
+    public boolean estUnPredecesseur(Noeud n){
+        for(Lien l : g.liens){
+             if(l.destinataire == n)
+                 return true;
+        }
+       return false;
     }
     
+    public boolean estAbsorbant(Noeud n){
+        for(Lien l : g.liens){
+            if(l.destinataire == n ){
+                for(Lien y : g.liens){
+                    if(y.source != n || (n == y.source && n == y.destinataire)){
+                        return true;
+                    }
+                }
+                
+                
+            }
+        }
+        return false;
+    }
+    
+    public static boolean estErgodique(Noeud n){
+        return false; // A FAIRE
+    }
     
     
     
