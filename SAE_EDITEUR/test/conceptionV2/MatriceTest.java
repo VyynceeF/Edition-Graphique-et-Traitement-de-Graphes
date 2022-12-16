@@ -6,13 +6,12 @@
 package conceptionV2;
 
 
-import java.util.ArrayList;
 
 /**
  *
  * @author amine.daamouch
  */
-public class TestMatrice {
+public class MatriceTest {
     
     public static void main(String[] args) throws NoeudException, LienException{
         GrapheProbabiliste g = new GrapheProbabiliste();
@@ -51,11 +50,9 @@ public class TestMatrice {
         
         Matrice m = new Matrice(g);
         
-        System.out.println(m.matriceTransition());
+        m.afficherMatrice();
+        System.out.println(m.estChemin(s2, s2));
     }   
-    
-    
-    
     
     
 }

@@ -23,20 +23,12 @@ public class Matrice {
     
  
     
-    public void afficherMatrice(){
-        if(g.liens.isEmpty()){
-            System.out.println("La matrice est null");
-        }else{
-            for (int i = 0; i < g.liens.size() ;i++) {
-                System.out.println(g.liens.get(i));
-            }
-        }
-    }
+    
     
     public double[][] matriceTransition(){
         double [][] tab = new double[g.noeuds.size()][g.noeuds.size()]; 
         for(int i = 0 ; i < g.noeuds.size() ; i++){
-            for(int y = 0 ; i < g.noeuds.size(); i++){
+            for(int y = 0 ; y < g.noeuds.size(); y++){
                 tab[i][y] = 0.0;
                 for(Lien lien : g.liens){
                     ArcProbabiliste l = (ArcProbabiliste) lien;
@@ -47,6 +39,31 @@ public class Matrice {
             } 
         }     
         return tab;
+    }
+    
+    public boolean estChemin(Noeud source , Noeud destinataire){
+        for(Lien l : g.liens){
+            if(source == l.source && destinataire == l.destinataire){
+                return true;
+            }
+            if(source == l.source && destinataire != l.destinataire){
+                return estChemin( l.destinataire, destinataire);
+            }else{
+                return false;
+            }
+        }  
+        return false;
+        //TO DO Ca ne marche pas
+    }
+    
+    public void afficherMatrice(){
+        double[][] tab = this.matriceTransition();
+        for (int i = 0; i < tab.length ; i++) {
+            for (int j = 0; j < tab.length ; j++) {
+                 System.out.print(tab[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
     
     

@@ -29,8 +29,10 @@ public class GrapheProbabiliste extends Graphe{
         if(!(l instanceof ArcProbabiliste)){
             throw new LienException("impossible de créer un arcs probabiliste");
         }
+        
+        liens.add(l);
         return l; 
-        // TO DO : à completer
+       
     }
     
     
