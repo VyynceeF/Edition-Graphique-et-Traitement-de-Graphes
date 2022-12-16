@@ -75,11 +75,8 @@ public abstract class Noeud {
     }
     
     public boolean estClique(double x, double y){
-        if(Math.sqrt((x - position.x )*(x - position.x )
-           + (y - position.y )*(y - position.y)) <= RAYON){
-            return true;
-        }
-        return false;
+        return Math.sqrt((x - position.x )*(x - position.x )
+                + (y - position.y )*(y - position.y)) <= RAYON;
     }
     
     

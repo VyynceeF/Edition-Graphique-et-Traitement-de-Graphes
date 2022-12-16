@@ -14,7 +14,7 @@ public class FactoryGrapheNonOriente implements AbstractFactoryGraphe {
     public FactoryGrapheNonOriente(){
         
     }
-
+    
     @Override
     public Graphe creerGraphe() {
         return new GrapheNonOriente();

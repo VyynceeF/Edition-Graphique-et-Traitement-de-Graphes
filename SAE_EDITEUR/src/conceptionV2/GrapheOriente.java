@@ -22,7 +22,7 @@ public class GrapheOriente extends Graphe{
         if (n instanceof NoeudGrapheOriente){
             noeuds.add(n);
         }else{
-            // thorw l'exception 
+            throw new NoeudException("Impossible de créer un Noeud");
         }
        
     }
@@ -30,7 +30,7 @@ public class GrapheOriente extends Graphe{
     @Override
     public Lien ajouterLien(Lien l)throws LienException{
         if(!(l instanceof Arc)){
-           // TODO Lève l'exception
+           throw new LienException("Impossible de créer un Lien");
         }
         if (l.destinataire == l.source) {
          

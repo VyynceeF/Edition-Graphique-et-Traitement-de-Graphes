@@ -24,6 +24,7 @@ public class FactoryManager {
     public FactoryManager() {
         factories.put("Graphe non orienté", new FactoryGrapheNonOriente());
         factories.put("Graphe orienté", new FactoryGrapheOriente());
+        factories.put("Graphe probabiliste", new FactoryGrapheProbabiliste());
     }
     public Set<String> getTypes(){
        return factories.keySet();

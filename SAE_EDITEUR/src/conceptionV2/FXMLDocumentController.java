@@ -7,6 +7,8 @@ package conceptionV2;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -82,14 +84,13 @@ public class FXMLDocumentController implements Initializable {
     
     
     @FXML
-    private void cliqueZoneDessin(MouseEvent event) throws NoeudException{
-        
+    private void cliqueZoneDessin(MouseEvent event) throws NoeudException , ArcProbabilisteException{
+        // récupere Position du clique sur la zone de dessin
+        double x = event.getX();
+        double y = event.getY();
         // l'action du noeudCliquer
         if (selection == 1) {
-           
-            // récupere Position du clique sur la zone de dessin
-            double x = event.getX();
-            double y = event.getY();
+
             try{
                 graphe.estNoeudValide(x, y);
                 Noeud n = factory.creerNoeud(x, y);
@@ -99,9 +100,12 @@ public class FXMLDocumentController implements Initializable {
             }catch(NoeudException e){
                 System.out.println(e.getMessage());
             }
-            
-            
+        }else if (selection == 3 ){
+            if(graphe instanceof GrapheProbabiliste){
+                GrapheProbabiliste g = (GrapheProbabiliste) graphe;
+            }
         }
+        
     }  
 
     
@@ -145,6 +149,9 @@ public class FXMLDocumentController implements Initializable {
         scrollpane.setPannable(true);
     }
 
+    
+       
+    
     @FXML
     private void zoneDessinMouseDragged(MouseEvent event) {
         
@@ -188,7 +195,9 @@ public class FXMLDocumentController implements Initializable {
 
             if (destinataire != null) {
                 try{
-                    graphe.ajouterLien(factory.creerLien(premierNoeud, destinataire)).dessiner(zoneDessin);
+                    Lien l = graphe.ajouterLien(factory.creerLien(premierNoeud, destinataire));               
+                    l.dessiner(zoneDessin);
+                    
                 }catch(LienException e){
                     System.out.println(e.getMessage());
                 }

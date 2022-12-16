@@ -18,6 +18,7 @@ public abstract class Graphe {
     ArrayList<Lien> liens ;
     
     public Graphe(){
+        Noeud.noNoeud = 0 ;
         liens =  new ArrayList<>();
         noeuds = new ArrayList<>();
     }
@@ -38,7 +39,6 @@ public abstract class Graphe {
         return null;
     }
     
-   
     /**
      * Prédicat vérifiant si un noeud peut être créer ou non
      * @return true ssi la zone du noeud à créer est en dehors de la zone de chaque noeud déjà créer 
