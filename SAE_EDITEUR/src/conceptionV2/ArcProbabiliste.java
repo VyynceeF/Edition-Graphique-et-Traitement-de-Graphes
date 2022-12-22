@@ -56,7 +56,7 @@ public class ArcProbabiliste extends Lien {
      * @param zoneDessin
      */
     @Override
-    public void dessiner(AnchorPane zoneDessin) {
+    public void dessiner(AnchorPane zoneDessin)  {
         String coeff = ""+coefficient;
         
         
@@ -135,6 +135,27 @@ public class ArcProbabiliste extends Lien {
         
         
         valeur = new TextField(coeff);
+        // force the field to be numeric only
+        valeur.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                try {
+                    Double.parseDouble(valeur.getText());
+                    
+                    // Ici traitement si c'est un float
+                    // ...
+                } catch (NumberFormatException ex) {
+                    // Ici traitement si ce n'est pas un float
+                    System.err.println("Erreur sur la saisie de la probabilités");
+                    valeur.setText("0.0");
+                    
+                }             
+            }
+        });
+        
+        
+        
         valeur.relocate(xControl, yControl );
         valeur.setBackground(Background.EMPTY);
         valeur.setFont(new Font(12));     

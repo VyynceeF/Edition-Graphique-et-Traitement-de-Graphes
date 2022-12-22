@@ -105,7 +105,6 @@ public class FXMLDocumentController implements Initializable {
                 GrapheProbabiliste g = (GrapheProbabiliste) graphe;
             }
         }
-        
     }  
 
     

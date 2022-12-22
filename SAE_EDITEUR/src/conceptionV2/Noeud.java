@@ -19,6 +19,7 @@ import javafx.scene.text.*;
 public abstract class Noeud {
     
     
+    
     /** Position du point sur l'axe(x,y) */
     Point position ; 
     
@@ -46,6 +47,7 @@ public abstract class Noeud {
         position = new Point(x,y);
         nom = NOM + noNoeud;
         noNoeud++;
+        
     }
     
     public Noeud(double x, double y, String nom){

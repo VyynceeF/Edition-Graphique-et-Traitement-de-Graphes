@@ -5,6 +5,8 @@
  */
 package conceptionV2;
 
+import java.util.ArrayList;
+
 
 
 /**
@@ -15,8 +17,22 @@ public class MatriceTest {
     
     public static void main(String[] args) throws NoeudException, LienException{
         GrapheProbabiliste g = new GrapheProbabiliste();
-    
-      
+        GrapheProbabiliste g2 = new GrapheProbabiliste();
+        NoeudGrapheProbabiliste n1 = new NoeudGrapheProbabiliste(0,1);
+        NoeudGrapheProbabiliste n2 = new NoeudGrapheProbabiliste(0,1);
+        NoeudGrapheProbabiliste n3 = new NoeudGrapheProbabiliste(0,1);
+
+        g2.ajouterNoeud(n1);
+        g2.ajouterNoeud(n2);
+        g2.ajouterNoeud(n3);
+        
+//        ArcProbabiliste l1 = new ArcProbabiliste(n1, n3, 1);
+//        ArcProbabiliste l2 = new ArcProbabiliste(n2,n3 , 1);
+//        ArcProbabiliste l3 = new ArcProbabiliste(n3, n2, 1);
+        
+//        g2.ajouterLien(l1);
+//        g2.ajouterLien(l2);    
+//        g2.ajouterLien(l3);
         
         NoeudGrapheProbabiliste s1 = new NoeudGrapheProbabiliste(0,1);
         NoeudGrapheProbabiliste s2 = new NoeudGrapheProbabiliste(0,2);
@@ -29,6 +45,8 @@ public class MatriceTest {
         g.ajouterNoeud(s3);
         g.ajouterNoeud(s4);
         g.ajouterNoeud(s5);
+        
+        
         
         ArcProbabiliste l1 = new ArcProbabiliste(s1, s2, 0.05);
         ArcProbabiliste l2 = new ArcProbabiliste(s1, s3, 0.95);
@@ -49,9 +67,11 @@ public class MatriceTest {
         g.ajouterLien(l8);
         
         Matrice m = new Matrice(g);
+        Matrice m2 = new Matrice(g2);
         
         m.afficherMatrice();
-        System.out.println(m.estChemin(s2, s2));
+        
+        System.out.println(m.estChemin(new ArrayList<NoeudGrapheProbabiliste>(), s1, s1));
     }   
     
     

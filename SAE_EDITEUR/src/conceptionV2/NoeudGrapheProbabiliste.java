@@ -5,15 +5,19 @@
  */
 package conceptionV2;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author amine.daamouch
  */
 public class NoeudGrapheProbabiliste extends Noeud {
-     
+     /** Liste des successeurs  */
+    ArrayList<NoeudGrapheProbabiliste> successeurs ;
     
     public NoeudGrapheProbabiliste(double x, double y) {
         super(x, y);
+        successeurs = new ArrayList<>();
     }
     
     

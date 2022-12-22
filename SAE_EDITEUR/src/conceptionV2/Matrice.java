@@ -17,6 +17,7 @@ public class Matrice {
     public GrapheProbabiliste g;
     
     
+    
     public Matrice(GrapheProbabiliste g){
         this.g = g ;
     }
@@ -40,21 +41,30 @@ public class Matrice {
         }     
         return tab;
     }
-    
-    public boolean estChemin(Noeud source , Noeud destinataire){
-        for(Lien l : g.liens){
-            if(source == l.source && destinataire == l.destinataire){
-                return true;
+     public boolean estChemin(ArrayList<NoeudGrapheProbabiliste> listeVisitees,NoeudGrapheProbabiliste source , NoeudGrapheProbabiliste destinataire){   
+     
+        for (int i = 0; i < source.successeurs.size() ; i++) {
+            if(!listeVisitees.contains(source.successeurs.get(i)) ){
+                /* cas où le chemin est minimun de poids 1 */
+                if(source.successeurs.get(i) == destinataire){
+                    return true;   
+                }
+                listeVisitees.add(source.successeurs.get(i));
+                /* cas d'une boucle */
+                if(source.successeurs.get(i) == source && source.successeurs.size() == 1 ){
+                    return false;
+                }
+                /* Cas où le chemin est minimun de poids 2 */
+                if(estChemin(listeVisitees,source.successeurs.get(i), destinataire)){
+                    return true;
+                }
+  
             }
-            if(source == l.source && destinataire != l.destinataire){
-                return estChemin( l.destinataire, destinataire);
-            }else{
-                return false;
-            }
-        }  
+        }
+        /* Arrivé , aucun successeur trouvé pour aller du noeud source au destinataire*/ 
         return false;
-        //TO DO Ca ne marche pas
     }
+        
     
     public void afficherMatrice(){
         double[][] tab = this.matriceTransition();
