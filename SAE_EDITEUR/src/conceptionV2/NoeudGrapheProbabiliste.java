@@ -21,5 +21,8 @@ public class NoeudGrapheProbabiliste extends Noeud {
         successeurs = new ArrayList<>();
     }
     
-    
+    public NoeudGrapheProbabiliste(String nom, double x, double y) {
+        super(x, y, nom);
+        successeurs = new ArrayList<>();
+    }
 }

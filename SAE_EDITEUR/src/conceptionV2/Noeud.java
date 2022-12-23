@@ -55,6 +55,11 @@ public abstract class Noeud {
         this.nom = nom ; 
     }
     
+    public String toString() {
+        
+        return nom;
+    }
+    
     public Circle dessiner(AnchorPane zoneDessin){
         c = new Circle();
         c.setCenterX(position.x);

@@ -34,11 +34,11 @@ public class MatriceTest {
 //        g2.ajouterLien(l2);    
 //        g2.ajouterLien(l3);
         
-        NoeudGrapheProbabiliste s1 = new NoeudGrapheProbabiliste(0,1);
-        NoeudGrapheProbabiliste s2 = new NoeudGrapheProbabiliste(0,2);
-        NoeudGrapheProbabiliste s3 = new NoeudGrapheProbabiliste(0,3);
-        NoeudGrapheProbabiliste s4 = new NoeudGrapheProbabiliste(0,4);
-        NoeudGrapheProbabiliste s5 = new NoeudGrapheProbabiliste(0,1);
+        NoeudGrapheProbabiliste s1 = new NoeudGrapheProbabiliste("s1", 0,1);
+        NoeudGrapheProbabiliste s2 = new NoeudGrapheProbabiliste("s2", 0,2);
+        NoeudGrapheProbabiliste s3 = new NoeudGrapheProbabiliste("s3", 0,3);
+        NoeudGrapheProbabiliste s4 = new NoeudGrapheProbabiliste("s4", 0,4);
+        NoeudGrapheProbabiliste s5 = new NoeudGrapheProbabiliste("s5", 0,1);
     
         g.ajouterNoeud(s1);
         g.ajouterNoeud(s2);
@@ -71,7 +71,8 @@ public class MatriceTest {
         
         m.afficherMatrice();
         
-        System.out.println(m.estChemin(new ArrayList<NoeudGrapheProbabiliste>(), s1, s1));
+        System.out.println(m.estChemin(new ArrayList<NoeudGrapheProbabiliste>(), s1, s4));
+        System.out.println(m.regroupementClasse());
     }   
     
     
