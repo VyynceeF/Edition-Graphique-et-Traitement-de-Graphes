@@ -49,7 +49,7 @@ public class GrapheProbabiliste extends Graphe{
      * @param pane Pane dans laquelle sera le bouton
      * @param g    Graphe que l'on souhaite verifier
      */
-    public static void ajouterBoutonVerification(Pane pane, Graphe g) {
+    public static Button ajouterBoutonVerification(Pane pane, Graphe g) {
         
         Button btnVerification = new Button("Vérifier le graphe");
         
@@ -67,6 +67,7 @@ public class GrapheProbabiliste extends Graphe{
             }
         });
         pane.getChildren().add(btnVerification);
+        return btnVerification;
     }
     
     /**

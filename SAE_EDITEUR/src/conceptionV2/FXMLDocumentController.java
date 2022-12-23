@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
@@ -61,6 +62,8 @@ public class FXMLDocumentController implements Initializable {
     private Noeud premierNoeud;
     @FXML
     private Pane paneSelection;
+    
+    private Button btnVerifier = null;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -71,15 +74,20 @@ public class FXMLDocumentController implements Initializable {
                 menuItem.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
-                        // TODO a completer
+                        
                         factory = factoryManager.getFactory(aAjouter);
                         graphe = factory.creerGraphe();
                         // Vider tous les Noeuds et Liens présents sur le graphe
                         zoneDessin.getChildren().clear();
+                        // Supprimer bouton Verifier graphe
+                        if (btnVerifier != null) {
+                            paneSelection.getChildren().remove(btnVerifier);
+                            btnVerifier = null;
+                        }
                         // Ajoute le bouton de verification si graphe probabiliste
                         if (aAjouter.equals("Graphe probabiliste")) {
-                            GrapheProbabiliste.ajouterBoutonVerification(paneSelection, graphe);
-                        }
+                            btnVerifier = GrapheProbabiliste.ajouterBoutonVerification(paneSelection, graphe);
+                        } 
                     }
                 });
                 menuNouveauGraphe.getItems().add(menuItem);
