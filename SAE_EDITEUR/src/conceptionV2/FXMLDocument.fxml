@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -22,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="595.0" prefWidth="991.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="conceptionV2.FXMLDocumentController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="595.0" prefWidth="991.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="conceptionV2.FXMLDocumentController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="796.0" prefWidth="796.0" />
@@ -34,7 +28,7 @@
    <children>
       <Pane maxWidth="200.0" prefHeight="565.0" prefWidth="200.0" style="-fx-border-color: black;" GridPane.rowIndex="1">
          <children>
-            <Pane layoutX="-4.0" layoutY="-1.0" prefHeight="298.0" prefWidth="160.0">
+            <Pane fx:id="paneSelection" layoutX="-4.0" layoutY="-1.0" prefHeight="246.0" prefWidth="206.0">
                <children>
                   <Circle fill="WHITE" layoutX="32.0" layoutY="69.0" onMouseClicked="#cliqueNoeud" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
                   <Text fx:id="textNoeud" layoutX="60.0" layoutY="75.0" onMouseClicked="#cliqueNoeud" strokeType="OUTSIDE" strokeWidth="0.0" text="Noeud">
@@ -65,11 +59,15 @@
                   </Text>
                </children>
             </Pane>
-            <Text layoutX="27.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Propriétés">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Text>
+            <Pane layoutY="246.0" prefHeight="319.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="55.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Propriétés">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
          </children>
       </Pane>
       <MenuBar prefHeight="47.0" prefWidth="807.0" GridPane.columnSpan="2">

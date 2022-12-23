@@ -12,8 +12,9 @@ import java.util.ArrayList;
  * @author amine.daamouch
  */
 public class NoeudGrapheProbabiliste extends Noeud {
-     /** Liste des successeurs  */
-    ArrayList<NoeudGrapheProbabiliste> successeurs ;
+    
+    /** Liste des successeurs  */
+    ArrayList<ArcProbabiliste> successeurs ;
     
     public NoeudGrapheProbabiliste(double x, double y) {
         super(x, y);

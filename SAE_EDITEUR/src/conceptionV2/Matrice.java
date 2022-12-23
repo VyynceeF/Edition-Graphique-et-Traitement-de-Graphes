@@ -46,16 +46,16 @@ public class Matrice {
         for (int i = 0; i < source.successeurs.size() ; i++) {
             if(!listeVisitees.contains(source.successeurs.get(i)) ){
                 /* cas où le chemin est minimun de poids 1 */
-                if(source.successeurs.get(i) == destinataire){
+                if(source.successeurs.get(i).source == destinataire){
                     return true;   
                 }
-                listeVisitees.add(source.successeurs.get(i));
+                listeVisitees.add((NoeudGrapheProbabiliste) source.successeurs.get(i).source);
                 /* cas d'une boucle */
-                if(source.successeurs.get(i) == source && source.successeurs.size() == 1 ){
+                if(source.successeurs.get(i).source == source && source.successeurs.size() == 1 ){
                     return false;
                 }
                 /* Cas où le chemin est minimun de poids 2 */
-                if(estChemin(listeVisitees,source.successeurs.get(i), destinataire)){
+                if(estChemin(listeVisitees, (NoeudGrapheProbabiliste) source.successeurs.get(i).source, destinataire)){
                     return true;
                 }
   
@@ -64,7 +64,6 @@ public class Matrice {
         /* Arrivé , aucun successeur trouvé pour aller du noeud source au destinataire*/ 
         return false;
     }
-        
     
     public void afficherMatrice(){
         double[][] tab = this.matriceTransition();

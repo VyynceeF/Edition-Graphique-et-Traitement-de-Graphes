@@ -5,6 +5,8 @@
  */
 package conceptionV2;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
@@ -27,6 +29,15 @@ public class ArcProbabiliste extends Lien {
     double coefficient;
     
     TextField valeur;
+    
+    /** Extremite de la fleche */
+    private Line arrow1;
+    
+    /** Extremite de la fleche */
+    private Line arrow2;
+    
+    /** Ligne (courbee) de la fleche */
+    private QuadCurve quadCurve;
     
     public ArcProbabiliste(Noeud source , Noeud destinataire){
         super(source,destinataire);
@@ -80,8 +91,7 @@ public class ArcProbabiliste extends Lien {
         yPrimeDes = destinataire.position.y - (destinataire.position.y - source.position.y) / (distance + EPSILON) * Noeud.RAYON;
 
         
-        
-        QuadCurve quadCurve = new QuadCurve();
+        quadCurve = new QuadCurve();
         quadCurve.setStartX(xPrimeSource); 
         quadCurve.setStartY(yPrimeSource); 
         quadCurve.setEndX(xPrimeDes); 
@@ -118,13 +128,13 @@ public class ArcProbabiliste extends Lien {
         
         
         /** Fleche coté Gauche */
-        Line arrow1 = new Line();
+        arrow1 = new Line();
         arrow1.setStartX(xPrimeDes);
         arrow1.setStartY(yPrimeDes);
         arrow1.setEndX(xPrimeDes + flecheLongueur * Math.cos(ligneAngle - angleFleche));
         arrow1.setEndY(yPrimeDes + flecheLongueur * Math.sin(ligneAngle - angleFleche));
         /** Fleche coté droit */
-        Line arrow2 = new Line();
+        arrow2 = new Line();
         arrow2.setStartX(xPrimeDes);
         arrow2.setStartY(yPrimeDes);
         arrow2.setEndX(xPrimeDes + flecheLongueur * Math.cos(ligneAngle + angleFleche));
@@ -136,21 +146,27 @@ public class ArcProbabiliste extends Lien {
         
         valeur = new TextField(coeff);
         // force the field to be numeric only
-        valeur.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, 
-                String newValue) {
-                try {
-                    Double.parseDouble(valeur.getText());
-                    
-                    // Ici traitement si c'est un float
-                    // ...
-                } catch (NumberFormatException ex) {
-                    // Ici traitement si ce n'est pas un float
-                    System.err.println("Erreur sur la saisie de la probabilités");
-                    valeur.setText("0.0");
-                    
-                }             
+        valeur.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            try {
+                Double.parseDouble(valeur.getText());
+                
+                // Ici traitement si c'est un float
+                this.setCoeff(Double.valueOf(valeur.getText()));
+                // Changement de couleur en noir 
+                arrow1.setStroke(Color.BLACK);
+                arrow2.setStroke(Color.BLACK);
+                quadCurve.setStroke(Color.BLACK);
+                
+            } catch (NumberFormatException ex) {
+                // Ici traitement si ce n'est pas un float
+                System.err.println("Erreur sur la saisie de la probabilités");
+                valeur.setText("0.0");
+                             
+            } catch (ArcProbabilisteException ex) {
+                // Changement de couleur en rouge
+                arrow1.setStroke(Color.RED);
+                arrow2.setStroke(Color.RED);
+                quadCurve.setStroke(Color.RED);
             }
         });
         

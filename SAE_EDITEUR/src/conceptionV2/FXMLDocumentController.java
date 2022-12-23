@@ -20,6 +20,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
@@ -58,6 +59,8 @@ public class FXMLDocumentController implements Initializable {
     private javafx.scene.control.ScrollPane scrollpane;
     
     private Noeud premierNoeud;
+    @FXML
+    private Pane paneSelection;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -73,6 +76,10 @@ public class FXMLDocumentController implements Initializable {
                         graphe = factory.creerGraphe();
                         // Vider tous les Noeuds et Liens présents sur le graphe
                         zoneDessin.getChildren().clear();
+                        // Ajoute le bouton de verification si graphe probabiliste
+                        if (aAjouter.equals("Graphe probabiliste")) {
+                            GrapheProbabiliste.ajouterBoutonVerification(paneSelection, graphe);
+                        }
                     }
                 });
                 menuNouveauGraphe.getItems().add(menuItem);
