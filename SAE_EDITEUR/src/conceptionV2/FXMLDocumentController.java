@@ -111,6 +111,7 @@ public class FXMLDocumentController implements Initializable {
             if(graphe instanceof GrapheProbabiliste){
                 GrapheProbabiliste g = (GrapheProbabiliste) graphe;
             }
+            System.out.println("xClic = " + x + "  yClic = " + y);
         }
     }  
 
