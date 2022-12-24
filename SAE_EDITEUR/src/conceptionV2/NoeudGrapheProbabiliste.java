@@ -7,6 +7,7 @@ package conceptionV2;
 
 import java.util.ArrayList;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
@@ -50,5 +51,21 @@ public class NoeudGrapheProbabiliste extends Noeud {
         
         zoneDessin.getChildren().add(nomClasse);
         
+    }
+    
+    /**
+     * Changement de la couleur de la bordure en vert 
+     */
+    public void changementCouleurTransitoire() {
+        
+        c.setStroke(Color.GREEN);
+    }
+    
+    /**
+     * Changement de la couleur de la bordure en bleu
+     */
+    public void changementCouleurErgodique() {
+        
+        c.setStroke(Color.BLUE);
     }
 }

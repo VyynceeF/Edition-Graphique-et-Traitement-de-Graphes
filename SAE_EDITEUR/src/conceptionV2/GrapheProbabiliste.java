@@ -67,7 +67,7 @@ public class GrapheProbabiliste extends Graphe{
                 if (g.verifierGraphe()) {   // Verifie si le graphe est probabiliste
                                             // Et change les couleurs sur les noeuds errones
                     
-                    g.regroupementClasse(zoneDessin);
+                    g.regroupementEtat(g.regroupementClasse(zoneDessin));
                 }
             }
         });
@@ -140,7 +140,7 @@ public class GrapheProbabiliste extends Graphe{
         for (int i = 0; i < source.successeurs.size() ; i++) {
             if(!listeVisitees.contains(source.successeurs.get(i).destinataire) ){
                 /* cas où le chemin est minimun de poids 1 */
-                if(source.successeurs.get(i).source == destinataire){
+                if(source.successeurs.get(i).destinataire == destinataire){
                     return true;   
                 }
                 listeVisitees.add((NoeudGrapheProbabiliste) source.successeurs.get(i).destinataire);
@@ -172,7 +172,7 @@ public class GrapheProbabiliste extends Graphe{
         int noClasse = 0 ; // Numero de la classe actuelle
         
         // Liste des noeuds pas encore dans une classe
-        ArrayList<Noeud> ensembleNoeud = noeuds;
+        ArrayList<Noeud> ensembleNoeud = (ArrayList<Noeud>) noeuds.clone();
         
         ArrayList<ArrayList<Noeud>> classes = new ArrayList<>();
         ArrayList<Noeud> classe;
@@ -222,5 +222,68 @@ public class GrapheProbabiliste extends Graphe{
         
         return estChemin(new ArrayList<NoeudGrapheProbabiliste>(), n1, n2)
                && estChemin(new ArrayList<NoeudGrapheProbabiliste>(), n2, n1);
+    }
+    
+    public void regroupementEtat(ArrayList<ArrayList<Noeud>> listeClasse) {
+        
+        ArrayList<ArrayList<Noeud>> listeClasseATester;
+        
+        boolean estTransitoire;
+        
+        for (int noClasse = 0 ; noClasse < listeClasse.size() ; noClasse++) {
+            
+            estTransitoire = false;
+            
+            listeClasseATester = (ArrayList<ArrayList<Noeud>>) listeClasse.clone();
+            listeClasseATester.remove(noClasse);
+            // Transitoire
+            for (int noClasseATester = 0 ; noClasseATester < listeClasseATester.size() && !estTransitoire ; noClasseATester++) {
+                
+                if (estChemin(new ArrayList<NoeudGrapheProbabiliste>(), 
+                              (NoeudGrapheProbabiliste) listeClasse.get(noClasse).get(0),       // Classe que l'on verifie
+                              (NoeudGrapheProbabiliste) listeClasseATester.get(noClasseATester).get(0) // Classe de comparaison
+                   )) {
+                    
+                    // Changement couleur noeud en couleur etat transitoire
+                    changementCouleurTransitoire(listeClasse.get(noClasse));
+                    estTransitoire = true;
+                }
+            }
+            
+            // Ergodique
+            if (!estTransitoire) {
+                changementCouleurErgodique(listeClasse.get(noClasse));
+            }
+        }
+    }
+    
+    /**
+     * Changement de la couleur de la bordure de tous les noeuds dans la classe
+     * @param classe Ensemble des noeuds a modifier
+     */
+    public void changementCouleurTransitoire(ArrayList<Noeud> classe) {
+        
+        NoeudGrapheProbabiliste noeud;
+        
+        for (int aChanger = 0 ; aChanger < classe.size() ; aChanger++) {
+            
+            noeud = (NoeudGrapheProbabiliste) classe.get(aChanger);
+            noeud.changementCouleurTransitoire();
+        }
+    }
+    
+    /**
+     * Changement de la couleur de la bordure de tous les noeuds dans la classe
+     * @param classe Ensemble des noeuds a modifier
+     */
+    public void changementCouleurErgodique(ArrayList<Noeud> classe) {
+        
+        NoeudGrapheProbabiliste noeud;
+        
+        for (int aChanger = 0 ; aChanger < classe.size() ; aChanger++) {
+            
+            noeud = (NoeudGrapheProbabiliste) classe.get(aChanger);
+            noeud.changementCouleurErgodique();
+        }
     }
 }
