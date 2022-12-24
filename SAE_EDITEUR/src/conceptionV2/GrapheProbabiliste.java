@@ -50,7 +50,7 @@ public class GrapheProbabiliste extends Graphe{
      * @param pane Pane dans laquelle sera le bouton
      * @param g    Graphe que l'on souhaite verifier
      */
-    public static Button ajouterBoutonVerification(Pane pane, Graphe g) {
+    public static Button ajouterBoutonVerification(Pane pane, Pane zoneDessin, GrapheProbabiliste g) {
         
         Button btnVerification = new Button("Vérifier le graphe");
         
@@ -64,7 +64,11 @@ public class GrapheProbabiliste extends Graphe{
 
             @Override
             public void handle(ActionEvent event) {
-                verifierGraphe((GrapheProbabiliste) g);
+                if (g.verifierGraphe()) {   // Verifie si le graphe est probabiliste
+                                            // Et change les couleurs sur les noeuds errones
+                    
+                    g.regroupementClasse(zoneDessin);
+                }
             }
         });
         pane.getChildren().add(btnVerification);
@@ -79,15 +83,15 @@ public class GrapheProbabiliste extends Graphe{
      * @return true si le graphe respecte les conditions du grapghe probabiliste, 
      *         false sinon
      */
-    public static boolean verifierGraphe(GrapheProbabiliste g) {
+    public boolean verifierGraphe() {
         
         boolean ttOk = true; // Tous les noeuds respectent les proprietes
         
         // Pour chaque sommet, la somme des valeurs des arcs ayant comme extrémité finale ce
         // sommet doit être égale à 1
-        for (int noAVerifier = 0 ; noAVerifier < g.noeuds.size() ; noAVerifier++) {
+        for (int noAVerifier = 0 ; noAVerifier < noeuds.size() ; noAVerifier++) {
             
-            if (!verifierNoeud((NoeudGrapheProbabiliste) g.noeuds.get(noAVerifier))) {
+            if (!verifierNoeud((NoeudGrapheProbabiliste) noeuds.get(noAVerifier))) {
                 
                 // Le noeud ne respecte pas les conditions donc il y a au moins un noeud errone
                 ttOk = false;
@@ -105,7 +109,7 @@ public class GrapheProbabiliste extends Graphe{
      * @return true si le noeud respecte les conditions du noeud probabiliste, 
      *         false sinon
      */
-    public static boolean verifierNoeud(NoeudGrapheProbabiliste n) {
+    public boolean verifierNoeud(NoeudGrapheProbabiliste n) {
         
         double somme; // Somme des valeurs sortant du noeud n
         
@@ -122,6 +126,7 @@ public class GrapheProbabiliste extends Graphe{
         n.c.setStroke(Color.BLACK);
         return true;
     }
+    
     /**
      * Predicat permettant de savoir s'il existe un chemin entre le noeud source
      * et le noeud destinataire dans le graphe probabiliste
@@ -159,9 +164,12 @@ public class GrapheProbabiliste extends Graphe{
      * C'est a dire regrouper les états d’un graphe probabiliste en classes 
      * d’équivalence : une classe d’équivalence regroupe tous les états qui 
      * communiquent entre eux.
+     * Affiche le numero de la classe dans le noeud
      * @return Une liste contenant les differentes classes
      */
-    public ArrayList<ArrayList<Noeud>> regroupementClasse() {
+    public ArrayList<ArrayList<Noeud>> regroupementClasse(Pane zoneDessin) {
+        
+        int noClasse = 0 ; // Numero de la classe actuelle
         
         // Liste des noeuds pas encore dans une classe
         ArrayList<Noeud> ensembleNoeud = noeuds;
@@ -169,28 +177,34 @@ public class GrapheProbabiliste extends Graphe{
         ArrayList<ArrayList<Noeud>> classes = new ArrayList<>();
         ArrayList<Noeud> classe;
         
-        Noeud noeudActuel; 
+        NoeudGrapheProbabiliste noeudActuel,
+                                noeudClasse; 
         
         while (ensembleNoeud.size() != 0) {
             
-            noeudActuel = ensembleNoeud.get(0);
+            noeudActuel = (NoeudGrapheProbabiliste) ensembleNoeud.get(0);
             classe = new ArrayList<>();
             // Ajout dans la classe
-            classe.add(noeudActuel);
+            classe.add(ensembleNoeud.get(0));
             // Comme dans une classe alors suppression dans l'ensemble des noeuds
-            ensembleNoeud.remove(noeudActuel);
+            ensembleNoeud.remove(ensembleNoeud.get(0));
+            // Affichage du nom de sa classe dans le cercle
+            noeudActuel.ajouterNomClasse(zoneDessin, "C" + noClasse);
             for (int noATester = 0 ; noATester < ensembleNoeud.size() ; noATester++) {
                 
                 if (estTransitifSysmetrique((NoeudGrapheProbabiliste) noeudActuel, 
                                             (NoeudGrapheProbabiliste) ensembleNoeud.get(noATester))) {
                     
-                    classe.add(ensembleNoeud.get(noATester));
-                    ensembleNoeud.remove(ensembleNoeud.get(noATester));
+                    noeudClasse = (NoeudGrapheProbabiliste) ensembleNoeud.get(noATester);
+                    classe.add(noeudClasse);
+                    ensembleNoeud.remove(noeudClasse);
+                    noeudClasse.ajouterNomClasse(zoneDessin, "C" + noClasse);
                     noATester--;
                 }
             }
             // Ajout de la classe dans la liste de classes
             classes.add(classe);
+            noClasse++; // Changement de classe
         }
         
         return classes;

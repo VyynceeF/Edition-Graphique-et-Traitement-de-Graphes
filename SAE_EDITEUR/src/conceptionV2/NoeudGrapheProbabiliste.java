@@ -7,7 +7,9 @@ package conceptionV2;
 
 import java.util.ArrayList;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 
 /**
  *
@@ -32,13 +34,21 @@ public class NoeudGrapheProbabiliste extends Noeud {
         successeurs = new ArrayList<>();
     }
     
-    public void ajouterNomClasse(Pane pane) {
+    public void ajouterNomClasse(Pane zoneDessin, String textNomClasse) {
         
         // Suppression du nom de la classe s'il existe deja
         if (nomClasse != null) {
             
-            pane.getChildren().remove(nomClasse);
+            zoneDessin.getChildren().remove(nomClasse);
         }
+        
+        nomClasse = new Text(position.x, position.y + 15, textNomClasse);
+        nomClasse.setFont(new Font(12));
+        
+        nomClasse.setBoundsType(TextBoundsType.VISUAL);
+        nomClasse.setX(position.x - (nomText.getLayoutBounds().getWidth() / 2));
+        
+        zoneDessin.getChildren().add(nomClasse);
         
     }
 }

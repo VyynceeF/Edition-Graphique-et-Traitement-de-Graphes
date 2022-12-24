@@ -86,7 +86,9 @@ public class FXMLDocumentController implements Initializable {
                         }
                         // Ajoute le bouton de verification si graphe probabiliste
                         if (aAjouter.equals("Graphe probabiliste")) {
-                            btnVerifier = GrapheProbabiliste.ajouterBoutonVerification(paneSelection, graphe);
+                            btnVerifier = GrapheProbabiliste.ajouterBoutonVerification(paneSelection, 
+                                                                                       zoneDessin, 
+                                                                                       (GrapheProbabiliste) graphe);
                         } 
                     }
                 });
@@ -119,7 +121,6 @@ public class FXMLDocumentController implements Initializable {
             if(graphe instanceof GrapheProbabiliste){
                 GrapheProbabiliste g = (GrapheProbabiliste) graphe;
             }
-            System.out.println("xClic = " + x + "  yClic = " + y);
         }
     }  
 
