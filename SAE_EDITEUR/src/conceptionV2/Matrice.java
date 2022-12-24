@@ -41,7 +41,8 @@ public class Matrice {
         }     
         return tab;
     }
-     public boolean estChemin(ArrayList<NoeudGrapheProbabiliste> listeVisitees,NoeudGrapheProbabiliste source , NoeudGrapheProbabiliste destinataire){   
+    
+    public boolean estChemin(ArrayList<NoeudGrapheProbabiliste> listeVisitees,NoeudGrapheProbabiliste source , NoeudGrapheProbabiliste destinataire){   
      
         for (int i = 0; i < source.successeurs.size() ; i++) {
             if(!listeVisitees.contains(source.successeurs.get(i).destinataire) ){

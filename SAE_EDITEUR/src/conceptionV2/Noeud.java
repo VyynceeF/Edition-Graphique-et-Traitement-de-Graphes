@@ -18,8 +18,6 @@ import javafx.scene.text.*;
  */
 public abstract class Noeud {
     
-    
-    
     /** Position du point sur l'axe(x,y) */
     Point position ; 
     
@@ -28,6 +26,7 @@ public abstract class Noeud {
     
     /** Nom du Noeud a créer*/
     Text nomText ; 
+    
     /** Cercle pour dessiner le noeud */
     Circle c  ; 
     
@@ -67,15 +66,12 @@ public abstract class Noeud {
         c.setRadius(RAYON);
         c.setFill(Color.WHITE);
         c.setStroke(Color.BLACK);
-        /* 
-         * On suprime le noeud si celui si à déjà été créer
-         * pour qu'il puisse passer en premier plan lors de la création
-         * d'un lien
-         */
-        zoneDessin.getChildren().remove(c);
         zoneDessin.getChildren().add(c);
         nomText = new Text(position.x,position.y,this.nom);
         nomText.setFont(new Font(12));
+        
+        nomText.setBoundsType(TextBoundsType.VISUAL);
+        nomText.setX(position.x - (nomText.getLayoutBounds().getWidth() / 2));
         
         zoneDessin.getChildren().add(nomText);
         return c;
