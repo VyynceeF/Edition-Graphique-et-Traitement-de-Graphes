@@ -6,6 +6,7 @@
 package conceptionV2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -16,10 +17,18 @@ import javafx.scene.paint.Color;
  *
  * @author amine.daamouch
  */
-public class GrapheProbabiliste extends Graphe{
-
+public class GrapheProbabiliste extends Graphe {
+    
+    /** Ensemble des noeuds finaux du graphe */
+    ArrayList<Noeud> noeudsFinales;
+    
+    /** Ensemble des noeuds transitoires du graphe */
+    ArrayList<Noeud> noeudsTransitoires;
+    
     public GrapheProbabiliste() {
         super();
+        noeudsFinales = new ArrayList<>();
+        noeudsTransitoires = new ArrayList<>();
     }
 
     @Override
@@ -68,6 +77,13 @@ public class GrapheProbabiliste extends Graphe{
                                             // Et change les couleurs sur les noeuds errones
                     
                     g.regroupementEtat(g.regroupementClasse(zoneDessin));
+                    double[][] m = g.matriceTransitoireCanonique();
+                    for (int i = 0 ; i < m.length ; i++) {
+                        for (int y = 0 ; y < m[i].length ; y++) {
+                            System.out.print(m[i][y] + " ");
+                        }
+                        System.out.println("");
+                    }
                 }
             }
         });
@@ -246,6 +262,8 @@ public class GrapheProbabiliste extends Graphe{
                     
                     // Changement couleur noeud en couleur etat transitoire
                     changementCouleurTransitoire(listeClasse.get(noClasse));
+                    // Ajout de tous les etats transitoire dans la liste 
+                    ajouterListeTransitoire(listeClasse.get(noClasse));
                     estTransitoire = true;
                 }
             }
@@ -253,6 +271,7 @@ public class GrapheProbabiliste extends Graphe{
             // Ergodique
             if (!estTransitoire) {
                 changementCouleurErgodique(listeClasse.get(noClasse));
+                ajouterListeFinale(listeClasse.get(noClasse));
             }
         }
     }
@@ -285,5 +304,62 @@ public class GrapheProbabiliste extends Graphe{
             noeud = (NoeudGrapheProbabiliste) classe.get(aChanger);
             noeud.changementCouleurErgodique();
         }
+    }
+
+    private void ajouterListeTransitoire(ArrayList<Noeud> classe) {
+        
+        for (int aAjouter = 0 ; aAjouter < classe.size() ; aAjouter++) {
+            noeudsTransitoires.add(classe.get(aAjouter));
+        }
+    }
+
+    private void ajouterListeFinale(ArrayList<Noeud> classe) {
+        
+        for (int aAjouter = 0 ; aAjouter < classe.size() ; aAjouter++) {
+            noeudsTransitoires.add(classe.get(aAjouter));
+        }
+    }
+    
+    /**
+     * Creer la matice de transition du graphe sous la forme canonique
+     */
+    public double[][] matriceTransitoireCanonique() {
+        
+        ArrayList<Noeud> ordreNoeud = new ArrayList<>();
+        
+        double[][] m = new double[noeuds.size()][noeuds.size()];
+        
+        // Ajout de noeuds ergodiques
+        for (int noErgo = 0 ; noErgo < noeudsFinales.size() ; noErgo++) {
+            ordreNoeud.add(noeudsFinales.get(noErgo));
+        }
+        // Ajout de noeuds transitoire
+        for (int noErgo = 0 ; noErgo < noeudsTransitoires.size() ; noErgo++) {
+            ordreNoeud.add(noeudsTransitoires.get(noErgo));
+        }
+        
+        // Ajout des valeurs dans la matrice
+        for (int x = 0 ; x < ordreNoeud.size() ; x++) {
+            
+            for (int y = 0 ; y < ordreNoeud.size() ; y++) {
+                
+                m[x][y] = valeurEntreDeuxNoeud((NoeudGrapheProbabiliste) ordreNoeud.get(x),
+                                               (NoeudGrapheProbabiliste) ordreNoeud.get(y));
+            }
+        }
+        
+        return m ;
+    }
+    
+    public double valeurEntreDeuxNoeud(NoeudGrapheProbabiliste n1, NoeudGrapheProbabiliste n2) {
+        
+        for (int i = 0; i < n1.successeurs.size() ; i++) {
+            
+            if (n1.successeurs.get(i).destinataire == n2) {
+                
+                return n1.successeurs.get(i).coefficient;
+            } 
+        }
+        return 0.0;
     }
 }
