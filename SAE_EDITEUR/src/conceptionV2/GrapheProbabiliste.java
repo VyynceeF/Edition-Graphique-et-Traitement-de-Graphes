@@ -25,10 +25,15 @@ public class GrapheProbabiliste extends Graphe {
     /** Ensemble des noeuds transitoires du graphe */
     ArrayList<Noeud> noeudsTransitoires;
     
+    /** Ordre des noeuds du graphe */
+    ArrayList<Noeud> noeudsOrdones;
+    
     public GrapheProbabiliste() {
         super();
         noeudsFinales = new ArrayList<>();
         noeudsTransitoires = new ArrayList<>();
+        noeudsOrdones = new ArrayList<>();
+        
     }
 
     @Override
@@ -51,7 +56,6 @@ public class GrapheProbabiliste extends Graphe {
         noeudSource.successeurs.add((ArcProbabiliste) l);
         
         return l; 
-       
     }
     
     /**
@@ -77,13 +81,10 @@ public class GrapheProbabiliste extends Graphe {
                                             // Et change les couleurs sur les noeuds errones
                     
                     g.regroupementEtat(g.regroupementClasse(zoneDessin));
-                    double[][] m = g.matriceTransitoireCanonique();
-                    for (int i = 0 ; i < m.length ; i++) {
-                        for (int y = 0 ; y < m[i].length ; y++) {
-                            System.out.print(m[i][y] + " ");
-                        }
-                        System.out.println("");
-                    }
+                    
+                    System.out.println("Noeud 1 = " + g.noeuds.get(0));
+                    System.out.println("Noeud 2 = " + g.noeuds.get(1));
+                    System.out.println("Proba   = " + g.probaEntreNoeudEnNTransition(g.noeuds.get(0), g.noeuds.get(1), 2));
                 }
             }
         });
@@ -325,26 +326,25 @@ public class GrapheProbabiliste extends Graphe {
      */
     public double[][] matriceTransitoireCanonique() {
         
-        ArrayList<Noeud> ordreNoeud = new ArrayList<>();
-        
         double[][] m = new double[noeuds.size()][noeuds.size()];
+        
         
         // Ajout de noeuds ergodiques
         for (int noErgo = 0 ; noErgo < noeudsFinales.size() ; noErgo++) {
-            ordreNoeud.add(noeudsFinales.get(noErgo));
+            noeudsOrdones.add(noeudsFinales.get(noErgo));
         }
         // Ajout de noeuds transitoire
         for (int noErgo = 0 ; noErgo < noeudsTransitoires.size() ; noErgo++) {
-            ordreNoeud.add(noeudsTransitoires.get(noErgo));
+            noeudsOrdones.add(noeudsTransitoires.get(noErgo));
         }
         
         // Ajout des valeurs dans la matrice
-        for (int x = 0 ; x < ordreNoeud.size() ; x++) {
+        for (int x = 0 ; x < noeudsOrdones.size() ; x++) {
             
-            for (int y = 0 ; y < ordreNoeud.size() ; y++) {
+            for (int y = 0 ; y < noeudsOrdones.size() ; y++) {
                 
-                m[x][y] = valeurEntreDeuxNoeud((NoeudGrapheProbabiliste) ordreNoeud.get(x),
-                                               (NoeudGrapheProbabiliste) ordreNoeud.get(y));
+                m[x][y] = valeurEntreDeuxNoeud((NoeudGrapheProbabiliste) noeudsOrdones.get(x),
+                                               (NoeudGrapheProbabiliste) noeudsOrdones.get(y));
             }
         }
         
@@ -361,5 +361,75 @@ public class GrapheProbabiliste extends Graphe {
             } 
         }
         return 0.0;
+    }
+    
+    /**
+     * Multiplie la matrice carree m par elle meme
+     * @param m Matrice a multiplier
+     * @return La multiplication de la matrice m par elle meme
+     */
+    public static double[][] multiplicationMatrice(double[][] m1, double[][] m2){
+        
+        // Créer une matrice pour stocker la multiplication
+        double resultat[][] = new double[m1.length][m1.length];  
+        
+        // Multiplication
+        for (int i=0 ; i < m1.length ; i++){
+            for (int j=0 ; j < m1.length ; j++){ 
+                resultat[i][j] = 0;    
+                for (int k=0 ; k < m1.length ; k++) { 
+                    resultat[i][j] += m1[i][k] * m2[k][j];    
+                }
+                System.out.print(resultat[i][j]+" "); 
+            }
+            System.out.println();
+        }  
+        return resultat;
+    }
+    
+    /**
+     * Calcul la matrice m elevee a l'exposant exp
+     * @param m   Matrice a elevee
+     * @param exp Exposant
+     * @return La matrice m elevee a l'exposant exp
+     */
+    public static double[][] exposantMatrice(double[][] m, int exp) {
+        
+        double[][] resultat = m ;
+        
+        while (exp > 1) {
+            
+            resultat = multiplicationMatrice(resultat, m);
+            exp--;
+        }
+        return resultat ;
+    }
+    
+    public double probaEntreNoeudEnNTransition(Noeud source, Noeud destinataire, int nbTransition) {
+        
+        // Matrice de transition du graphe
+        double[][] matrice = matriceTransitoireCanonique();
+        
+        int ligne   = 0 ;   // Ligne du noeud source dans la matrice de transition
+        int colonne = 0 ;   // Ligne du noeud destinataire dans la matrice de transition
+        
+        regroupementEtat(regroupementClasse(new Pane()));
+        matrice = exposantMatrice(matrice, nbTransition);
+        
+        // Recherche de source dans la matrice
+        for (int i = 0 ; i < noeudsOrdones.size() ; i++) {
+            if (noeudsOrdones.get(i) == source) {
+                ligne = i;
+            }
+        }
+        
+        // Recherche de destinataire dans la matrice
+        for (int i = 0 ; i < noeudsOrdones.size() ; i++) {
+            if (noeudsOrdones.get(i) == destinataire) {
+                colonne = i;
+            }
+        }
+        
+        return matrice[ligne][colonne];
     }
 }
