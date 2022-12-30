@@ -50,7 +50,7 @@ public class NoeudGrapheProbabiliste extends Noeud {
         nomClasse.setX(position.x - (nomText.getLayoutBounds().getWidth() / 2));
         
         zoneDessin.getChildren().add(nomClasse);
-        
+        System.out.println("OK");
     }
     
     /**

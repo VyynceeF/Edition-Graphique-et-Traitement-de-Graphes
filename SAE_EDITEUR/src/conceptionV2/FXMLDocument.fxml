@@ -70,7 +70,7 @@
             </Pane>
          </children>
       </Pane>
-      <MenuBar prefHeight="47.0" prefWidth="807.0" GridPane.columnSpan="2">
+      <MenuBar fx:id="navbar" prefHeight="47.0" prefWidth="807.0" GridPane.columnSpan="2">
         <menus>
           <Menu mnemonicParsing="false" text="Graphe">
             <items>

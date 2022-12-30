@@ -7,8 +7,6 @@ package conceptionV2;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -24,6 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  *
@@ -64,6 +64,11 @@ public class FXMLDocumentController implements Initializable {
     private Pane paneSelection;
     
     private Button btnVerifier = null;
+    
+    @FXML
+    private MenuBar navbar;
+    
+    private Menu menuEdition = null;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -82,6 +87,7 @@ public class FXMLDocumentController implements Initializable {
                         // Supprimer bouton Verifier graphe
                         if (btnVerifier != null) {
                             paneSelection.getChildren().remove(btnVerifier);
+                            navbar.getMenus().remove(menuEdition);
                             btnVerifier = null;
                         }
                         // Ajoute le bouton de verification si graphe probabiliste
@@ -89,6 +95,8 @@ public class FXMLDocumentController implements Initializable {
                             btnVerifier = GrapheProbabiliste.ajouterBoutonVerification(paneSelection, 
                                                                                        zoneDessin, 
                                                                                        (GrapheProbabiliste) graphe);
+                            
+                            menuEdition = GrapheProbabiliste.ajouterMenuNavBar(navbar, (GrapheProbabiliste) graphe, zoneDessin);
                         } 
                     }
                 });

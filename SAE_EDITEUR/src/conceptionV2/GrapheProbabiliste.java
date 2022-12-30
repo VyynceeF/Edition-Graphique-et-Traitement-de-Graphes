@@ -5,13 +5,26 @@
  */
 package conceptionV2;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 
 /**
  *
@@ -80,7 +93,7 @@ public class GrapheProbabiliste extends Graphe {
                 if (g.verifierGraphe()) {   // Verifie si le graphe est probabiliste
                                             // Et change les couleurs sur les noeuds errones
                     
-                    g.regroupementEtat(g.regroupementClasse(zoneDessin));
+                    g.regroupementEtat(g.regroupementClasse());
                     
                     System.out.println("Noeud 1 = " + g.noeuds.get(0));
                     System.out.println("Noeud 2 = " + g.noeuds.get(1));
@@ -90,6 +103,78 @@ public class GrapheProbabiliste extends Graphe {
         });
         pane.getChildren().add(btnVerification);
         return btnVerification;
+    }
+    
+    public static Menu ajouterMenuNavBar(MenuBar menuBar, GrapheProbabiliste g, Pane zoneDessin) {
+        
+        Menu editMenu = new Menu("Edition");
+        
+        /* Matrice de transition */
+        MenuItem itemMatriceTransition = new MenuItem("Matrice de transition");
+        itemMatriceTransition.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    
+                    // Création de l'objet de la popup
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+                    // Définition du titre de la popup
+                    alert.setTitle("Matrice de transition");
+
+                    // Définition du contenu de la popup
+                    alert.setContentText("Matrice de transition\n\n"
+                                         + g.matriceTransitoireCanoniqueToString());
+
+                    // Affichage de la popup
+                    alert.show();
+                }
+            }
+        );
+        
+        MenuItem itemRegroupementClasse = new MenuItem("Regroupement par classe");
+        itemRegroupementClasse.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    
+                    g.regroupementClasseEtAffiche(zoneDessin);
+                }
+            }
+        );
+        
+        MenuItem itemClassificationSommets = new MenuItem("Classification des sommets");
+        itemClassificationSommets.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    
+                    g.regroupementEtatEtChangementCouleur(g.regroupementClasse());
+                }
+            }
+        );
+        
+        Menu itemInterpretation = new Menu("Interprétation");
+        //Sous menu de interpretation
+        MenuItem itemProbaSommetASommet = new MenuItem("Probabilité de passer d’un sommet à un autre");
+        itemClassificationSommets.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    
+                    g.regroupementEtatEtChangementCouleur(g.regroupementClasse());
+                }
+            }
+        );
+        
+        MenuItem itemProbaTransition = new MenuItem("Loi de probabilité atteinte après un nombre de transition(s) donné");
+        itemInterpretation.getItems().addAll(itemProbaSommetASommet, itemProbaTransition);
+        
+        // Ajout des menus de edition
+        editMenu.getItems().addAll(itemMatriceTransition, 
+                                   itemRegroupementClasse,
+                                   itemClassificationSommets,
+                                   itemInterpretation);
+        
+        // Ajout dans la navbar
+        menuBar.getMenus().add(editMenu);
+        return editMenu;
     }
     
     /**
@@ -184,7 +269,11 @@ public class GrapheProbabiliste extends Graphe {
      * Affiche le numero de la classe dans le noeud
      * @return Une liste contenant les differentes classes
      */
-    public ArrayList<ArrayList<Noeud>> regroupementClasse(Pane zoneDessin) {
+    public ArrayList<ArrayList<Noeud>> regroupementClasseEtAffiche(Pane zoneDessin) {
+        
+        noeudsFinales.clear();
+        noeudsTransitoires.clear();
+        noeudsOrdones.clear();
         
         int noClasse = 0 ; // Numero de la classe actuelle
         
@@ -228,6 +317,58 @@ public class GrapheProbabiliste extends Graphe {
     }
     
     /**
+     * Regroupement des sommets du graphe par classe
+     * C'est a dire regrouper les états d’un graphe probabiliste en classes 
+     * d’équivalence : une classe d’équivalence regroupe tous les états qui 
+     * communiquent entre eux.
+     * @return Une liste contenant les differentes classes
+     */
+    public ArrayList<ArrayList<Noeud>> regroupementClasse() {
+        
+        noeudsFinales.clear();
+        noeudsTransitoires.clear();
+        noeudsOrdones.clear();
+        
+        int noClasse = 0 ; // Numero de la classe actuelle
+        
+        // Liste des noeuds pas encore dans une classe
+        ArrayList<Noeud> ensembleNoeud = (ArrayList<Noeud>) noeuds.clone();
+        
+        ArrayList<ArrayList<Noeud>> classes = new ArrayList<>();
+        ArrayList<Noeud> classe;
+        
+        NoeudGrapheProbabiliste noeudActuel,
+                                noeudClasse; 
+        
+        while (ensembleNoeud.size() != 0) {
+            
+            noeudActuel = (NoeudGrapheProbabiliste) ensembleNoeud.get(0);
+            classe = new ArrayList<>();
+            // Ajout dans la classe
+            classe.add(ensembleNoeud.get(0));
+            // Comme dans une classe alors suppression dans l'ensemble des noeuds
+            ensembleNoeud.remove(ensembleNoeud.get(0));
+            // Affichage du nom de sa classe dans le cercle
+            for (int noATester = 0 ; noATester < ensembleNoeud.size() ; noATester++) {
+                
+                if (estTransitifSysmetrique((NoeudGrapheProbabiliste) noeudActuel, 
+                                            (NoeudGrapheProbabiliste) ensembleNoeud.get(noATester))) {
+                    
+                    noeudClasse = (NoeudGrapheProbabiliste) ensembleNoeud.get(noATester);
+                    classe.add(noeudClasse);
+                    ensembleNoeud.remove(noeudClasse);
+                    noATester--;
+                }
+            }
+            // Ajout de la classe dans la liste de classes
+            classes.add(classe);
+            noClasse++; // Changement de classe
+        }
+        
+        return classes;
+    }
+    
+    /**
      * Verifie qu'il y est un chemin entre n1 et n2 
      * et verifie qu'il y est un chemin entre n2 et n1
      * @param n1 Noeud a tester
@@ -241,7 +382,16 @@ public class GrapheProbabiliste extends Graphe {
                && estChemin(new ArrayList<NoeudGrapheProbabiliste>(), n2, n1);
     }
     
-    public void regroupementEtat(ArrayList<ArrayList<Noeud>> listeClasse) {
+    /**
+     * Regroupe les etats ergodiques et les etats transitoires
+     * Et change la couleur des noeuds
+     * @param listeClasse 
+     */
+    public void regroupementEtatEtChangementCouleur(ArrayList<ArrayList<Noeud>> listeClasse) {
+        
+        noeudsFinales.clear();
+        noeudsTransitoires.clear();
+        noeudsOrdones.clear();
         
         ArrayList<ArrayList<Noeud>> listeClasseATester;
         
@@ -272,6 +422,45 @@ public class GrapheProbabiliste extends Graphe {
             // Ergodique
             if (!estTransitoire) {
                 changementCouleurErgodique(listeClasse.get(noClasse));
+                ajouterListeFinale(listeClasse.get(noClasse));
+            }
+        }
+    }
+    
+    /**
+     * Regroupe les etats ergodiques et les etats transitoires
+     * @param listeClasse 
+     */
+    public void regroupementEtat(ArrayList<ArrayList<Noeud>> listeClasse) {
+        
+        noeudsOrdones.clear();
+        
+        ArrayList<ArrayList<Noeud>> listeClasseATester;
+        
+        boolean estTransitoire;
+        
+        for (int noClasse = 0 ; noClasse < listeClasse.size() ; noClasse++) {
+            
+            estTransitoire = false;
+            
+            listeClasseATester = (ArrayList<ArrayList<Noeud>>) listeClasse.clone();
+            listeClasseATester.remove(noClasse);
+            // Transitoire
+            for (int noClasseATester = 0 ; noClasseATester < listeClasseATester.size() && !estTransitoire ; noClasseATester++) {
+                
+                if (estChemin(new ArrayList<NoeudGrapheProbabiliste>(), 
+                              (NoeudGrapheProbabiliste) listeClasse.get(noClasse).get(0),       // Classe que l'on verifie
+                              (NoeudGrapheProbabiliste) listeClasseATester.get(noClasseATester).get(0) // Classe de comparaison
+                   )) {
+                    
+                    // Ajout de tous les etats transitoire dans la liste 
+                    ajouterListeTransitoire(listeClasse.get(noClasse));
+                    estTransitoire = true;
+                }
+            }
+            
+            // Ergodique
+            if (!estTransitoire) {
                 ajouterListeFinale(listeClasse.get(noClasse));
             }
         }
@@ -317,7 +506,7 @@ public class GrapheProbabiliste extends Graphe {
     private void ajouterListeFinale(ArrayList<Noeud> classe) {
         
         for (int aAjouter = 0 ; aAjouter < classe.size() ; aAjouter++) {
-            noeudsTransitoires.add(classe.get(aAjouter));
+            noeudsFinales.add(classe.get(aAjouter));
         }
     }
     
@@ -328,7 +517,6 @@ public class GrapheProbabiliste extends Graphe {
         
         double[][] m = new double[noeuds.size()][noeuds.size()];
         
-        
         // Ajout de noeuds ergodiques
         for (int noErgo = 0 ; noErgo < noeudsFinales.size() ; noErgo++) {
             noeudsOrdones.add(noeudsFinales.get(noErgo));
@@ -337,7 +525,7 @@ public class GrapheProbabiliste extends Graphe {
         for (int noErgo = 0 ; noErgo < noeudsTransitoires.size() ; noErgo++) {
             noeudsOrdones.add(noeudsTransitoires.get(noErgo));
         }
-        
+        System.out.println("n" + noeudsOrdones);
         // Ajout des valeurs dans la matrice
         for (int x = 0 ; x < noeudsOrdones.size() ; x++) {
             
@@ -349,6 +537,38 @@ public class GrapheProbabiliste extends Graphe {
         }
         
         return m ;
+    }
+    
+    /**
+     * Renvoie la matice de transition du graphe sous la forme canonique en string
+     * @return la matice de transition
+     */
+    public String matriceTransitoireCanoniqueToString() {
+        
+        regroupementEtat(regroupementClasse());
+        
+        String m = "   ";
+        double[][] matrice = matriceTransitoireCanonique();
+        
+        // Nom Noeuds
+        for (int i = 0 ; i < noeudsOrdones.size() ; i++) {
+            
+            m += " " + noeudsOrdones.get(i);
+        }
+        m += "\n";
+        for (int i = 0 ; i < matrice.length ; i++) {
+            m += noeudsOrdones.get(i) + "[";
+            for (int y = 0 ; y < matrice[i].length ; y++) {
+                
+                m += matrice[i][y];
+                if (y != matrice[i].length - 1) {
+                    m += " , ";
+                }
+            }
+            m += "]\n";
+        }
+        System.out.println("m = " + m);
+        return m;
     }
     
     public double valeurEntreDeuxNoeud(NoeudGrapheProbabiliste n1, NoeudGrapheProbabiliste n2) {
@@ -413,7 +633,7 @@ public class GrapheProbabiliste extends Graphe {
         int ligne   = 0 ;   // Ligne du noeud source dans la matrice de transition
         int colonne = 0 ;   // Ligne du noeud destinataire dans la matrice de transition
         
-        regroupementEtat(regroupementClasse(new Pane()));
+        regroupementEtat(regroupementClasse());
         matrice = exposantMatrice(matrice, nbTransition);
         
         // Recherche de source dans la matrice
