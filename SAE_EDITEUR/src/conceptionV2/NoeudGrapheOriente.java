@@ -35,11 +35,11 @@ public class NoeudGrapheOriente extends Noeud {
         this.nom = nom;
     }
 
-    public TextField getNomText() {
+    public Text getNomText() {
         return nomText;
     }
 
-    public void setNomText(TextField nomText) {
+    public void setNomText(Text nomText) {
         this.nomText = nomText;
     }
 
