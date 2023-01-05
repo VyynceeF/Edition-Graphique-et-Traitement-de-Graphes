@@ -199,5 +199,10 @@ public abstract class Graphe {
             noeudSelectionne.noeudDeselectionne();
             noeudSelectionne = null;
         }
+        if (lienSelectionne != null) {
+            
+            lienSelectionne.lienDeselectionne();
+            lienSelectionne = null;
+        }
     }
 }

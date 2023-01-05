@@ -43,10 +43,12 @@ public class Arete extends Lien {
         
         line = new Line(xPrimeSource, yPrimeSource, xPrimeDes, yPrimeDes);
         
+        line.setStrokeWidth(1);
+        
         zoneDessin.getChildren().add(line);
         
         a = (yPrimeDes - yPrimeSource) / (xPrimeDes - xPrimeSource);
-        b = a * xPrimeDes + yPrimeDes;
+        b = -(a * xPrimeDes) + yPrimeDes;
     }
 
     public Noeud getSource() {
@@ -74,8 +76,8 @@ public class Arete extends Lien {
     @Override
     public boolean estClique(double x, double y) {
         
-        if (a * x + b == y) {
-            
+        
+        if (Math.abs((a * x + b) - y) <= 5) {
             return true;
         }
         return false;
@@ -84,8 +86,20 @@ public class Arete extends Lien {
     /**
      * Augmente l'epaisseur du lien
      */
+    @Override
     public void lienSelectionne() {
         
         line.setStrokeWidth(3);
+    }
+    
+    
+    
+    /**
+     * Augmente l'epaisseur du lien
+     */
+    @Override
+    public void lienDeselectionne() {
+        
+        line.setStrokeWidth(1);
     }
 }

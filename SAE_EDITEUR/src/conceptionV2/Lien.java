@@ -33,6 +33,8 @@ public abstract class Lien {
     public abstract boolean estClique(double x, double y);
     
     public abstract void lienSelectionne();
+    
+    public abstract void lienDeselectionne();
   
     public abstract void dessiner(AnchorPane zoneDessin);
 

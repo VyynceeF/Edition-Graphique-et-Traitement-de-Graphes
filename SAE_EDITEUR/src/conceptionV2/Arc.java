@@ -142,4 +142,12 @@ public class Arc extends Lien {
         
         
     }
+    
+    /**
+     * Augmente l'epaisseur du lien
+     */
+    @Override
+    public void lienDeselectionne() {
+        
+    }
 }
