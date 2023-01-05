@@ -6,6 +6,11 @@
 package conceptionV2;
 
 
+import java.io.Serializable;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
@@ -66,12 +71,16 @@ public abstract class Noeud {
         c.setRadius(RAYON);
         c.setFill(Color.WHITE);
         c.setStroke(Color.BLACK);
+        c.setStrokeWidth(1);
         zoneDessin.getChildren().add(c);
+        
+        // Nom du noeud
         nomText = new Text(position.x,position.y,this.nom);
         nomText.setFont(new Font(12));
         
         nomText.setBoundsType(TextBoundsType.VISUAL);
         nomText.setX(position.x - (nomText.getLayoutBounds().getWidth() / 2));
+        
         
         zoneDessin.getChildren().add(nomText);
         return c;
@@ -81,7 +90,61 @@ public abstract class Noeud {
         return Math.sqrt((x - position.x )*(x - position.x )
                 + (y - position.y )*(y - position.y)) <= RAYON;
     }
+
+    public Point getPosition() {
+        return position;
+    }
+
+    public void setPosition(Point position) {
+        this.position = position;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Text getNomText() {
+        return nomText;
+    }
+
+    public void setNomText(Text nomText) {
+        this.nomText = nomText;
+    }
+
+    public Circle getC() {
+        return c;
+    }
+
+    public void setC(Circle c) {
+        this.c = c;
+    }
+
+    public static int getNoNoeud() {
+        return noNoeud;
+    }
+
+    public static void setNoNoeud(int noNoeud) {
+        Noeud.noNoeud = noNoeud;
+    }
     
+    /**
+     * Augmente l'epaisseur du cercle representant le noeud
+     */
+    public void noeudSelectionne() {
+        
+        c.setStrokeWidth(3);
+    }
     
+    /**
+     * Remet l'epaisseur du cercle representant le noeud par defaut
+     */
+    public void noeudDeselectionne() {
+        
+        c.setStrokeWidth(1);
+    }
    
 }

@@ -5,6 +5,7 @@
  */
 package conceptionV2;
 
+import java.io.Serializable;
 import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -15,7 +16,7 @@ import javafx.scene.shape.QuadCurve;
  *
  * @author amine.daamouch
  */
-public class Arc extends Lien{
+public class Arc extends Lien {
     
   
     public Arc(Noeud source,Noeud destinataire){
@@ -115,4 +116,30 @@ public class Arc extends Lien{
         zoneDessin.getChildren().addAll(arrow1,arrow2, groupeFleche); 
     }
 
+    public Noeud getSource() {
+        return source;
+    }
+
+    public Noeud getDestinataire() {
+        return destinataire;
+    }
+    
+    /**
+     * Predicat verifiant si le point (x, y) est sur le lien)
+     * @param x Abscisse du point a tester
+     * @param y Ordonnee du point a tester
+     * @return Le lien s'il existe un lien sur la position (x, y), false sinon
+     */
+    @Override
+    public boolean estClique(double x, double y) {
+        return false;
+    }
+    
+    /**
+     * Augmente l'epaisseur du lien
+     */
+    public void lienSelectionne() {
+        
+        
+    }
 }

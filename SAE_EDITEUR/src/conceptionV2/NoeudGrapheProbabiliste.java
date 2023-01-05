@@ -5,9 +5,12 @@
  */
 package conceptionV2;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
@@ -50,7 +53,6 @@ public class NoeudGrapheProbabiliste extends Noeud {
         nomClasse.setX(position.x - (nomText.getLayoutBounds().getWidth() / 2));
         
         zoneDessin.getChildren().add(nomClasse);
-        System.out.println("OK");
     }
     
     /**
@@ -68,4 +70,61 @@ public class NoeudGrapheProbabiliste extends Noeud {
         
         c.setStroke(Color.BLUE);
     }
+
+    public ArrayList<ArcProbabiliste> getSuccesseurs() {
+        return successeurs;
+    }
+
+    public void setSuccesseurs(ArrayList<ArcProbabiliste> successeurs) {
+        this.successeurs = successeurs;
+    }
+
+    public Text getNomClasse() {
+        return nomClasse;
+    }
+
+    public void setNomClasse(Text nomClasse) {
+        this.nomClasse = nomClasse;
+    }
+
+    public Point getPosition() {
+        return position;
+    }
+
+    public void setPosition(Point position) {
+        this.position = position;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public TextField getNomText() {
+        return nomText;
+    }
+
+    public void setNomText(TextField nomText) {
+        this.nomText = nomText;
+    }
+
+    public Circle getC() {
+        return c;
+    }
+
+    public void setC(Circle c) {
+        this.c = c;
+    }
+
+    public static int getNoNoeud() {
+        return noNoeud;
+    }
+
+    public static void setNoNoeud(int noNoeud) {
+        Noeud.noNoeud = noNoeud;
+    }
+    
 }

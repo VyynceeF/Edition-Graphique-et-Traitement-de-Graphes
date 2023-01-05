@@ -6,6 +6,7 @@
 package conceptionV2;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -13,18 +14,25 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import jdk.nashorn.internal.ir.BreakNode;
 
 /**
  *
@@ -94,10 +102,6 @@ public class GrapheProbabiliste extends Graphe {
                                             // Et change les couleurs sur les noeuds errones
                     
                     g.regroupementEtat(g.regroupementClasse());
-                    
-                    System.out.println("Noeud 1 = " + g.noeuds.get(0));
-                    System.out.println("Noeud 2 = " + g.noeuds.get(1));
-                    System.out.println("Proba   = " + g.probaEntreNoeudEnNTransition(g.noeuds.get(0), g.noeuds.get(1), 2));
                 }
             }
         });
@@ -136,7 +140,14 @@ public class GrapheProbabiliste extends Graphe {
                 @Override
                 public void handle(ActionEvent e) {
                     
+                    System.out.println("Regroupement");
                     g.regroupementClasseEtAffiche(zoneDessin);
+                    Stage popUp = new Stage();
+                    popUp.initModality(Modality.APPLICATION_MODAL);
+                    StackPane pane = new StackPane();
+                    pane.getChildren().add(new Button("Fermer"));
+                    popUp.setScene(new Scene(pane, 200, 200));
+                    popUp.showAndWait();
                 }
             }
         );
@@ -146,6 +157,7 @@ public class GrapheProbabiliste extends Graphe {
                 @Override
                 public void handle(ActionEvent e) {
                     
+                    System.out.println("Classification");
                     g.regroupementEtatEtChangementCouleur(g.regroupementClasse());
                 }
             }
@@ -154,11 +166,89 @@ public class GrapheProbabiliste extends Graphe {
         Menu itemInterpretation = new Menu("Interprétation");
         //Sous menu de interpretation
         MenuItem itemProbaSommetASommet = new MenuItem("Probabilité de passer d’un sommet à un autre");
-        itemClassificationSommets.setOnAction(new EventHandler<ActionEvent>() {
+        itemProbaSommetASommet.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent e) {
                     
-                    g.regroupementEtatEtChangementCouleur(g.regroupementClasse());
+                    Stage popUp = new Stage();
+                    popUp.initModality(Modality.APPLICATION_MODAL);
+                    StackPane pane = new StackPane();
+                    GridPane gridPane = new GridPane();
+                    
+                    // Resultat
+                    Text resultat = new Text();
+                    
+                    // Noeud source
+                    Text textSource = new Text("Noeud source - ");
+                    ComboBox comboBoxSource = new ComboBox();
+                    for (int i = 0 ; i < g.noeuds.size() ; i++) {
+                        comboBoxSource.getItems().add(g.noeuds.get(i));
+                    }
+                    
+                    // Noeud destinataire
+                    Text textDestinataire = new Text("Noeud destinataire - ");
+                    ComboBox comboBoxDestinataire = new ComboBox();
+                    for (int i = 0 ; i < g.noeuds.size() ; i++) {
+                        comboBoxDestinataire.getItems().add(g.noeuds.get(i));
+                    }
+                    
+                    // Nombre de transition
+                    Text textTransition = new Text("Nombre de transition - ");
+                    TextField inputTransition = new TextField("1");
+                    
+                    // Button calcul
+                    Button btCalcul = new Button("Calculer");
+                    btCalcul.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent e) {
+                            
+                            Noeud nSource, nDestinataire;
+                            
+                            int nbTransition = 0;
+                            
+                            System.out.println("Pass");
+                            // Verification validiter nombre de transition
+                            try {
+                                
+                                nbTransition = Integer.parseInt(inputTransition.getText());
+                                inputTransition.setStyle("-fx-border-color: black;");
+                                if (nbTransition < 1) {
+                                    inputTransition.setStyle("-fx-border-color: red;");
+                                    nbTransition = 0;
+                                }
+                            } catch (NumberFormatException erreur) {
+                                inputTransition.setStyle("-fx-border-color: red;");
+                                nbTransition = 0;
+                            }
+                            
+                            // Verification noeud source
+                            if (nbTransition != 0) {
+                                nSource = (NoeudGrapheProbabiliste) comboBoxSource.getValue();
+                                nDestinataire = (NoeudGrapheProbabiliste) comboBoxDestinataire.getValue();
+                                
+                                resultat.setText("La probabilité d'atteindre le noeud " + nDestinataire.nom
+                                                 + " depuis le noeud " + nSource.nom + " en " + nbTransition + " transition(s) est de "
+                                                 + g.probaEntreNoeudEnNTransition(nSource, nDestinataire, nbTransition));
+                            }
+                        }
+                    });
+                    
+                    // Ajout dans la grid pane
+                    gridPane.add(textSource, 0, 0);
+                    gridPane.add(comboBoxSource, 1, 0);
+                    gridPane.add(textDestinataire, 0, 1);
+                    gridPane.add(comboBoxDestinataire, 1, 1);
+                    gridPane.add(textTransition, 0, 2);
+                    gridPane.add(inputTransition, 1, 2);
+                    gridPane.add(btCalcul, 1, 3);
+                    gridPane.add(resultat, 0, 4);
+                    gridPane.setColumnSpan(resultat,2);
+                    gridPane.setAlignment(Pos.CENTER);
+                    gridPane.setHgap(10);
+                    gridPane.setVgap(10);
+                    pane.getChildren().add(gridPane);
+                    popUp.setScene(new Scene(pane, 600, 400));
+                    popUp.showAndWait();
                 }
             }
         );
@@ -220,7 +310,7 @@ public class GrapheProbabiliste extends Graphe {
             
             somme += n.successeurs.get(noLien).coefficient;
         }
-        if (somme != 1) {
+        if (Math.abs(somme - 1) >= 10e-10) {
             n.c.setStroke(Color.RED);
             return false;
         }
@@ -525,7 +615,6 @@ public class GrapheProbabiliste extends Graphe {
         for (int noErgo = 0 ; noErgo < noeudsTransitoires.size() ; noErgo++) {
             noeudsOrdones.add(noeudsTransitoires.get(noErgo));
         }
-        System.out.println("n" + noeudsOrdones);
         // Ajout des valeurs dans la matrice
         for (int x = 0 ; x < noeudsOrdones.size() ; x++) {
             
@@ -567,7 +656,6 @@ public class GrapheProbabiliste extends Graphe {
             }
             m += "]\n";
         }
-        System.out.println("m = " + m);
         return m;
     }
     
@@ -600,9 +688,7 @@ public class GrapheProbabiliste extends Graphe {
                 for (int k=0 ; k < m1.length ; k++) { 
                     resultat[i][j] += m1[i][k] * m2[k][j];    
                 }
-                System.out.print(resultat[i][j]+" "); 
             }
-            System.out.println();
         }  
         return resultat;
     }
@@ -622,18 +708,28 @@ public class GrapheProbabiliste extends Graphe {
             resultat = multiplicationMatrice(resultat, m);
             exp--;
         }
+        
+//        Affichage dans la console
+//        for (int i=0 ; i < m.length ; i++){
+//            
+//            for (int j=0 ; j < m.length ; j++){ 
+//                System.out.print(" " + resultat[i][j]);
+//            }
+//            System.out.println("");
+//        }
         return resultat ;
     }
     
     public double probaEntreNoeudEnNTransition(Noeud source, Noeud destinataire, int nbTransition) {
         
-        // Matrice de transition du graphe
-        double[][] matrice = matriceTransitoireCanonique();
+        regroupementEtat(regroupementClasse());  
         
         int ligne   = 0 ;   // Ligne du noeud source dans la matrice de transition
         int colonne = 0 ;   // Ligne du noeud destinataire dans la matrice de transition
         
-        regroupementEtat(regroupementClasse());
+        // Matrice de transition du graphe
+        double[][] matrice = matriceTransitoireCanonique();
+        
         matrice = exposantMatrice(matrice, nbTransition);
         
         // Recherche de source dans la matrice
@@ -652,4 +748,46 @@ public class GrapheProbabiliste extends Graphe {
         
         return matrice[ligne][colonne];
     }
+
+    public ArrayList<Noeud> getNoeudsFinales() {
+        return noeudsFinales;
+    }
+
+    public void setNoeudsFinales(ArrayList<Noeud> noeudsFinales) {
+        this.noeudsFinales = noeudsFinales;
+    }
+
+    public ArrayList<Noeud> getNoeudsTransitoires() {
+        return noeudsTransitoires;
+    }
+
+    public void setNoeudsTransitoires(ArrayList<Noeud> noeudsTransitoires) {
+        this.noeudsTransitoires = noeudsTransitoires;
+    }
+
+    public ArrayList<Noeud> getNoeudsOrdones() {
+        return noeudsOrdones;
+    }
+
+    public void setNoeudsOrdones(ArrayList<Noeud> noeudsOrdones) {
+        this.noeudsOrdones = noeudsOrdones;
+    }
+
+    public ArrayList<Noeud> getNoeuds() {
+        return noeuds;
+    }
+
+    public void setNoeuds(ArrayList<Noeud> noeuds) {
+        this.noeuds = noeuds;
+    }
+
+    public ArrayList<Lien> getLiens() {
+        return liens;
+    }
+
+    public void setLiens(ArrayList<Lien> liens) {
+        this.liens = liens;
+    }
+    
+    
 }

@@ -5,6 +5,7 @@
  */
 package conceptionV2;
 
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
@@ -185,7 +186,79 @@ public class ArcProbabiliste extends Lien {
         valeur.setFont(new Font(12));     
         zoneDessin.getChildren().add(valeur);
     }
+
+    public double getCoefficient() {
+        return coefficient;
+    }
+
+    public void setCoefficient(double coefficient) {
+        this.coefficient = coefficient;
+    }
+
+    public TextField getValeur() {
+        return valeur;
+    }
+
+    public void setValeur(TextField valeur) {
+        this.valeur = valeur;
+    }
+
+    public Line getArrow1() {
+        return arrow1;
+    }
+
+    public void setArrow1(Line arrow1) {
+        this.arrow1 = arrow1;
+    }
+
+    public Line getArrow2() {
+        return arrow2;
+    }
+
+    public void setArrow2(Line arrow2) {
+        this.arrow2 = arrow2;
+    }
+
+    public QuadCurve getQuadCurve() {
+        return quadCurve;
+    }
+
+    public void setQuadCurve(QuadCurve quadCurve) {
+        this.quadCurve = quadCurve;
+    }
+
+    public Noeud getSource() {
+        return source;
+    }
+
+    public void setSource(Noeud source) {
+        this.source = source;
+    }
+
+    public Noeud getDestinataire() {
+        return destinataire;
+    }
+
+    public void setDestinataire(Noeud destinataire) {
+        this.destinataire = destinataire;
+    }
     
+    /**
+     * Predicat verifiant si le point (x, y) est sur le lien)
+     * @param x Abscisse du point a tester
+     * @param y Ordonnee du point a tester
+     * @return Le lien s'il existe un lien sur la position (x, y), false sinon
+     */
+    @Override
+    public boolean estClique(double x, double y) {
+        return false;
+    }
     
-    
+    /**
+     * Augmente l'epaisseur du lien
+     */
+    public void lienSelectionne() {
+        
+        
+    }
 }

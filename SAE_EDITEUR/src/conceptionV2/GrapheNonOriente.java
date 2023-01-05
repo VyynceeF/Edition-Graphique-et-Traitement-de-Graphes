@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package conceptionV2;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  *
  * @author amine.daamouch
@@ -41,4 +45,22 @@ public class GrapheNonOriente extends Graphe {
         liens.add(l);
         return l;
     }
+
+    public ArrayList<Noeud> getNoeuds() {
+        return noeuds;
+    }
+
+    public void setNoeuds(ArrayList<Noeud> noeuds) {
+        this.noeuds = noeuds;
+    }
+
+    public ArrayList<Lien> getLiens() {
+        return liens;
+    }
+
+    public void setLiens(ArrayList<Lien> liens) {
+        this.liens = liens;
+    }
+    
+    
 }

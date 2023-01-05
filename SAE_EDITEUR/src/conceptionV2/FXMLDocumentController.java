@@ -5,6 +5,7 @@
  */
 package conceptionV2;
 
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -24,6 +25,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 /**
  *
@@ -113,6 +117,11 @@ public class FXMLDocumentController implements Initializable {
         // récupere Position du clique sur la zone de dessin
         double x = event.getX();
         double y = event.getY();
+        
+        /* Deselectionner de tous les elements */
+        graphe.deselectionnerAll();
+        
+        /* Execution de l'action en fonction de la selection */
         // l'action du noeudCliquer
         if (selection == 1) {
 
@@ -122,13 +131,21 @@ public class FXMLDocumentController implements Initializable {
                 
                 graphe.ajouterNoeud(n);         
                 n.dessiner(zoneDessin);
-            }catch(NoeudException e){
-                System.out.println(e.getMessage());
+            } catch (NoeudException e) {
             }
-        }else if (selection == 3 ){
-            if(graphe instanceof GrapheProbabiliste){
-                GrapheProbabiliste g = (GrapheProbabiliste) graphe;
+        } else if (selection == 3) {
+            
+            // Cas - Clic sur noeud
+            if (graphe.estNoeud(x, y) != null) {
+                
+                graphe.noeudSelectionne(graphe.estNoeud(x, y));
             }
+            // Cas - Clic sur Lien
+            if (graphe.estLien(x, y) != null) {
+                
+                graphe.lienSelectionne(graphe.estLien(x, y));
+            }
+            
         }
     }  
 
@@ -238,6 +255,12 @@ public class FXMLDocumentController implements Initializable {
             zoneDessin.setCursor(Cursor.E_RESIZE);
             scrollpane.setPannable(true);
         }
+    }
+
+    @FXML
+    private void enregistrerGraphe(ActionEvent event) {
+        
+        graphe.enregistrer();
     }
 
 
