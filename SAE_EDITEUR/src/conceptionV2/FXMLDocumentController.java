@@ -13,6 +13,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -118,34 +120,46 @@ public class FXMLDocumentController implements Initializable {
         double x = event.getX();
         double y = event.getY();
         
-        /* Deselectionner de tous les elements */
-        graphe.deselectionnerAll();
-        
-        /* Execution de l'action en fonction de la selection */
-        // l'action du noeudCliquer
-        if (selection == 1) {
+        // Verifie qu'un graphe est ouvert ou cree
+        if (graphe != null) {
+            
+            /* Deselectionner de tous les elements */
+            graphe.deselectionnerAll();
 
-            try{
-                graphe.estNoeudValide(x, y);
-                Noeud n = factory.creerNoeud(x, y);
-                
-                graphe.ajouterNoeud(n);         
-                n.dessiner(zoneDessin);
-            } catch (NoeudException e) {
+            /* Execution de l'action en fonction de la selection */
+            // l'action du noeudCliquer
+            if (selection == 1) {
+
+                try{
+                    graphe.estNoeudValide(x, y);
+                    Noeud n = factory.creerNoeud(x, y);
+
+                    graphe.ajouterNoeud(n);         
+                    n.dessiner(zoneDessin);
+                } catch (NoeudException e) {
+                }
+            } else if (selection == 3) {
+
+                // Cas - Clic sur noeud
+                if (graphe.estNoeud(x, y) != null) {
+
+                    graphe.noeudSelectionne(graphe.estNoeud(x, y));
+                }
+                // Cas - Clic sur Lien
+                if (graphe.estLien(x, y) != null) {
+
+                    graphe.lienSelectionne(graphe.estLien(x, y));
+                }
+
             }
-        } else if (selection == 3) {
-            
-            // Cas - Clic sur noeud
-            if (graphe.estNoeud(x, y) != null) {
-                
-                graphe.noeudSelectionne(graphe.estNoeud(x, y));
-            }
-            // Cas - Clic sur Lien
-            if (graphe.estLien(x, y) != null) {
-                
-                graphe.lienSelectionne(graphe.estLien(x, y));
-            }
-            
+        } else {
+            // Affichage alerte aucun graphe selectionne
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Attention");
+            alert.setHeaderText("Aucun graphe sélectionné");
+            alert.setContentText("Veuillez créer ou ouvrir un graphe avant de créer un noeud.");
+
+            alert.showAndWait();
         }
     }  
 
@@ -199,32 +213,44 @@ public class FXMLDocumentController implements Initializable {
         double xPrimeSource;
         double yPrimeSource;
         double distance;
-        if (selection == 2) {
-            double x, y; // Position souris
+        
+        // Verifie qu'un graphe est ouvert ou cree
+        if (graphe != null) {
+            if (selection == 2) {
+                double x, y; // Position souris
 
-            // Récupérer position souris en évitant de déborder de la zone de dessin
-            x = event.getX();
-            y = event.getY();
-            
-            // Créer une nouvelle enveloppe ou modifier l'enveloppe en cours
-            if (lineMouseDrag == null && graphe.estNoeud(x, y) != null) {
-                
-                // 1er point cliqué : il faut créer une nouvelle enveloppe
-                premierNoeud = graphe.estNoeud(x, y);
-                lineMouseDrag = new Line(x, y, x, y);
-                zoneDessin.getChildren().add(lineMouseDrag);
-            } else if (lineMouseDrag != null && premierNoeud != null) {    
-                
-                // Récupérer 2ème point et dessiner l'enveloppe
-                distance = Math.sqrt(Math.pow(premierNoeud.position.x - x, 2) + Math.pow(premierNoeud.position.y - y, 2));
-                xPrimeSource = premierNoeud.position.x + (x - premierNoeud.position.x) / distance * Noeud.RAYON;
-                yPrimeSource = premierNoeud.position.y + (y - premierNoeud.position.y) / distance * Noeud.RAYON;
-                lineMouseDrag.setStartX(xPrimeSource);
-                lineMouseDrag.setStartY(yPrimeSource);
-                lineMouseDrag.setEndX(x);
-                lineMouseDrag.setEndY(y);
+                // Récupérer position souris en évitant de déborder de la zone de dessin
+                x = event.getX();
+                y = event.getY();
+
+                // Créer une nouvelle enveloppe ou modifier l'enveloppe en cours
+                if (lineMouseDrag == null && graphe.estNoeud(x, y) != null) {
+
+                    // 1er point cliqué : il faut créer une nouvelle enveloppe
+                    premierNoeud = graphe.estNoeud(x, y);
+                    lineMouseDrag = new Line(x, y, x, y);
+                    zoneDessin.getChildren().add(lineMouseDrag);
+                } else if (lineMouseDrag != null && premierNoeud != null) {    
+
+                    // Récupérer 2ème point et dessiner l'enveloppe
+                    distance = Math.sqrt(Math.pow(premierNoeud.position.x - x, 2) + Math.pow(premierNoeud.position.y - y, 2));
+                    xPrimeSource = premierNoeud.position.x + (x - premierNoeud.position.x) / distance * Noeud.RAYON;
+                    yPrimeSource = premierNoeud.position.y + (y - premierNoeud.position.y) / distance * Noeud.RAYON;
+                    lineMouseDrag.setStartX(xPrimeSource);
+                    lineMouseDrag.setStartY(yPrimeSource);
+                    lineMouseDrag.setEndX(x);
+                    lineMouseDrag.setEndY(y);
+                }
+
             }
-            
+        } else {
+            // Affichage alerte aucun graphe selectionne
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Attention");
+            alert.setHeaderText("Aucun graphe sélectionné");
+            alert.setContentText("Veuillez créer ou ouvrir un graphe avant de créer un noeud.");
+
+            alert.showAndWait();
         }
     }
 
