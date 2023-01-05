@@ -19,6 +19,9 @@ public class Point {
     /** l'axe des ordonées */ 
     public double y;
 
+    public Point() {
+    }
+
     
     /** Initialise les coordonnées du Point  */
     public Point(double x, double y) {

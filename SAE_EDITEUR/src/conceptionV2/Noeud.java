@@ -37,6 +37,9 @@ public abstract class Noeud {
     
     /** Rayon du cercle représentant le noeud */
     public static final double RAYON = 50; 
+
+    public Noeud() {
+    }
     
     /** Début de l'appelation du Noeud */
     public final static String NOM = "N" ;

@@ -248,7 +248,7 @@ public class FXMLDocumentController implements Initializable {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Attention");
             alert.setHeaderText("Aucun graphe sélectionné");
-            alert.setContentText("Veuillez créer ou ouvrir un graphe avant de créer un noeud.");
+            alert.setContentText("Veuillez créer ou ouvrir un graphe avant toutes actions.");
 
             alert.showAndWait();
         }
@@ -286,9 +286,20 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void enregistrerGraphe(ActionEvent event) {
         
-        graphe.enregistrer();
-    }
+        // Verifie qu'un graphe est ouvert ou cree
+        if (graphe != null) {
+            graphe.enregistrer();
+        } else {
+            // Affichage alerte aucun graphe selectionne
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Attention");
+            alert.setHeaderText("Aucun graphe sélectionné");
+            alert.setContentText("Veuillez créer ou ouvrir un graphe avant toutes actions.");
 
+            alert.showAndWait();
+        }
+
+    }
 
 }
    
