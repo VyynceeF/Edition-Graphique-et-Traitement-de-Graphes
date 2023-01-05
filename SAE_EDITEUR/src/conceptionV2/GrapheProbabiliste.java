@@ -266,26 +266,22 @@ public class GrapheProbabiliste extends Graphe {
                 // Resultat
                 Text resultat = new Text();
                 
-                //Recuperation du nombre d'etat du graphe
-                int nbEtat = g.regroupementClasse().size();
+                //Recuperation du nombre de noeuds du graphe
+                int nbNoeuds = g.noeuds.size();
                 
-                //Tableau contenant tous les textfield pour les etats
-                TextField[] tabField = new TextField[nbEtat];
-                Text textEtat = new Text("Entrer une probabilité pour chaque Etat -");
-                for (int i = 0 ; i <  nbEtat ; i++) {
-                    Text etat = new Text();
-                    etat.setText(g.regroupementClasse().get(i).toString());
-                    gridPane.add(etat,1,i);
-                    etat.setId("etat" + i);
+                //Tableau contenant tous les textfield pour les noeuds
+                TextField[] tabField = new TextField[nbNoeuds];
+                Text textNoeuds = new Text("Entrer une probabilité pour chaque Noeuds -");
+                for (int i = 0 ; i <  nbNoeuds ; i++) {
+                    Text noeuds = new Text();
+                    noeuds.setText(g.noeuds.get(i).toString());
+                    gridPane.add(noeuds,1,i);
+                    noeuds.setId("noeuds" + i);
                     TextField Field = new TextField("1");
                     gridPane.add(Field,2,i);
-                    tabField[i] = Field; // Ajout u textField de l'etat i dans le tableau
+                    tabField[i] = Field; // Ajout textField du noeuds i dans le tableau
                     Field.setId("Field" + i);
                 }
-                
-                //Probabilité pour l'Etat selectionner
-                Text textProbEtat = new Text("Probabilité pour l'état selectionner - ");
-                TextField inputEtat = new TextField("1");
                 
                 // Nombre de transition
                 Text textTransition = new Text("Nombre de transition - ");
@@ -314,10 +310,10 @@ public class GrapheProbabiliste extends Graphe {
                             nbTransition = 0;
                         }
                         
-                        //recuperation des proba pour chaque état
-                        boolean tabErr = true; //True si pas d'erreur de probabilité des états sinon false
+                        //recuperation des proba pour chaque noeud
+                        boolean tabErr = true; //True si pas d'erreur de probabilité des noeuds sinon false
                         
-                        double[][] vecteurInitial = new double[1][nbEtat];
+                        double[][] vecteurInitial = new double[1][nbNoeuds];
                         for(int i = 0; i < tabField.length; i++){
                             //Verifie les probabilitées et ajoute au tableau les valeurs
                             try{
@@ -333,19 +329,19 @@ public class GrapheProbabiliste extends Graphe {
                         }
                         
                         if(nbTransition != 0 && tabErr){
-                            resultat.setText("Le vecteur de probabilité qui représente les probabilité d'etre sur chaque état apres N transition : " 
-                                            /*+ g.loiDeProbabiliteeEnNTransition(vecteurInitial,nbTransition)*/);
+                            resultat.setText("Le vecteur de probabilité qui représente les probabilité d'etre sur chaque sommet apres " + nbTransition + " transition : " 
+                                            + g.loiDeProbabiliteeEnNTransition(vecteurInitial,nbTransition));
                         }
                     }
                 });
                 
                 //Ajout dans le grid pane
-                gridPane.add(textEtat,0,0);
-                gridPane.add(textTransition,1,nbEtat);
-                gridPane.add(inputTransition,2,nbEtat);
-                gridPane.add(btCalcul, 2, nbEtat + 1);
+                gridPane.add(textNoeuds,0,0);
+                gridPane.add(textTransition,1,nbNoeuds);
+                gridPane.add(inputTransition,2,nbNoeuds);
+                gridPane.add(btCalcul, 2, nbNoeuds + 1);
                 gridPane.setColumnSpan(btCalcul,3);
-                gridPane.add(resultat, 0, nbEtat + 2);
+                gridPane.add(resultat, 0, nbNoeuds + 2);
                 gridPane.setColumnSpan(resultat,3);
                 gridPane.setAlignment(Pos.CENTER);
                 gridPane.setHgap(10);
@@ -776,20 +772,25 @@ public class GrapheProbabiliste extends Graphe {
     }
     
     /**
-     * Multiplie la matrice carree m par elle meme
-     * @param m Matrice a multiplier
-     * @return La multiplication de la matrice m par elle meme
+     * Multiplie la matrice carree m1 avec m2
+     * @param m1 Matrice a multiplier
+     * @param m2 Matrice a multiplier
+     * @return La multiplication de la matrice m1 par m2
      */
     public static double[][] multiplicationMatrice(double[][] m1, double[][] m2){
         
+        if(m1[0].length != m2.length){
+            throw new IllegalArgumentException("Multiplication impossible !");
+        }
+        
         // Créer une matrice pour stocker la multiplication
-        double resultat[][] = new double[m1.length][m1.length];  
+        double resultat[][] = new double[m1.length][m2.length];  
         
         // Multiplication
-        for (int i=0 ; i < m1.length ; i++){
-            for (int j=0 ; j < m1.length ; j++){ 
+        for (int i=0 ; i < m1.length ; i++){ //ligne matrice m1
+            for (int j=0 ; j < m2.length ; j++){ //ligne matrice m2
                 resultat[i][j] = 0;    
-                for (int k=0 ; k < m1.length ; k++) { 
+                for (int k=0 ; k < m2.length ; k++) { //colonne
                     resultat[i][j] += m1[i][k] * m2[k][j];    
                 }
             }
@@ -864,7 +865,7 @@ public class GrapheProbabiliste extends Graphe {
         matrice = exposantMatrice(matrice, nbTransition);
  
             //Mutiplier le vecteur de probabilité par la matrice de transition exposant N
-        double[][] resultat =  multiplicationMatrice(matrice, vecteur);
+        double[][] resultat =  multiplicationMatrice(vecteur, matrice);
             
         //Retourner le resultat
         return resultat;
