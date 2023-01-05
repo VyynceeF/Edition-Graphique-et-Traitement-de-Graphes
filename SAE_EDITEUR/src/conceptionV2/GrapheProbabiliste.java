@@ -329,8 +329,8 @@ public class GrapheProbabiliste extends Graphe {
                         }
                         
                         if(nbTransition != 0 && tabErr){
-                            resultat.setText("Le vecteur de probabilité qui représente les probabilité d'etre sur chaque sommet apres " + nbTransition + " transition : " 
-                                            + g.loiDeProbabiliteeEnNTransition(vecteurInitial,nbTransition));
+                            resultat.setText("Le vecteur de probabilité qui représente les probabilité d'etre sur chaque sommet apres " + nbTransition + " transition :\n" 
+                                            + afficheMatrice(g.loiDeProbabiliteeEnNTransition(vecteurInitial,nbTransition)));
                         }
                     }
                 });
@@ -347,7 +347,7 @@ public class GrapheProbabiliste extends Graphe {
                 gridPane.setHgap(10);
                 gridPane.setVgap(10);
                 pane.getChildren().add(gridPane);
-                popUp.setScene(new Scene(pane, 700, 500));
+                popUp.setScene(new Scene(pane, 800, 600));
                 popUp.showAndWait();
                 
             }
@@ -813,6 +813,7 @@ public class GrapheProbabiliste extends Graphe {
             resultat = multiplicationMatrice(resultat, m);
             exp--;
         }
+        System.out.println(afficheMatrice(resultat));
         
 //        Affichage dans la console
 //        for (int i=0 ; i < m.length ; i++){
@@ -868,6 +869,34 @@ public class GrapheProbabiliste extends Graphe {
         double[][] resultat =  multiplicationMatrice(vecteur, matrice);
             
         //Retourner le resultat
+        return resultat;
+    }
+    
+    /**
+     * Affiche une matrice
+     * @param matrice
+     * @return matrice
+     */
+    public static String afficheMatrice(double[][] matrice){
+        String resultat = "";
+        String espaces = "";
+        int taille;
+        double number;
+        
+        for(int i = 0; i < matrice.length; i++){ //Ligne
+            for(int j = 0; j < matrice[i].length; j++){ //Colonne
+                number = Math.round(matrice[i][j]*1000.0)/1000.0;
+                taille = String.valueOf(number).length();
+                taille = 8 - taille;
+                espaces = "";
+                for(int k = 0; k < taille; k++){
+                    espaces += " ";
+                }
+                resultat += number + espaces;
+            }
+            resultat += "\n";
+        }
+        
         return resultat;
     }
 
