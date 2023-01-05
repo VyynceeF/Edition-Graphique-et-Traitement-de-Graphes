@@ -254,6 +254,110 @@ public class GrapheProbabiliste extends Graphe {
         );
         
         MenuItem itemProbaTransition = new MenuItem("Loi de probabilité atteinte après un nombre de transition(s) donné");
+        itemProbaTransition.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                
+                Stage popUp = new Stage();
+                popUp.initModality(Modality.APPLICATION_MODAL);
+                StackPane pane = new StackPane();
+                GridPane gridPane = new GridPane();
+                
+                // Resultat
+                Text resultat = new Text();
+                
+                //Recuperation du nombre d'etat du graphe
+                int nbEtat = g.regroupementClasse().size();
+                
+                //Tableau contenant tous les textfield pour les etats
+                TextField[] tabField = new TextField[nbEtat];
+                Text textEtat = new Text("Entrer une probabilité pour chaque Etat -");
+                for (int i = 0 ; i <  nbEtat ; i++) {
+                    Text etat = new Text();
+                    etat.setText(g.regroupementClasse().get(i).toString());
+                    gridPane.add(etat,1,i);
+                    etat.setId("etat" + i);
+                    TextField Field = new TextField("1");
+                    gridPane.add(Field,2,i);
+                    tabField[i] = Field; // Ajout u textField de l'etat i dans le tableau
+                    Field.setId("Field" + i);
+                }
+                
+                //Probabilité pour l'Etat selectionner
+                Text textProbEtat = new Text("Probabilité pour l'état selectionner - ");
+                TextField inputEtat = new TextField("1");
+                
+                // Nombre de transition
+                Text textTransition = new Text("Nombre de transition - ");
+                TextField inputTransition = new TextField("1");
+                
+                // Button calcul
+                Button btCalcul = new Button("Calculer");
+                btCalcul.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        
+                        //Recuperation du nombre de transition entrer
+                        int nbTransition = 0;
+                        
+                         // Verification validiter nombre de transition
+                        try {
+                                
+                            nbTransition = Integer.parseInt(inputTransition.getText());
+                            inputTransition.setStyle("-fx-border-color: black;");
+                            if (nbTransition < 1) {
+                                inputTransition.setStyle("-fx-border-color: red;");
+                                nbTransition = 0;
+                            }
+                        } catch (NumberFormatException erreur) {
+                            inputTransition.setStyle("-fx-border-color: red;");
+                            nbTransition = 0;
+                        }
+                        
+                        //recuperation des proba pour chaque état
+                        boolean tabErr = true; //True si pas d'erreur de probabilité des états sinon false
+                        
+                        double[][] vecteurInitial = new double[1][nbEtat];
+                        for(int i = 0; i < tabField.length; i++){
+                            //Verifie les probabilitées et ajoute au tableau les valeurs
+                            try{
+                                vecteurInitial[0][i] = Double.parseDouble(tabField[i].getText());
+                                tabField[i].setStyle("-fx-border-color: black;");
+                                if(vecteurInitial[0][i] < 0 || vecteurInitial[0][i] > 1){
+                                    tabField[i].setStyle("-fx-border-color: red;");
+                                    tabErr = false;
+                                }
+                            } catch (NumberFormatException erreur) {
+                               tabField[i].setStyle("-fx-border-color: red;");
+                            }
+                        }
+                        
+                        if(nbTransition != 0 && tabErr){
+                            resultat.setText("Le vecteur de probabilité qui représente les probabilité d'etre sur chaque état apres N transition : " 
+                                            /*+ g.loiDeProbabiliteeEnNTransition(vecteurInitial,nbTransition)*/);
+                        }
+                    }
+                });
+                
+                //Ajout dans le grid pane
+                gridPane.add(textEtat,0,0);
+                gridPane.add(textTransition,1,nbEtat);
+                gridPane.add(inputTransition,2,nbEtat);
+                gridPane.add(btCalcul, 2, nbEtat + 1);
+                gridPane.setColumnSpan(btCalcul,3);
+                gridPane.add(resultat, 0, nbEtat + 2);
+                gridPane.setColumnSpan(resultat,3);
+                gridPane.setAlignment(Pos.CENTER);
+                gridPane.setHgap(10);
+                gridPane.setVgap(10);
+                pane.getChildren().add(gridPane);
+                popUp.setScene(new Scene(pane, 700, 500));
+                popUp.showAndWait();
+                
+            }
+        });
+        
+        
         itemInterpretation.getItems().addAll(itemProbaSommetASommet, itemProbaTransition);
         
         // Ajout des menus de edition
@@ -747,6 +851,23 @@ public class GrapheProbabiliste extends Graphe {
         }
         
         return matrice[ligne][colonne];
+    }
+    
+    /**
+     * 
+     */
+    public double[][] loiDeProbabiliteeEnNTransition(double[][] vecteur, int nbTransition){
+
+        //Calcul de la loi de probabiliuté
+            //Matrice de Transition exposant N
+        double[][] matrice = matriceTransitoireCanonique();     
+        matrice = exposantMatrice(matrice, nbTransition);
+ 
+            //Mutiplier le vecteur de probabilité par la matrice de transition exposant N
+        double[][] resultat =  multiplicationMatrice(matrice, vecteur);
+            
+        //Retourner le resultat
+        return resultat;
     }
 
     public ArrayList<Noeud> getNoeudsFinales() {
