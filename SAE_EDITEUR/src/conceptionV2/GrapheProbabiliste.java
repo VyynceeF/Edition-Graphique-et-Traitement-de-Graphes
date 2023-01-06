@@ -313,6 +313,8 @@ public class GrapheProbabiliste extends Graphe {
                         //recuperation des proba pour chaque noeud
                         boolean tabErr = true; //True si pas d'erreur de probabilité des noeuds sinon false
                         
+                        double sommeProba = 0.0; //Somme des proba du vecteur initial
+                        
                         double[][] vecteurInitial = new double[1][nbNoeuds];
                         for(int i = 0; i < tabField.length; i++){
                             //Verifie les probabilitées et ajoute au tableau les valeurs
@@ -323,14 +325,33 @@ public class GrapheProbabiliste extends Graphe {
                                     tabField[i].setStyle("-fx-border-color: red;");
                                     tabErr = false;
                                 }
+                                sommeProba += vecteurInitial[0][i];
                             } catch (NumberFormatException erreur) {
                                tabField[i].setStyle("-fx-border-color: red;");
                             }
                         }
                         
+                        //Verifie que la somme des proba du vecteur initial est égal à 1.0
+                        if(Math.abs(sommeProba - 1) >= 10e-10){
+                            tabErr = false;
+                            resultat.setText("Erreur ! La somme des probabilité du vecteur initial n'est pas égal à 1.0");
+                            resultat.setFill(Color.RED);
+                        }
+                        
                         if(nbTransition != 0 && tabErr){
-                            resultat.setText("Le vecteur de probabilité qui représente les probabilité d'etre sur chaque sommet apres " + nbTransition + " transition :\n" 
-                                            + afficheMatrice(g.loiDeProbabiliteeEnNTransition(vecteurInitial,nbTransition)));
+                            double[][] tabVecteur = g.loiDeProbabiliteeEnNTransition(vecteurInitial,nbTransition);
+                            String afficher = "";
+                            double number;
+                            //Mise en forme pour l'affichage
+                            for(int i = 0; i < g.noeuds.size(); i++){ 
+                                number = Math.round(tabVecteur[0][i] * 1000.0) / 1000.0; //Arrondir le double
+                                afficher += g.noeuds.get(i).nom + " -> " + number + "\n";
+                            }
+                            
+                            //Affichage
+                            resultat.setText("Le vecteur de probabilité qui représente les probabilité d'etre sur chaque sommet apres " + nbTransition + " transitions :\n\n" 
+                                            + afficher);
+                            resultat.setFill(Color.BLACK);
                         }
                     }
                 });
@@ -813,16 +834,6 @@ public class GrapheProbabiliste extends Graphe {
             resultat = multiplicationMatrice(resultat, m);
             exp--;
         }
-        System.out.println(afficheMatrice(resultat));
-        
-//        Affichage dans la console
-//        for (int i=0 ; i < m.length ; i++){
-//            
-//            for (int j=0 ; j < m.length ; j++){ 
-//                System.out.print(" " + resultat[i][j]);
-//            }
-//            System.out.println("");
-//        }
         return resultat ;
     }
     
@@ -859,6 +870,8 @@ public class GrapheProbabiliste extends Graphe {
      * 
      */
     public double[][] loiDeProbabiliteeEnNTransition(double[][] vecteur, int nbTransition){
+        
+        regroupementEtat(regroupementClasse());
 
         //Calcul de la loi de probabiliuté
             //Matrice de Transition exposant N
@@ -879,7 +892,7 @@ public class GrapheProbabiliste extends Graphe {
      */
     public static String afficheMatrice(double[][] matrice){
         String resultat = "";
-        String espaces = "";
+        String espaces;
         int taille;
         double number;
         
