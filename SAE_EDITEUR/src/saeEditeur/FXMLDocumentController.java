@@ -87,6 +87,11 @@ public class FXMLDocumentController implements Initializable {
     private MenuBar navbar;
     
     private Menu menuEdition = null;
+    
+    /**
+     * Anciennes coordonnées d'un éléments du graphe (lors du déplacement)
+     */
+    private double xAncien, yAncien;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -155,11 +160,15 @@ public class FXMLDocumentController implements Initializable {
                 // Cas - Clic sur noeud
                 if (graphe.estNoeud(x, y) != null) {
 
+                    scrollpane.setPannable(false);
                     graphe.noeudSelectionne(graphe.estNoeud(x, y));
+                    xAncien = graphe.noeudSelectionne.position.x;
+                    yAncien = graphe.noeudSelectionne.position.y;
                 }
                 // Cas - Clic sur Lien
-                if (graphe.estLien(x, y) != null) {
+                if (graphe.estLien(x, y) != null && graphe.noeudSelectionne == null) {
 
+                    scrollpane.setPannable(false);
                     graphe.lienSelectionne(graphe.estLien(x, y));
                 }
 
@@ -215,9 +224,6 @@ public class FXMLDocumentController implements Initializable {
         textSelection.setStyle("-fx-font-weight: bold");
         scrollpane.setPannable(true);
     }
-
-    
-       
     
     @FXML
     private void zoneDessinMouseDragged(MouseEvent event) {
@@ -254,6 +260,20 @@ public class FXMLDocumentController implements Initializable {
                     lineMouseDrag.setEndY(y);
                 }
 
+            } else if (selection == 3) {
+                
+                double x, y; // Position souris
+
+                // Récupérer position souris en évitant de déborder de la zone de dessin
+                x = event.getX();
+                y = event.getY();
+
+                // Créer une nouvelle enveloppe ou modifier l'enveloppe en cours
+                if (graphe.noeudSelectionne != null) {
+
+                    // 1er point cliqué : il faut créer une nouvelle enveloppe
+                    graphe.noeudSelectionne.modifierPosition(x, y, zoneDessin);
+                }
             }
         } else {
             // Affichage alerte aucun graphe selectionne
@@ -284,7 +304,24 @@ public class FXMLDocumentController implements Initializable {
             }
             zoneDessin.getChildren().remove(lineMouseDrag);
             lineMouseDrag = null;
-        }
+        } else if (selection == 3 && graphe.noeudSelectionne != null) {
+                
+                double x, y; // Position souris
+
+                // Récupérer position souris en évitant de déborder de la zone de dessin
+                x = event.getX();
+                y = event.getY();
+
+                if (graphe.noeudSelectionne != null) {
+                    // Si la position du noeud est invalide 
+                    // Alors on le remet sur son ancienne position
+                    if (!graphe.estNoeudValideApresDeplacement(x, y, graphe.noeudSelectionne)) {
+                        
+                        graphe.noeudSelectionne.modifierPosition(xAncien, yAncien, zoneDessin);
+                        graphe.noeudSelectionne.noeudSelectionne();
+                    }
+                }
+            }
     }
 
     @FXML

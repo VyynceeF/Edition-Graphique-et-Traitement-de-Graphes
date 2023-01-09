@@ -83,9 +83,10 @@ public class GrapheProbabiliste extends Graphe {
             throw new LienException("impossible de créer un arcs probabiliste");
         }
         
+        l.source.successeurs.add(l);
+        l.destinataire.successeurs.add(l);
         liens.add(l);
         NoeudGrapheProbabiliste noeudSource = (NoeudGrapheProbabiliste)l.source;
-        noeudSource.successeurs.add((ArcProbabiliste) l);
         
         return l; 
     }

@@ -141,6 +141,64 @@ public abstract class Graphe {
     }
     
     /**
+     * Prédicat vérifiant si un noeud peut être créer ou non
+     * @return true ssi la zone du noeud à créer est en dehors de la zone de chaque noeud déjà créer 
+     */
+    public boolean estNoeudValideApresDeplacement(double x, double y, Noeud n) {
+    	
+        ArrayList<Noeud> noeudsTests = (ArrayList<Noeud>) noeuds.clone();
+        noeudsTests.remove(n);
+        
+    	for (int noATester = 0 ; noATester < noeudsTests.size() ; noATester++) {
+    		
+    		// Coin haut droit
+    		if (noeudsTests.get(noATester).position.x - DECALLAGE <= x + DECALLAGE
+                    && x + DECALLAGE <= noeudsTests.get(noATester).position.x + DECALLAGE
+                    && noeudsTests.get(noATester).position.y - DECALLAGE <= y + DECALLAGE
+                    && y + DECALLAGE <= noeudsTests.get(noATester).position.y + DECALLAGE) {
+                    
+                    return false;                    
+    		}
+
+    		// Coin haut gauche
+    		if (noeudsTests.get(noATester).position.x - DECALLAGE <= x - DECALLAGE
+                    && x - DECALLAGE <= noeudsTests.get(noATester).position.x + DECALLAGE
+                    && noeudsTests.get(noATester).position.y - DECALLAGE <= y + DECALLAGE
+                    && y + DECALLAGE <= noeudsTests.get(noATester).position.y + DECALLAGE) {
+
+                    return false;                    
+    		}
+
+    		// Coin bas gauche
+    		if (noeudsTests.get(noATester).position.x - DECALLAGE <= x - DECALLAGE
+                    && x - DECALLAGE <= noeudsTests.get(noATester).position.x + DECALLAGE
+                    && noeudsTests.get(noATester).position.y - DECALLAGE <= y - DECALLAGE
+                    && y - DECALLAGE <= noeudsTests.get(noATester).position.y + DECALLAGE) {
+
+                    return false;                    
+    		}
+
+    		// Coin bas droit
+    		if (noeudsTests.get(noATester).position.x - DECALLAGE <= x + DECALLAGE
+                    && x + DECALLAGE <= noeudsTests.get(noATester).position.x + DECALLAGE
+                    && noeudsTests.get(noATester).position.y - DECALLAGE <= y - DECALLAGE
+                    && y - DECALLAGE <= noeudsTests.get(noATester).position.y + DECALLAGE) {
+
+                    return false;                    
+    		}
+    	}    	
+        
+        if (DECALLAGE > x 
+            || 2000 - DECALLAGE < x
+            ||  DECALLAGE > y
+            || 2000 - DECALLAGE < y) {
+
+            return false;                    
+        }
+        return true;
+    }
+    
+    /**
      * Permet d'enregistrer le graphe dans un fichier
      * @param chemin Chemin et nom du fichier
      */

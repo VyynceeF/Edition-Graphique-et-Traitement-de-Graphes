@@ -18,7 +18,7 @@ public class Arete extends Lien {
     /** Valeur de a et b dans la droite d'equation y = a x + b */
     private double a, b;
     
-    private Line line;
+    private Line line = null;
     
     public Arete(Noeud source , Noeud destinataire){
         super(source,destinataire);
@@ -38,6 +38,10 @@ public class Arete extends Lien {
         double yPrimeDes;
         
         double distance;
+        
+        if (line != null) {
+            zoneDessin.getChildren().remove(line);
+        }
         
         distance = Math.sqrt(Math.pow(destinataire.position.x - source.position.x, 2) + Math.pow(destinataire.position.y - source.position.y, 2));
         xPrimeSource = source.position.x + (destinataire.position.x - source.position.x) / distance * Noeud.RAYON;

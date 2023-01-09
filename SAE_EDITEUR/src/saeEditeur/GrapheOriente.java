@@ -44,8 +44,11 @@ public class GrapheOriente extends Graphe {
            throw new LienException("Impossible de créer un Lien");
         }
         if (l.destinataire == l.source) {
-         
+            throw new LienException("Impossible de créer un Lien");
         }
+        
+        l.source.successeurs.add(l);
+        l.destinataire.successeurs.add(l);
         
         for (Lien aTester : liens) {
             if ((l.destinataire == aTester.destinataire

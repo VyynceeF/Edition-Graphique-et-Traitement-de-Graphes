@@ -35,13 +35,13 @@ public class ArcProbabiliste extends Lien {
     TextField valeur;
     
     /** Extremite de la fleche */
-    private Line arrow1;
+    private Line arrow1 = null;
     
     /** Extremite de la fleche */
-    private Line arrow2;
+    private Line arrow2 = null;
     
     /** Ligne (courbee) de la fleche */
-    private QuadCurve quadCurve;
+    private QuadCurve quadCurve = null;
     
     public ArcProbabiliste(Noeud source , Noeud destinataire){
         super(source,destinataire);
@@ -92,6 +92,14 @@ public class ArcProbabiliste extends Lien {
         double distance;
         double longueurFleche; 
         int multiplicateurPointControl;
+        
+        if (quadCurve != null) {
+            
+            zoneDessin.getChildren().remove(quadCurve);
+            zoneDessin.getChildren().remove(arrow1);
+            zoneDessin.getChildren().remove(arrow2);
+            zoneDessin.getChildren().remove(valeur);
+        }
         
         quadCurve = new QuadCurve();
 
@@ -151,9 +159,7 @@ public class ArcProbabiliste extends Lien {
         quadCurve.setFill(null);
         quadCurve.setStroke(Color.BLACK);
         
-        //Creating a Group object  
-        Group groupeFleche = new Group(quadCurve);
-        zoneDessin.getChildren().addAll(arrow1,arrow2, groupeFleche); 
+        zoneDessin.getChildren().addAll(arrow1,arrow2, quadCurve); 
         
         
         valeur = new TextField(coeff);

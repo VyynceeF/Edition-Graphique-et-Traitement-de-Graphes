@@ -7,6 +7,7 @@ package saeEditeur;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -30,10 +31,16 @@ public abstract class Noeud {
     String nom ; 
     
     /** Nom du Noeud a créer*/
-    Text nomText ; 
+    Text nomText = null; 
     
     /** Cercle pour dessiner le noeud */
-    Circle c  ; 
+    Circle c = null ; 
+    
+    /** Liste des successeurs  */
+    ArrayList<Lien> successeurs ;
+    
+    /** Liste des predecesseurs  */
+    ArrayList<Lien> predecesseurs ;
     
     /** Rayon du cercle représentant le noeud */
     public static final double RAYON = 50; 
@@ -54,12 +61,16 @@ public abstract class Noeud {
         position = new Point(x,y);
         nom = NOM + noNoeud;
         noNoeud++;
+        successeurs = new ArrayList<>();
+        predecesseurs = new ArrayList<>();
         
     }
     
     public Noeud(double x, double y, String nom){
         position = new Point(x,y);
         this.nom = nom ; 
+        successeurs = new ArrayList<>();
+        predecesseurs = new ArrayList<>();
     }
     
     public String toString() {
@@ -67,7 +78,28 @@ public abstract class Noeud {
         return nom;
     }
     
+    public void modifierPosition(double x, double y, AnchorPane zoneDessin) {
+        
+        position.setX(x);
+        position.setY(y);
+        
+        for (int noSuccesseur = 0 ; noSuccesseur < successeurs.size() ; noSuccesseur++) {
+            
+            successeurs.get(noSuccesseur).dessiner(zoneDessin);
+        }
+        for (int noPredecesseur = 0 ; noPredecesseur < predecesseurs.size() ; noPredecesseur++) {
+            
+            predecesseurs.get(noPredecesseur).dessiner(zoneDessin);
+        }
+        dessiner(zoneDessin);
+    }
+    
     public Circle dessiner(AnchorPane zoneDessin){
+        
+        if (c != null) {
+            zoneDessin.getChildren().remove(c);
+            zoneDessin.getChildren().remove(nomText);
+        }
         c = new Circle();
         c.setCenterX(position.x);
         c.setCenterY(position.y);

@@ -21,13 +21,13 @@ import static saeEditeur.ArcProbabiliste.FLECHE_LONGUEUR;
 public class Arc extends Lien {
     
     /** Ligne (courbee) de la fleche */
-    private QuadCurve quadCurve;
+    private QuadCurve quadCurve = null;
     
     /** Extremite de la fleche */
-    private Line arrow1;
+    private Line arrow1 = null;
     
     /** Extremite de la fleche */
-    private Line arrow2;
+    private Line arrow2 = null;
   
     public Arc(Noeud source,Noeud destinataire){
         super(source,destinataire);
@@ -54,6 +54,13 @@ public class Arc extends Lien {
         double distance;
         double longueurFleche; 
         int multiplicateurPointControl;
+       
+        if (quadCurve != null) {
+            
+            zoneDessin.getChildren().remove(quadCurve);
+            zoneDessin.getChildren().remove(arrow1);
+            zoneDessin.getChildren().remove(arrow2);
+        }
         
         quadCurve = new QuadCurve();
 
@@ -113,9 +120,7 @@ public class Arc extends Lien {
         quadCurve.setFill(null);
         quadCurve.setStroke(Color.BLACK);
         
-        //Creating a Group object  
-        Group groupeFleche = new Group(quadCurve);
-        zoneDessin.getChildren().addAll(arrow1,arrow2, groupeFleche); 
+        zoneDessin.getChildren().addAll(arrow1,arrow2, quadCurve); 
     }
 
     public Noeud getSource() {
