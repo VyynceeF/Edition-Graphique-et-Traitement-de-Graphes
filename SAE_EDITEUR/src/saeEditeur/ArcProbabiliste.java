@@ -110,14 +110,14 @@ public class ArcProbabiliste extends Lien {
             multiplicateurPointControl = 80;
         } else {
             xPrimeSource = source.position.x;
-            yPrimeSource = source.position.y + Noeud.RAYON; 
-            xPrimeDes = source.position.x + Noeud.RAYON;
-            yPrimeDes = source.position.y;
+            yPrimeSource = source.position.y - Noeud.RAYON; 
+            xPrimeDes = source.position.x - Noeud.RAYON * Math.sqrt(2)/2;
+            yPrimeDes = source.position.y - Noeud.RAYON * Math.sqrt(2)/2;
             quadCurve.setStartX(xPrimeSource);
             quadCurve.setStartY(yPrimeSource);
             quadCurve.setEndX(xPrimeDes);
             quadCurve.setEndY(yPrimeDes);
-            multiplicateurPointControl = 180; 
+            multiplicateurPointControl = 70; 
         }
 
         xVectDirect = xPrimeDes - xPrimeSource; 
@@ -185,7 +185,6 @@ public class ArcProbabiliste extends Lien {
         
         
         valeur.relocate(xControl, yControl);
-        System.out.println("X = " + xControl + "  Y = " + yControl);
         valeur.setBackground(Background.EMPTY);
         valeur.setFont(new Font(12));     
         zoneDessin.getChildren().add(valeur);

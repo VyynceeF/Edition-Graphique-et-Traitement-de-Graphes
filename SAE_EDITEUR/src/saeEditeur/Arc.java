@@ -7,9 +7,12 @@ package saeEditeur;
 
 import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
+import javafx.scene.text.Font;
+import static saeEditeur.ArcProbabiliste.FLECHE_LONGUEUR;
 
 /**
  *
@@ -17,6 +20,14 @@ import javafx.scene.shape.QuadCurve;
  */
 public class Arc extends Lien {
     
+    /** Ligne (courbee) de la fleche */
+    private QuadCurve quadCurve;
+    
+    /** Extremite de la fleche */
+    private Line arrow1;
+    
+    /** Extremite de la fleche */
+    private Line arrow2;
   
     public Arc(Noeud source,Noeud destinataire){
         super(source,destinataire);
@@ -28,6 +39,7 @@ public class Arc extends Lien {
    
     @Override
     public void dessiner(AnchorPane zoneDessin){
+        
         final double EPSILON = 10E-15;
         double xPrimeSource;
         double yPrimeSource;
@@ -40,77 +52,67 @@ public class Arc extends Lien {
         double xVectOrtho; 
         double yVectOrtho;
         double distance;
+        double longueurFleche; 
+        int multiplicateurPointControl;
         
-        
-        distance = Math.sqrt(Math.pow(destinataire.position.x - source.position.x, 2) + Math.pow(destinataire.position.y - source.position.y, 2));
-        xPrimeSource = source.position.x + (destinataire.position.x - source.position.x) / (distance + EPSILON) * Noeud.RAYON;
-        yPrimeSource = source.position.y + (destinataire.position.y - source.position.y) / (distance+ EPSILON) * Noeud.RAYON;
-        xPrimeDes = destinataire.position.x - (destinataire.position.x - source.position.x) / (distance+ EPSILON) * Noeud.RAYON;
-        yPrimeDes = destinataire.position.y - (destinataire.position.y - source.position.y) / (distance + EPSILON) * Noeud.RAYON;
+        quadCurve = new QuadCurve();
 
         
+        distance = Math.sqrt(Math.pow(destinataire.position.x - source.position.x, 2) + Math.pow(destinataire.position.y - source.position.y, 2));
         
-        QuadCurve quadCurve = new QuadCurve();
-        quadCurve.setStartX(xPrimeSource); 
-        quadCurve.setStartY(yPrimeSource); 
-        quadCurve.setEndX(xPrimeDes); 
-        quadCurve.setEndY(yPrimeDes);
-        
+        if (distance != 0.0) {
+            xPrimeSource = source.position.x + (destinataire.position.x - source.position.x) / (distance + EPSILON) * Noeud.RAYON;
+            yPrimeSource = source.position.y + (destinataire.position.y - source.position.y) / (distance+ EPSILON) * Noeud.RAYON;
+            xPrimeDes = destinataire.position.x - (destinataire.position.x - source.position.x) / (distance+ EPSILON) * Noeud.RAYON;
+            yPrimeDes = destinataire.position.y - (destinataire.position.y - source.position.y) / (distance + EPSILON) * Noeud.RAYON;
+            quadCurve.setStartX(xPrimeSource); 
+            quadCurve.setStartY(yPrimeSource); 
+            quadCurve.setEndX(xPrimeDes); 
+            quadCurve.setEndY(yPrimeDes);
+            multiplicateurPointControl = 80;
+        } else {
+            xPrimeSource = source.position.x;
+            yPrimeSource = source.position.y - Noeud.RAYON; 
+            xPrimeDes = source.position.x - Noeud.RAYON * Math.sqrt(2)/2;
+            yPrimeDes = source.position.y - Noeud.RAYON * Math.sqrt(2)/2;
+            quadCurve.setStartX(xPrimeSource);
+            quadCurve.setStartY(yPrimeSource);
+            quadCurve.setEndX(xPrimeDes);
+            quadCurve.setEndY(yPrimeDes);
+            multiplicateurPointControl = 70; 
+        }
+
         xVectDirect = xPrimeDes - xPrimeSource; 
         yVectDirect = yPrimeDes - yPrimeSource; 
-        
+
         xVectOrtho = - yVectDirect * (1 / Math.sqrt(yVectDirect * yVectDirect + xVectDirect * xVectDirect));
         yVectOrtho =   xVectDirect* (1 / Math.sqrt(yVectDirect * yVectDirect + xVectDirect * xVectDirect));
+
+        xControl = xVectOrtho * multiplicateurPointControl + (xPrimeSource + xPrimeDes) / 2; 
+        yControl = yVectOrtho * multiplicateurPointControl + (yPrimeSource + yPrimeDes) / 2;
         
-        xControl = xVectOrtho * 80 + (xPrimeSource + xPrimeDes) / 2; 
-        yControl = yVectOrtho * 80 + (yPrimeSource + yPrimeDes) / 2;
+        /* Longueur flèche*/
+        longueurFleche = FLECHE_LONGUEUR / Math.sqrt(Math.pow(xPrimeDes - xControl, 2) + Math.pow(yPrimeDes - yControl, 2));
         
-        double pente = (yControl  - yPrimeDes)/ (xControl - xPrimeDes);
-        double ligneAngle = Math.atan(pente);
-        double angleFleche = 0;
-        
-        if ( xPrimeSource > xPrimeDes) {
-            angleFleche = Math.PI/8; 
-        } else if ( xPrimeSource == xPrimeDes) {
-            angleFleche = yPrimeSource > yPrimeDes ? Math.PI / 8 : 9 * Math.PI / 8; 
-        } else {
-            angleFleche = 9 * Math.PI / 8; 
-        }
-        double flecheLongueur = 20;
-        
-        // dans le cas de la boucle 
-        if (distance == 0.0){
-            yPrimeSource = source.position.y + Noeud.RAYON; 
-            xPrimeSource = source.position.x; 
-            
-        }
-        
-        
-        /** Fleche coté Gauche */
-        Line arrow1 = new Line();
+        /* Fleche coté Gauche */
+        arrow1 = new Line();
         arrow1.setStartX(xPrimeDes);
         arrow1.setStartY(yPrimeDes);
-        arrow1.setEndX(xPrimeDes + flecheLongueur * Math.cos(ligneAngle - angleFleche));
-        arrow1.setEndY(yPrimeDes + flecheLongueur * Math.sin(ligneAngle - angleFleche));
+        arrow1.setEndX(xPrimeDes + longueurFleche * ((xControl - xPrimeDes) * Math.cos(Math.PI/8)-(yControl - yPrimeDes) * Math.sin(Math.PI/8)));
+        arrow1.setEndY(yPrimeDes + longueurFleche * ((xControl - xPrimeDes) * Math.sin(Math.PI/8)+(yControl - yPrimeDes) * Math.cos(Math.PI/8)));
+        
         /** Fleche coté droit */
-        Line arrow2 = new Line();
+        arrow2 = new Line();
         arrow2.setStartX(xPrimeDes);
         arrow2.setStartY(yPrimeDes);
-        arrow2.setEndX(xPrimeDes + flecheLongueur * Math.cos(ligneAngle + angleFleche));
-        arrow2.setEndY(yPrimeDes + flecheLongueur * Math.sin(ligneAngle + angleFleche));
+        arrow2.setEndX(xPrimeDes + longueurFleche * ((xControl - xPrimeDes) * Math.cos(-Math.PI/8)-(yControl - yPrimeDes) * Math.sin(-Math.PI/8)));
+        arrow2.setEndY(yPrimeDes + longueurFleche * ((xControl - xPrimeDes) * Math.sin(-Math.PI/8)+(yControl - yPrimeDes) * Math.cos(-Math.PI/8)));
         
         quadCurve.setControlX(xControl); 
-        quadCurve.setControlY(yControl);
-        
-        System.out.println("xPrime Source : " + xPrimeSource + "  xPrimeDes : " + xPrimeDes);
-        System.out.println("yPrime Source : " + yPrimeSource + "  yPrimeDes : " + yPrimeDes);
-        System.out.println("Pente de la ligne : " + pente);
-        System.out.println("Ligne angle : " + ligneAngle);
-        System.out.println("Distance : " + distance);
-        
-        
+        quadCurve.setControlY(yControl);       
         quadCurve.setFill(null);
         quadCurve.setStroke(Color.BLACK);
+        
         //Creating a Group object  
         Group groupeFleche = new Group(quadCurve);
         zoneDessin.getChildren().addAll(arrow1,arrow2, groupeFleche); 
