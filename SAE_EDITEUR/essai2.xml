@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_172" class="java.beans.XMLDecoder">
+ <object class="testprojet.NoeudGrapheNonOriente">
+  <void property="nom">
+   <string>N0</string>
+  </void>
+  <void property="position">
+   <object class="testprojet.Point" id="Point0">
+    <void class="testprojet.Point" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point0"/>
+      <double>10.0</double>
+     </void>
+    </void>
+    <void class="testprojet.Point" method="getField">
+     <string>y</string>
+     <void method="set">
+      <object idref="Point0"/>
+      <double>50.0</double>
+     </void>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>
