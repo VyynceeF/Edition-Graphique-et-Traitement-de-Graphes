@@ -73,6 +73,8 @@ public class FXMLDocumentController implements Initializable {
     private MenuBar navbar;
     
     private Menu menuEdition = null;
+    @FXML
+    private Pane panePropriété;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -138,7 +140,12 @@ public class FXMLDocumentController implements Initializable {
             // Cas - Clic sur noeud
             if (graphe.estNoeud(x, y) != null) {
                 
-                graphe.noeudSelectionne(graphe.estNoeud(x, y));
+                Noeud noeudSelect = graphe.estNoeud(x, y);
+                graphe.noeudSelectionne(noeudSelect);
+                
+                //Afficher les propriétées
+                Text nomNoeud = new Text(noeudSelect.nom);
+                panePropriété.getChildren().add(nomNoeud);
             }
             // Cas - Clic sur Lien
             if (graphe.estLien(x, y) != null) {
