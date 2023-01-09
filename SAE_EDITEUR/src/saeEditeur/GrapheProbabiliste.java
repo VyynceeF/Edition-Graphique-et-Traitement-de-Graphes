@@ -71,6 +71,7 @@ public class GrapheProbabiliste extends Graphe {
     @Override
     public void ajouterNoeud(Noeud n) throws NoeudException {
          if (n instanceof NoeudGrapheProbabiliste){
+            n.setNom(nomNoeud(n.nom,0));
             noeuds.add(n);
         }else{
             // thorw l'exception 
@@ -263,6 +264,130 @@ public class GrapheProbabiliste extends Graphe {
         );
         
         MenuItem itemProbaTransition = new MenuItem("Loi de probabilité atteinte après un nombre de transition(s) donné");
+        itemProbaTransition.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                
+                g.regroupementEtat(g.regroupementClasse());
+                g.matriceTransitoireCanonique();
+                
+                Stage popUp = new Stage();
+                popUp.initModality(Modality.APPLICATION_MODAL);
+                StackPane pane = new StackPane();
+                GridPane gridPane = new GridPane();
+                
+                // Resultat
+                Text resultat = new Text();
+                
+                //Recuperation du nombre de noeuds du graphe
+                int nbNoeuds = g.noeudsOrdones.size();
+                System.out.println("Size noeudsOrdones pour Loi de Probabilité = " + nbNoeuds);
+                
+                //Tableau contenant tous les textfield pour les noeuds
+                TextField[] tabField = new TextField[nbNoeuds];
+                Text textNoeuds = new Text("Entrer une probabilité pour chaque Noeuds -");
+                for (int i = 0 ; i <  nbNoeuds ; i++) {
+                    Text noeuds = new Text();
+                    noeuds.setText(g.noeudsOrdones.get(i).toString());
+                    gridPane.add(noeuds,1,i);
+                    noeuds.setId("noeuds" + i);
+                    TextField Field = new TextField("1");
+                    gridPane.add(Field,2,i);
+                    tabField[i] = Field; // Ajout textField du noeuds i dans le tableau
+                    Field.setId("Field" + i);
+                }
+                
+                // Nombre de transition
+                Text textTransition = new Text("Nombre de transition - ");
+                TextField inputTransition = new TextField("1");
+                
+                // Button calcul
+                Button btCalcul = new Button("Calculer");
+                btCalcul.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        
+                        //Recuperation du nombre de transition entrer
+                        int nbTransition = 0;
+                        
+                         // Verification validiter nombre de transition
+                        try {
+                                
+                            nbTransition = Integer.parseInt(inputTransition.getText());
+                            inputTransition.setStyle("-fx-border-color: black;");
+                            if (nbTransition < 1) {
+                                inputTransition.setStyle("-fx-border-color: red;");
+                                nbTransition = 0;
+                            }
+                        } catch (NumberFormatException erreur) {
+                            inputTransition.setStyle("-fx-border-color: red;");
+                            nbTransition = 0;
+                        }
+                        
+                        //recuperation des proba pour chaque noeud
+                        boolean tabErr = true; //True si pas d'erreur de probabilité des noeuds sinon false
+                        
+                        double sommeProba = 0.0; //Somme des proba du vecteur initial
+                        
+                        double[][] vecteurInitial = new double[1][nbNoeuds];
+                        for(int i = 0; i < tabField.length; i++){
+                            //Verifie les probabilitées et ajoute au tableau les valeurs
+                            try{
+                                vecteurInitial[0][i] = Double.parseDouble(tabField[i].getText());
+                                tabField[i].setStyle("-fx-border-color: black;");
+                                if(vecteurInitial[0][i] < 0 || vecteurInitial[0][i] > 1){
+                                    tabField[i].setStyle("-fx-border-color: red;");
+                                    tabErr = false;
+                                }
+                                sommeProba += vecteurInitial[0][i];
+                            } catch (NumberFormatException erreur) {
+                               tabField[i].setStyle("-fx-border-color: red;");
+                            }
+                        }
+                        
+                        //Verifie que la somme des proba du vecteur initial est égal à 1.0
+                        if(Math.abs(sommeProba - 1) >= 10e-10){
+                            tabErr = false;
+                            resultat.setText("Erreur ! La somme des probabilité du vecteur initial n'est pas égal à 1.0");
+                            resultat.setFill(Color.RED);
+                        }
+                        
+                        if(nbTransition != 0 && tabErr){
+                            double[][] tabVecteur = g.loiDeProbabiliteeEnNTransition(vecteurInitial,nbTransition);
+                            String afficher = "";
+                            double number;
+                            //Mise en forme pour l'affichage
+                            for(int i = 0; i < g.noeudsOrdones.size(); i++){ 
+                                number = Math.round(tabVecteur[0][i] * 1000.0) / 1000.0; //Arrondir le double
+                                afficher += g.noeudsOrdones.get(i).nom + " -> " + number + "\n";
+                            }
+                            
+                            //Affichage
+                            resultat.setText("Le vecteur de probabilité qui représente les probabilité d'etre sur chaque sommet apres " + nbTransition + " transitions :\n\n" 
+                                            + afficher);
+                            resultat.setFill(Color.BLACK);
+                        }
+                    }
+                });
+                
+                //Ajout dans le grid pane
+                gridPane.add(textNoeuds,0,0);
+                gridPane.add(textTransition,1,nbNoeuds);
+                gridPane.add(inputTransition,2,nbNoeuds);
+                gridPane.add(btCalcul, 2, nbNoeuds + 1);
+                gridPane.setColumnSpan(btCalcul,3);
+                gridPane.add(resultat, 0, nbNoeuds + 2);
+                gridPane.setColumnSpan(resultat,3);
+                gridPane.setAlignment(Pos.CENTER);
+                gridPane.setHgap(10);
+                gridPane.setVgap(10);
+                pane.getChildren().add(gridPane);
+                popUp.setScene(new Scene(pane, 800, 600));
+                popUp.showAndWait();
+                
+            }
+        });
+        
         itemInterpretation.getItems().addAll(itemProbaSommetASommet, itemProbaTransition);
         
         // Ajout des menus de edition
@@ -444,6 +569,8 @@ public class GrapheProbabiliste extends Graphe {
         
         while (ensembleNoeud.size() != 0) {
             
+            System.out.println("EnsembleNoeud pas vide");
+            
             noeudActuel = (NoeudGrapheProbabiliste) ensembleNoeud.get(0);
             classe = new ArrayList<>();
             // Ajout dans la classe
@@ -467,6 +594,7 @@ public class GrapheProbabiliste extends Graphe {
             noClasse++; // Changement de classe
         }
         
+        System.out.println(classes);
         return classes;
     }
     
@@ -684,20 +812,25 @@ public class GrapheProbabiliste extends Graphe {
     }
     
     /**
-     * Multiplie la matrice carree m par elle meme
-     * @param m Matrice a multiplier
-     * @return La multiplication de la matrice m par elle meme
+     * Multiplie la matrice carree m1 avec m2
+     * @param m1 Matrice a multiplier
+     * @param m2 Matrice a multiplier
+     * @return La multiplication de la matrice m1 par m2
      */
     public static double[][] multiplicationMatrice(double[][] m1, double[][] m2){
         
+        if(m1[0].length != m2.length){
+            throw new IllegalArgumentException("Multiplication impossible !");
+        }
+        
         // Créer une matrice pour stocker la multiplication
-        double resultat[][] = new double[m1.length][m1.length];  
+        double resultat[][] = new double[m1.length][m2.length];  
         
         // Multiplication
-        for (int i=0 ; i < m1.length ; i++){
-            for (int j=0 ; j < m1.length ; j++){ 
+        for (int i=0 ; i < m1.length ; i++){ //ligne matrice m1
+            for (int j=0 ; j < m2.length ; j++){ //ligne matrice m2
                 resultat[i][j] = 0;    
-                for (int k=0 ; k < m1.length ; k++) { 
+                for (int k=0 ; k < m2.length ; k++) { //colonne
                     resultat[i][j] += m1[i][k] * m2[k][j];    
                 }
             }
@@ -720,15 +853,6 @@ public class GrapheProbabiliste extends Graphe {
             resultat = multiplicationMatrice(resultat, m);
             exp--;
         }
-        
-//        Affichage dans la console
-//        for (int i=0 ; i < m.length ; i++){
-//            
-//            for (int j=0 ; j < m.length ; j++){ 
-//                System.out.print(" " + resultat[i][j]);
-//            }
-//            System.out.println("");
-//        }
         return resultat ;
     }
     
@@ -759,6 +883,53 @@ public class GrapheProbabiliste extends Graphe {
         }
         
         return matrice[ligne][colonne];
+    }
+    
+    /**
+     * 
+     */
+    public double[][] loiDeProbabiliteeEnNTransition(double[][] vecteur, int nbTransition){
+        
+        regroupementEtat(regroupementClasse());
+
+        //Calcul de la loi de probabiliuté
+            //Matrice de Transition exposant N
+        double[][] matrice = matriceTransitoireCanonique();     
+        matrice = exposantMatrice(matrice, nbTransition);
+ 
+            //Mutiplier le vecteur de probabilité par la matrice de transition exposant N
+        double[][] resultat =  multiplicationMatrice(vecteur, matrice);
+            
+        //Retourner le resultat
+        return resultat;
+    }
+    
+    /**
+     * Affiche une matrice
+     * @param matrice
+     * @return matrice
+     */
+    public static String afficheMatrice(double[][] matrice){
+        String resultat = "";
+        String espaces;
+        int taille;
+        double number;
+        
+        for(int i = 0; i < matrice.length; i++){ //Ligne
+            for(int j = 0; j < matrice[i].length; j++){ //Colonne
+                number = Math.round(matrice[i][j]*1000.0)/1000.0;
+                taille = String.valueOf(number).length();
+                taille = 8 - taille;
+                espaces = "";
+                for(int k = 0; k < taille; k++){
+                    espaces += " ";
+                }
+                resultat += number + espaces;
+            }
+            resultat += "\n";
+        }
+        
+        return resultat;
     }
 
     public ArrayList<Noeud> getNoeudsFinales() {

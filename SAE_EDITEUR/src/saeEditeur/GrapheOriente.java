@@ -31,6 +31,7 @@ public class GrapheOriente extends Graphe {
     @Override
     public void ajouterNoeud(Noeud n) throws NoeudException {
         if (n instanceof NoeudGrapheOriente){
+            n.setNom(nomNoeud(n.nom,0));
             noeuds.add(n);
         }else{
             throw new NoeudException("Impossible de créer un Noeud");

@@ -32,6 +32,18 @@ public class NoeudGrapheProbabiliste extends Noeud {
         successeursProbabilistes = new ArrayList<>();
         nomClasse = null;
     }
+
+    public ArrayList<Lien> getSuccesseurs() {
+        return successeurs;
+    }
+
+    public ArrayList<Lien> getPredecesseurs() {
+        return predecesseurs;
+    }
+
+    public void setPredecesseurs(ArrayList<Lien> predecesseurs) {
+        this.predecesseurs = predecesseurs;
+    }
     
     public NoeudGrapheProbabiliste() {
         

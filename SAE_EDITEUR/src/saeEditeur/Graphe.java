@@ -319,6 +319,37 @@ public abstract class Graphe {
             lienSelectionne = null;
         }
     }
+
+    /**
+     * Verifie si le nom n'est pas deja utiliser
+     * @param aVerifier nouveau nom du noeud
+     * @return true si valide sinon false
+     */
+    public boolean estNomNoeudValide(String aVerifier) {
+        for (int i = 0; i < noeuds.size(); i++) {
+            if(aVerifier.equals(noeuds.get(i).nom)){
+                return false;
+            }
+        }
+        return true;
+    }
     
+    /**
+     * Renvoie le nom du noeud a creer
+     * Verifie que le nom n'est pas utiliser
+     * Si utiliser alors il le modifie
+     * @param aVerifier nom du noeud
+     * @param complement permet de creer le nom du noeud si il existe deja 
+     * @return le nom du noeud a creer 
+     */
+    public String nomNoeud(String aVerifier, int complement){
+        
+        for (int i = 0; i < noeuds.size(); i++) {
+            if(aVerifier.equals(noeuds.get(i).nom)){
+                return nomNoeud("N" + complement, complement + 1);
+            }
+        }
+        return aVerifier;
+    }
     
 }

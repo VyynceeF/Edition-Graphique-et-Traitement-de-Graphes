@@ -92,6 +92,8 @@ public class FXMLDocumentController implements Initializable {
      * Anciennes coordonnées d'un éléments du graphe (lors du déplacement)
      */
     private double xAncien, yAncien;
+    @FXML
+    private GridPane gridProprietees;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -142,6 +144,9 @@ public class FXMLDocumentController implements Initializable {
             
             /* Deselectionner de tous les elements */
             graphe.deselectionnerAll();
+            
+            /* Clear le grid des proprietees*/
+            gridProprietees.getChildren().clear();
 
             /* Execution de l'action en fonction de la selection */
             // l'action du noeudCliquer
@@ -164,6 +169,9 @@ public class FXMLDocumentController implements Initializable {
                     graphe.noeudSelectionne(graphe.estNoeud(x, y));
                     xAncien = graphe.noeudSelectionne.position.x;
                     yAncien = graphe.noeudSelectionne.position.y;
+                    
+                    Noeud noeudSelect = graphe.estNoeud(x, y);
+                    Proprietees.updateNameNoeud(noeudSelect, graphe, gridProprietees);
                 }
                 // Cas - Clic sur Lien
                 if (graphe.estLien(x, y) != null && graphe.noeudSelectionne == null) {
