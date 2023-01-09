@@ -5,7 +5,9 @@
  */
 package saeEditeur;
 
+import java.beans.XMLDecoder;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.StringWriter;
 import java.net.URL;
@@ -34,6 +36,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.xml.bind.JAXBContext;
@@ -378,6 +381,94 @@ public class FXMLDocumentController implements Initializable {
             alert.showAndWait();
         }
 
+    }
+
+    /**
+     * Ouvre un graphe
+     * @param event 
+     */
+    @FXML
+    private void ouvrirGraphe(ActionEvent event) {
+        
+        Stage popUp = new Stage();
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        StackPane pane = new StackPane();
+        GridPane gridPane = new GridPane();
+
+        // Label des inputs
+        Text labelChemin = new Text("Saisir le fichier du graphe ");
+
+        // Phrase d'erreur
+        Text erreur = new Text();
+
+        Button inputChemin = new Button("Choisir fichier");
+        inputChemin.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+
+                final FileChooser dialog = new FileChooser(); 
+                final File file = dialog.showSaveDialog(inputChemin.getScene().getWindow());
+                if (file != null) { 
+                    // Effectuer le traitement. 
+
+                    inputChemin.setText(file.getAbsolutePath());
+                } 
+            }
+        });
+
+        // Button calcul
+        Button btOurvrir = new Button("Ouvrir");
+        btOurvrir.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+
+                try {
+                    graphe = Graphe.ouvrir(inputChemin.getText());
+                    // Vider tous les Noeuds et Liens présents sur le graphe
+                    zoneDessin.getChildren().clear();
+                    graphe.dessiner(zoneDessin);
+                    // Factory
+                    factory = factoryManager.getFactory(graphe.getFactory());
+                    
+                    // Ajoute le bouton de verification si graphe probabiliste
+                    if (graphe.getFactory().equals("Graphe probabiliste")) {
+                        btnVerifier = GrapheProbabiliste.ajouterBoutonVerification(paneSelection, 
+                                                                                   zoneDessin, 
+                                                                                   (GrapheProbabiliste) graphe);
+
+                        menuEdition = GrapheProbabiliste.ajouterMenuNavBar(navbar, (GrapheProbabiliste) graphe, zoneDessin);
+                    } 
+                    
+                    popUp.close();
+
+                    // Affichage pour confirmer l'enregistrement
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Ouverture");
+                    alert.setHeaderText("Le graphe a été ouvert avec succès");
+
+                    alert.showAndWait();
+
+                } catch (FileNotFoundException err) {
+
+                    // Erreur dans la saisie du chemin et du noeud
+                    erreur.setText("Les informations sont érronées.");
+                }
+            }
+        });
+
+        gridPane.add(labelChemin, 0, 0);
+        gridPane.add(inputChemin, 1, 0);
+        gridPane.add(btOurvrir, 1, 2);
+        gridPane.add(erreur, 0, 3);
+        gridPane.setColumnSpan(erreur,2);
+        // CSS
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+
+        pane.getChildren().add(gridPane);
+        popUp.setScene(new Scene(pane, 500, 200));
+        popUp.showAndWait();
     }
 
 }

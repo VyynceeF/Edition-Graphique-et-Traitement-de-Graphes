@@ -82,6 +82,7 @@
             <items>
                   <Menu fx:id="menuNouveauGraphe" mnemonicParsing="false" text="Nouveau Graphe" />
                   <MenuItem mnemonicParsing="false" onAction="#enregistrerGraphe" text="Enregistrer" />
+                  <MenuItem mnemonicParsing="false" onAction="#ouvrirGraphe" text="Ouvrir" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Aide">

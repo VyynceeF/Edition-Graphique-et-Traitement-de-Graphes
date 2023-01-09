@@ -16,6 +16,8 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 /**
  *
  * @author amine.daamouch
@@ -42,6 +44,8 @@ public abstract class Graphe {
     }
     
     public abstract String toString();
+    
+    public abstract String getFactory();
     
     public abstract void ajouterNoeud(Noeud n) throws NoeudException;
     
@@ -137,7 +141,7 @@ public abstract class Graphe {
     }
     
     /**
-     * Permet d'enregistrer le graphe dans un fichier avec json
+     * Permet d'enregistrer le graphe dans un fichier
      * @param chemin Chemin et nom du fichier
      */
     public void enregistrer(String chemin) throws FileNotFoundException {
@@ -148,6 +152,59 @@ public abstract class Graphe {
         encoder.writeObject(this);
         encoder.close();
            
+    }
+    
+    /**
+     * Permet d'ouvrir un graphe contenu dans le fichier 
+     * @param chemin Chemin et nom du fichier
+     */
+    public static Graphe ouvrir(String chemin) throws FileNotFoundException {
+        
+        // Déserialisation et affichage du noeud pour véfification
+        try {
+            // Le fichier est bien un enregistrement d'un graphe
+            XMLDecoder decoder = new XMLDecoder(new FileInputStream(chemin));
+
+            Graphe graphe = (Graphe) decoder.readObject();
+            
+            return graphe;
+            
+        } catch (Exception e) {
+            
+            throw new FileNotFoundException();
+        }
+        
+        
+           
+    }
+    
+    /**
+     * Dessine sur la zone de dessin tous les elements du graphe (après ouverture)
+     * @param zoneDessin Zone de dessin du graphe
+     */
+    public void dessiner(AnchorPane zoneDessin) {
+        
+        /* Dessin des noeuds */
+        for (int noNoeud = 0 ; noNoeud < noeuds.size() ; noNoeud++) {
+            
+            noeuds.get(noNoeud).dessiner(zoneDessin);
+        }
+        
+        /* Dessin des liens */
+        for (int noLien = 0 ; noLien < liens.size() ; noLien++) {
+            
+            liens.get(noLien).dessiner(zoneDessin);
+        }
+        
+        /* Precedente selection */
+        if (noeudSelectionne != null) {
+            
+            noeudSelectionne.noeudSelectionne();
+        }
+        if (lienSelectionne != null) {
+            
+            lienSelectionne.lienSelectionne();
+        }
     }
 
     public ArrayList<Noeud> getNoeuds() {

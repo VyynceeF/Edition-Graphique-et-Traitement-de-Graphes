@@ -61,6 +61,12 @@ public class GrapheProbabiliste extends Graphe {
         
         return "GrapheProbabiliste";
     }
+    
+    @Override
+    public String getFactory() {
+        
+        return "Graphe probabiliste";
+    }
 
     @Override
     public void ajouterNoeud(Noeud n) throws NoeudException {

@@ -24,6 +24,12 @@ public class GrapheNonOriente extends Graphe {
     }
     
     @Override
+    public String getFactory() {
+        
+        return "Graphe non orienté";
+    }
+    
+    @Override
     public void ajouterNoeud(Noeud n) throws NoeudException{
         if (n instanceof NoeudGrapheNonOriente){
             noeuds.add(n);

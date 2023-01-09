@@ -1,0 +1,1049 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_172" class="java.beans.XMLDecoder">
+ <object class="saeEditeur.GrapheProbabiliste" id="GrapheProbabiliste0">
+  <void property="liens">
+   <void method="add">
+    <object class="saeEditeur.ArcProbabiliste" id="ArcProbabiliste0">
+     <void property="arrow1">
+      <object class="javafx.scene.shape.Line" id="Line0">
+       <void property="endX">
+        <double>702.0235253944509</double>
+       </void>
+       <void property="endY">
+        <double>627.0674636395987</double>
+       </void>
+       <void property="startX">
+        <double>722.018754689332</double>
+       </void>
+       <void property="startY">
+        <double>626.6306508134063</double>
+       </void>
+       <void id="Color0" property="stroke"/>
+      </object>
+     </void>
+     <void property="arrow2">
+      <object class="javafx.scene.shape.Line">
+       <void property="endX">
+        <double>708.1888657750516</double>
+       </void>
+       <void property="endY">
+        <double>641.0782863507065</double>
+       </void>
+       <void property="startX">
+        <double>722.018754689332</double>
+       </void>
+       <void property="startY">
+        <double>626.6306508134063</double>
+       </void>
+      </object>
+     </void>
+     <void property="coefficient">
+      <double>0.95</double>
+     </void>
+     <void property="destinataire">
+      <object class="saeEditeur.NoeudGrapheProbabiliste" id="NoeudGrapheProbabiliste0">
+       <void property="c">
+        <object class="javafx.scene.shape.Circle">
+         <void property="centerX">
+          <double>772.0</double>
+         </void>
+         <void property="centerY">
+          <double>628.0</double>
+         </void>
+         <void property="radius">
+          <double>50.0</double>
+         </void>
+         <void property="stroke">
+          <object idref="Color0"/>
+         </void>
+        </object>
+       </void>
+       <void property="nom">
+        <string>N2</string>
+       </void>
+       <void property="nomText">
+        <object class="javafx.scene.text.Text">
+         <void property="boundsType">
+          <object class="java.lang.Enum" id="TextBoundsType0" method="valueOf">
+           <class>javafx.scene.text.TextBoundsType</class>
+           <string>VISUAL</string>
+          </object>
+         </void>
+         <void property="text">
+          <string>N2</string>
+         </void>
+         <void property="x">
+          <double>765.150390625</double>
+         </void>
+         <void property="y">
+          <double>628.0</double>
+         </void>
+        </object>
+       </void>
+       <void property="position">
+        <object class="saeEditeur.Point" id="Point0">
+         <void class="saeEditeur.Point" method="getField">
+          <string>x</string>
+          <void method="set">
+           <object idref="Point0"/>
+           <double>772.0</double>
+          </void>
+         </void>
+         <void class="saeEditeur.Point" method="getField">
+          <string>y</string>
+          <void method="set">
+           <object idref="Point0"/>
+           <double>628.0</double>
+          </void>
+         </void>
+        </object>
+       </void>
+       <void property="successeurs">
+        <object class="java.util.ArrayList">
+         <void method="add">
+          <object class="saeEditeur.ArcProbabiliste" id="ArcProbabiliste1">
+           <void property="arrow1">
+            <object class="javafx.scene.shape.Line">
+             <void property="endX">
+              <double>1096.5049611675302</double>
+             </void>
+             <void property="endY">
+              <double>603.7243110010967</double>
+             </void>
+             <void property="startX">
+              <double>1116.1640987990695</double>
+             </void>
+             <void property="startY">
+              <double>600.0475858843395</double>
+             </void>
+            </object>
+           </void>
+           <void property="arrow2">
+            <object class="javafx.scene.shape.Line">
+             <void property="endX">
+              <double>1104.8628265301463</double>
+             </void>
+             <void property="endY">
+              <double>616.5485326784985</double>
+             </void>
+             <void property="startX">
+              <double>1116.1640987990695</double>
+             </void>
+             <void property="startY">
+              <double>600.0475858843395</double>
+             </void>
+            </object>
+           </void>
+           <void property="coefficient">
+            <double>0.2</double>
+           </void>
+           <void property="destinataire">
+            <object class="saeEditeur.NoeudGrapheProbabiliste" id="NoeudGrapheProbabiliste1">
+             <void property="c">
+              <object class="javafx.scene.shape.Circle">
+               <void property="centerX">
+                <double>1166.0</double>
+               </void>
+               <void property="centerY">
+                <double>596.0</double>
+               </void>
+               <void property="radius">
+                <double>50.0</double>
+               </void>
+               <void property="stroke">
+                <object idref="Color0"/>
+               </void>
+              </object>
+             </void>
+             <void property="nom">
+              <string>N3</string>
+             </void>
+             <void property="nomText">
+              <object class="javafx.scene.text.Text">
+               <void property="boundsType">
+                <object idref="TextBoundsType0"/>
+               </void>
+               <void property="text">
+                <string>N3</string>
+               </void>
+               <void property="x">
+                <double>1159.2705078125</double>
+               </void>
+               <void property="y">
+                <double>596.0</double>
+               </void>
+              </object>
+             </void>
+             <void property="position">
+              <object class="saeEditeur.Point" id="Point1">
+               <void class="saeEditeur.Point" method="getField">
+                <string>x</string>
+                <void method="set">
+                 <object idref="Point1"/>
+                 <double>1166.0</double>
+                </void>
+               </void>
+               <void class="saeEditeur.Point" method="getField">
+                <string>y</string>
+                <void method="set">
+                 <object idref="Point1"/>
+                 <double>596.0</double>
+                </void>
+               </void>
+              </object>
+             </void>
+             <void property="successeurs">
+              <object class="java.util.ArrayList">
+               <void method="add">
+                <object class="saeEditeur.ArcProbabiliste" id="ArcProbabiliste2">
+                 <void property="arrow1">
+                  <object class="javafx.scene.shape.Line">
+                   <void property="endX">
+                    <double>845.1623645500092</double>
+                   </void>
+                   <void property="endY">
+                    <double>178.5607423422916</double>
+                   </void>
+                   <void property="startX">
+                    <double>834.3476057219916</double>
+                   </void>
+                   <void property="startY">
+                    <double>161.73692019951395</double>
+                   </void>
+                  </object>
+                 </void>
+                 <void property="arrow2">
+                  <object class="javafx.scene.shape.Line">
+                   <void property="endX">
+                    <double>853.8910337488144</double>
+                   </void>
+                   <void property="endY">
+                    <double>165.9859696179601</double>
+                   </void>
+                   <void property="startX">
+                    <double>834.3476057219916</double>
+                   </void>
+                   <void property="startY">
+                    <double>161.73692019951395</double>
+                   </void>
+                  </object>
+                 </void>
+                 <void property="coefficient">
+                  <double>0.35</double>
+                 </void>
+                 <void property="destinataire">
+                  <object class="saeEditeur.NoeudGrapheProbabiliste" id="NoeudGrapheProbabiliste2">
+                   <void property="c">
+                    <object class="javafx.scene.shape.Circle">
+                     <void property="centerX">
+                      <double>804.0</double>
+                     </void>
+                     <void property="centerY">
+                      <double>122.0</double>
+                     </void>
+                     <void property="radius">
+                      <double>50.0</double>
+                     </void>
+                     <void property="stroke">
+                      <object idref="Color0"/>
+                     </void>
+                    </object>
+                   </void>
+                   <void property="nom">
+                    <string>N4</string>
+                   </void>
+                   <void property="nomText">
+                    <object class="javafx.scene.text.Text">
+                     <void property="boundsType">
+                      <object idref="TextBoundsType0"/>
+                     </void>
+                     <void property="text">
+                      <string>N4</string>
+                     </void>
+                     <void property="x">
+                      <double>797.033203125</double>
+                     </void>
+                     <void property="y">
+                      <double>122.0</double>
+                     </void>
+                    </object>
+                   </void>
+                   <void property="position">
+                    <object class="saeEditeur.Point" id="Point2">
+                     <void class="saeEditeur.Point" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Point2"/>
+                       <double>804.0</double>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.Point" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Point2"/>
+                       <double>122.0</double>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                   <void property="successeurs">
+                    <object class="java.util.ArrayList">
+                     <void method="add">
+                      <object class="saeEditeur.ArcProbabiliste" id="ArcProbabiliste3">
+                       <void property="arrow1">
+                        <object class="javafx.scene.shape.Line">
+                         <void property="endX">
+                          <double>857.9488736829979</double>
+                         </void>
+                         <void property="endY">
+                          <double>141.60628462089966</double>
+                         </void>
+                         <void property="startX">
+                          <double>854.0</double>
+                         </void>
+                         <void property="startY">
+                          <double>122.0</double>
+                         </void>
+                        </object>
+                       </void>
+                       <void property="arrow2">
+                        <object class="javafx.scene.shape.Line">
+                         <void property="endX">
+                          <double>870.6560121686086</double>
+                         </void>
+                         <void property="endY">
+                          <double>133.07146145001474</double>
+                         </void>
+                         <void property="startX">
+                          <double>854.0</double>
+                         </void>
+                         <void property="startY">
+                          <double>122.0</double>
+                         </void>
+                        </object>
+                       </void>
+                       <void property="coefficient">
+                        <double>1.0</double>
+                       </void>
+                       <void property="destinataire">
+                        <object idref="NoeudGrapheProbabiliste2"/>
+                       </void>
+                       <void property="quadCurve">
+                        <object class="javafx.scene.shape.QuadCurve">
+                         <void property="controlX">
+                          <double>956.2792206135786</double>
+                         </void>
+                         <void property="controlY">
+                          <double>274.27922061357856</double>
+                         </void>
+                         <void property="endX">
+                          <double>854.0</double>
+                         </void>
+                         <void property="endY">
+                          <double>122.0</double>
+                         </void>
+                         <void property="fill">
+                          <null/>
+                         </void>
+                         <void property="startX">
+                          <double>804.0</double>
+                         </void>
+                         <void property="startY">
+                          <double>172.0</double>
+                         </void>
+                         <void property="stroke">
+                          <object idref="Color0"/>
+                         </void>
+                        </object>
+                       </void>
+                       <void property="source">
+                        <object idref="NoeudGrapheProbabiliste2"/>
+                       </void>
+                       <void property="valeur">
+                        <object class="javafx.scene.control.TextField">
+                         <void property="layoutX">
+                          <double>956.2792206135786</double>
+                         </void>
+                         <void property="layoutY">
+                          <double>274.27922061357856</double>
+                         </void>
+                         <void property="text">
+                          <string>1.0</string>
+                         </void>
+                        </object>
+                       </void>
+                      </object>
+                     </void>
+                    </object>
+                   </void>
+                  </object>
+                 </void>
+                 <void property="quadCurve">
+                  <object class="javafx.scene.shape.QuadCurve">
+                   <void property="controlX">
+                    <double>1048.5790723192224</double>
+                   </void>
+                   <void property="controlY">
+                    <double>310.4438308448133</double>
+                   </void>
+                   <void property="endX">
+                    <double>834.3476057219916</double>
+                   </void>
+                   <void property="endY">
+                    <double>161.73692019951395</double>
+                   </void>
+                   <void property="fill">
+                    <null/>
+                   </void>
+                   <void property="startX">
+                    <double>1135.6523942780084</double>
+                   </void>
+                   <void property="startY">
+                    <double>556.263079800486</double>
+                   </void>
+                   <void property="stroke">
+                    <object idref="Color0"/>
+                   </void>
+                  </object>
+                 </void>
+                 <void property="source">
+                  <object idref="NoeudGrapheProbabiliste1"/>
+                 </void>
+                 <void property="valeur">
+                  <object class="javafx.scene.control.TextField">
+                   <void property="layoutX">
+                    <double>1048.5790723192224</double>
+                   </void>
+                   <void property="layoutY">
+                    <double>310.4438308448133</double>
+                   </void>
+                   <void property="text">
+                    <string>0.35</string>
+                   </void>
+                  </object>
+                 </void>
+                </object>
+               </void>
+               <void method="add">
+                <object class="saeEditeur.ArcProbabiliste" id="ArcProbabiliste4">
+                 <void property="arrow1">
+                  <object class="javafx.scene.shape.Line">
+                   <void property="endX">
+                    <double>403.75028058586736</double>
+                   </void>
+                   <void property="endY">
+                    <double>617.8571529899219</double>
+                   </void>
+                   <void property="startX">
+                    <double>383.9855600669312</double>
+                   </void>
+                   <void property="startY">
+                    <double>614.7984240368526</double>
+                   </void>
+                  </object>
+                 </void>
+                 <void property="arrow2">
+                  <object class="javafx.scene.shape.Line">
+                   <void property="endX">
+                    <double>400.1241759586548</double>
+                   </void>
+                   <void property="endY">
+                    <double>602.9855041141828</double>
+                   </void>
+                   <void property="startX">
+                    <double>383.9855600669312</double>
+                   </void>
+                   <void property="startY">
+                    <double>614.7984240368526</double>
+                   </void>
+                  </object>
+                 </void>
+                 <void property="coefficient">
+                  <double>0.65</double>
+                 </void>
+                 <void property="destinataire">
+                  <object class="saeEditeur.NoeudGrapheProbabiliste" id="NoeudGrapheProbabiliste3">
+                   <void property="c">
+                    <object class="javafx.scene.shape.Circle">
+                     <void property="centerX">
+                      <double>334.0</double>
+                     </void>
+                     <void property="centerY">
+                      <double>616.0</double>
+                     </void>
+                     <void property="radius">
+                      <double>50.0</double>
+                     </void>
+                     <void property="stroke">
+                      <object idref="Color0"/>
+                     </void>
+                    </object>
+                   </void>
+                   <void property="nom">
+                    <string>N0</string>
+                   </void>
+                   <void property="nomText">
+                    <object class="javafx.scene.text.Text">
+                     <void property="boundsType">
+                      <object idref="TextBoundsType0"/>
+                     </void>
+                     <void property="text">
+                      <string>N0</string>
+                     </void>
+                     <void property="x">
+                      <double>327.07421875</double>
+                     </void>
+                     <void property="y">
+                      <double>616.0</double>
+                     </void>
+                    </object>
+                   </void>
+                   <void property="position">
+                    <object class="saeEditeur.Point" id="Point3">
+                     <void class="saeEditeur.Point" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Point3"/>
+                       <double>334.0</double>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.Point" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Point3"/>
+                       <double>616.0</double>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                   <void property="successeurs">
+                    <object class="java.util.ArrayList">
+                     <void method="add">
+                      <object idref="ArcProbabiliste0"/>
+                     </void>
+                     <void method="add">
+                      <object class="saeEditeur.ArcProbabiliste" id="ArcProbabiliste5">
+                       <void property="arrow1">
+                        <object class="javafx.scene.shape.Line">
+                         <void property="endX">
+                          <double>440.8509087352183</double>
+                         </void>
+                         <void property="endY">
+                          <double>262.31293400356327</double>
+                         </void>
+                         <void property="startX">
+                          <double>445.6639239439768</double>
+                         </void>
+                         <void property="startY">
+                          <double>242.90069856814114</double>
+                         </void>
+                        </object>
+                       </void>
+                       <void property="arrow2">
+                        <object class="javafx.scene.shape.Line">
+                         <void property="endX">
+                          <double>455.98713156628645</double>
+                         </void>
+                         <void property="endY">
+                          <double>260.0305375745851</double>
+                         </void>
+                         <void property="startX">
+                          <double>445.6639239439768</double>
+                         </void>
+                         <void property="startY">
+                          <double>242.90069856814114</double>
+                         </void>
+                        </object>
+                       </void>
+                       <void property="coefficient">
+                        <double>0.05</double>
+                       </void>
+                       <void property="destinataire">
+                        <object class="saeEditeur.NoeudGrapheProbabiliste" id="NoeudGrapheProbabiliste4">
+                         <void property="c">
+                          <object class="javafx.scene.shape.Circle">
+                           <void property="centerX">
+                            <double>460.0</double>
+                           </void>
+                           <void property="centerY">
+                            <double>195.0</double>
+                           </void>
+                           <void property="radius">
+                            <double>50.0</double>
+                           </void>
+                           <void property="stroke">
+                            <object idref="Color0"/>
+                           </void>
+                          </object>
+                         </void>
+                         <void property="nom">
+                          <string>N1</string>
+                         </void>
+                         <void property="nomText">
+                          <object class="javafx.scene.text.Text">
+                           <void property="boundsType">
+                            <object idref="TextBoundsType0"/>
+                           </void>
+                           <void property="text">
+                            <string>N1</string>
+                           </void>
+                           <void property="x">
+                            <double>453.94140625</double>
+                           </void>
+                           <void property="y">
+                            <double>195.0</double>
+                           </void>
+                          </object>
+                         </void>
+                         <void property="position">
+                          <object class="saeEditeur.Point" id="Point4">
+                           <void class="saeEditeur.Point" method="getField">
+                            <string>x</string>
+                            <void method="set">
+                             <object idref="Point4"/>
+                             <double>460.0</double>
+                            </void>
+                           </void>
+                           <void class="saeEditeur.Point" method="getField">
+                            <string>y</string>
+                            <void method="set">
+                             <object idref="Point4"/>
+                             <double>195.0</double>
+                            </void>
+                           </void>
+                          </object>
+                         </void>
+                         <void property="successeurs">
+                          <object class="java.util.ArrayList">
+                           <void method="add">
+                            <object class="saeEditeur.ArcProbabiliste" id="ArcProbabiliste6">
+                             <void property="arrow1">
+                              <object class="javafx.scene.shape.Line">
+                               <void property="endX">
+                                <double>513.9488736829979</double>
+                               </void>
+                               <void property="endY">
+                                <double>214.60628462089966</double>
+                               </void>
+                               <void property="startX">
+                                <double>510.0</double>
+                               </void>
+                               <void property="startY">
+                                <double>195.0</double>
+                               </void>
+                              </object>
+                             </void>
+                             <void property="arrow2">
+                              <object class="javafx.scene.shape.Line">
+                               <void property="endX">
+                                <double>526.6560121686086</double>
+                               </void>
+                               <void property="endY">
+                                <double>206.07146145001474</double>
+                               </void>
+                               <void property="startX">
+                                <double>510.0</double>
+                               </void>
+                               <void property="startY">
+                                <double>195.0</double>
+                               </void>
+                              </object>
+                             </void>
+                             <void property="coefficient">
+                              <double>1.0</double>
+                             </void>
+                             <void property="destinataire">
+                              <object idref="NoeudGrapheProbabiliste4"/>
+                             </void>
+                             <void property="quadCurve">
+                              <object class="javafx.scene.shape.QuadCurve">
+                               <void property="controlX">
+                                <double>612.2792206135786</double>
+                               </void>
+                               <void property="controlY">
+                                <double>347.27922061357856</double>
+                               </void>
+                               <void property="endX">
+                                <double>510.0</double>
+                               </void>
+                               <void property="endY">
+                                <double>195.0</double>
+                               </void>
+                               <void property="fill">
+                                <null/>
+                               </void>
+                               <void property="startX">
+                                <double>460.0</double>
+                               </void>
+                               <void property="startY">
+                                <double>245.0</double>
+                               </void>
+                               <void property="stroke">
+                                <object idref="Color0"/>
+                               </void>
+                              </object>
+                             </void>
+                             <void property="source">
+                              <object idref="NoeudGrapheProbabiliste4"/>
+                             </void>
+                             <void property="valeur">
+                              <object class="javafx.scene.control.TextField">
+                               <void property="layoutX">
+                                <double>612.2792206135786</double>
+                               </void>
+                               <void property="layoutY">
+                                <double>347.27922061357856</double>
+                               </void>
+                               <void property="text">
+                                <string>1.0</string>
+                               </void>
+                              </object>
+                             </void>
+                            </object>
+                           </void>
+                          </object>
+                         </void>
+                        </object>
+                       </void>
+                       <void property="quadCurve">
+                        <object class="javafx.scene.shape.QuadCurve">
+                         <void property="controlX">
+                          <double>473.6411177090258</double>
+                         </void>
+                         <void property="controlY">
+                          <double>428.4377216896372</double>
+                         </void>
+                         <void property="endX">
+                          <double>445.6639239439768</double>
+                         </void>
+                         <void property="endY">
+                          <double>242.90069856814114</double>
+                         </void>
+                         <void property="fill">
+                          <null/>
+                         </void>
+                         <void property="startX">
+                          <double>348.3360760560232</double>
+                         </void>
+                         <void property="startY">
+                          <double>568.0993014318589</double>
+                         </void>
+                         <void property="stroke">
+                          <object idref="Color0"/>
+                         </void>
+                        </object>
+                       </void>
+                       <void property="source">
+                        <object idref="NoeudGrapheProbabiliste3"/>
+                       </void>
+                       <void property="valeur">
+                        <object class="javafx.scene.control.TextField">
+                         <void property="layoutX">
+                          <double>473.6411177090258</double>
+                         </void>
+                         <void property="layoutY">
+                          <double>428.4377216896372</double>
+                         </void>
+                         <void property="text">
+                          <string>0.05</string>
+                         </void>
+                        </object>
+                       </void>
+                      </object>
+                     </void>
+                    </object>
+                   </void>
+                  </object>
+                 </void>
+                 <void property="quadCurve">
+                  <object class="javafx.scene.shape.QuadCurve">
+                   <void property="controlX">
+                    <double>748.0774784589642</double>
+                   </void>
+                   <void property="controlY">
+                    <double>526.0231038929101</double>
+                   </void>
+                   <void property="endX">
+                    <double>383.9855600669312</double>
+                   </void>
+                   <void property="endY">
+                    <double>614.7984240368526</double>
+                   </void>
+                   <void property="fill">
+                    <null/>
+                   </void>
+                   <void property="startX">
+                    <double>1116.0144399330688</double>
+                   </void>
+                   <void property="startY">
+                    <double>597.2015759631474</double>
+                   </void>
+                   <void property="stroke">
+                    <object idref="Color0"/>
+                   </void>
+                  </object>
+                 </void>
+                 <void property="source">
+                  <object idref="NoeudGrapheProbabiliste1"/>
+                 </void>
+                 <void property="valeur">
+                  <object class="javafx.scene.control.TextField">
+                   <void property="layoutX">
+                    <double>748.0774784589642</double>
+                   </void>
+                   <void property="layoutY">
+                    <double>526.0231038929101</double>
+                   </void>
+                   <void property="text">
+                    <string>0.65</string>
+                   </void>
+                  </object>
+                 </void>
+                </object>
+               </void>
+              </object>
+             </void>
+            </object>
+           </void>
+           <void property="quadCurve">
+            <object class="javafx.scene.shape.QuadCurve">
+             <void property="controlX">
+              <double>975.4761374149433</double>
+             </void>
+             <void property="controlY">
+              <double>691.7374419214887</double>
+             </void>
+             <void property="endX">
+              <double>1116.1640987990695</double>
+             </void>
+             <void property="endY">
+              <double>600.0475858843395</double>
+             </void>
+             <void property="fill">
+              <null/>
+             </void>
+             <void property="startX">
+              <double>821.8359012009304</double>
+             </void>
+             <void property="startY">
+              <double>623.9524141156605</double>
+             </void>
+             <void property="stroke">
+              <object idref="Color0"/>
+             </void>
+            </object>
+           </void>
+           <void property="source">
+            <object idref="NoeudGrapheProbabiliste0"/>
+           </void>
+           <void property="valeur">
+            <object class="javafx.scene.control.TextField">
+             <void property="layoutX">
+              <double>975.4761374149433</double>
+             </void>
+             <void property="layoutY">
+              <double>691.7374419214887</double>
+             </void>
+             <void property="text">
+              <string>0.2</string>
+             </void>
+            </object>
+           </void>
+          </object>
+         </void>
+         <void method="add">
+          <object class="saeEditeur.ArcProbabiliste" id="ArcProbabiliste7">
+           <void property="arrow1">
+            <object class="javafx.scene.shape.Line">
+             <void property="endX">
+              <double>500.2760177275325</double>
+             </void>
+             <void property="endY">
+              <double>252.23897759864758</double>
+             </void>
+             <void property="startX">
+              <double>489.230042465886</double>
+             </void>
+             <void property="startY">
+              <double>235.56605252477127</double>
+             </void>
+            </object>
+           </void>
+           <void property="arrow2">
+            <object class="javafx.scene.shape.Line">
+             <void property="endX">
+              <double>508.83026486016826</double>
+             </void>
+             <void property="endY">
+              <double>239.54490689439533</double>
+             </void>
+             <void property="startX">
+              <double>489.230042465886</double>
+             </void>
+             <void property="startY">
+              <double>235.56605252477127</double>
+             </void>
+            </object>
+           </void>
+           <void property="coefficient">
+            <double>0.8</double>
+           </void>
+           <void property="destinataire">
+            <object idref="NoeudGrapheProbabiliste4"/>
+           </void>
+           <void property="quadCurve">
+            <object class="javafx.scene.shape.QuadCurve">
+             <void property="controlX">
+              <double>680.905684039634</double>
+             </void>
+             <void property="controlY">
+              <double>364.7319320545824</double>
+             </void>
+             <void property="endX">
+              <double>489.230042465886</double>
+             </void>
+             <void property="endY">
+              <double>235.56605252477127</double>
+             </void>
+             <void property="fill">
+              <null/>
+             </void>
+             <void property="startX">
+              <double>742.769957534114</double>
+             </void>
+             <void property="startY">
+              <double>587.4339474752287</double>
+             </void>
+             <void property="stroke">
+              <object idref="Color0"/>
+             </void>
+            </object>
+           </void>
+           <void property="source">
+            <object idref="NoeudGrapheProbabiliste0"/>
+           </void>
+           <void property="valeur">
+            <object class="javafx.scene.control.TextField">
+             <void property="layoutX">
+              <double>680.905684039634</double>
+             </void>
+             <void property="layoutY">
+              <double>364.7319320545824</double>
+             </void>
+             <void property="text">
+              <string>0.8</string>
+             </void>
+            </object>
+           </void>
+          </object>
+         </void>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void property="quadCurve">
+      <object class="javafx.scene.shape.QuadCurve">
+       <void property="controlX">
+        <double>550.8090413014502</double>
+       </void>
+       <void property="controlY">
+        <double>701.9699924970689</double>
+       </void>
+       <void property="endX">
+        <double>722.018754689332</double>
+       </void>
+       <void property="endY">
+        <double>626.6306508134063</double>
+       </void>
+       <void property="fill">
+        <null/>
+       </void>
+       <void property="startX">
+        <double>383.98124531066804</double>
+       </void>
+       <void property="startY">
+        <double>617.3693491865937</double>
+       </void>
+       <void property="stroke">
+        <object idref="Color0"/>
+       </void>
+      </object>
+     </void>
+     <void property="source">
+      <object idref="NoeudGrapheProbabiliste3"/>
+     </void>
+     <void property="valeur">
+      <object class="javafx.scene.control.TextField">
+       <void property="layoutX">
+        <double>550.8090413014502</double>
+       </void>
+       <void property="layoutY">
+        <double>701.9699924970689</double>
+       </void>
+       <void property="text">
+        <string>0.95</string>
+       </void>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object idref="ArcProbabiliste5"/>
+   </void>
+   <void method="add">
+    <object idref="ArcProbabiliste1"/>
+   </void>
+   <void method="add">
+    <object idref="ArcProbabiliste7"/>
+   </void>
+   <void method="add">
+    <object idref="ArcProbabiliste2"/>
+   </void>
+   <void method="add">
+    <object idref="ArcProbabiliste3"/>
+   </void>
+   <void method="add">
+    <object idref="ArcProbabiliste6"/>
+   </void>
+   <void method="add">
+    <object idref="ArcProbabiliste4"/>
+   </void>
+  </void>
+  <void property="noeuds">
+   <void method="add">
+    <object idref="NoeudGrapheProbabiliste3"/>
+   </void>
+   <void method="add">
+    <object idref="NoeudGrapheProbabiliste4"/>
+   </void>
+   <void method="add">
+    <object idref="NoeudGrapheProbabiliste0"/>
+   </void>
+   <void method="add">
+    <object idref="NoeudGrapheProbabiliste1"/>
+   </void>
+   <void method="add">
+    <object idref="NoeudGrapheProbabiliste2"/>
+   </void>
+  </void>
+  <void property="noeudsFinales">
+   <void method="add">
+    <object idref="NoeudGrapheProbabiliste4"/>
+   </void>
+   <void method="add">
+    <object idref="NoeudGrapheProbabiliste2"/>
+   </void>
+  </void>
+  <void property="noeudsTransitoires">
+   <void method="add">
+    <object idref="NoeudGrapheProbabiliste3"/>
+   </void>
+   <void method="add">
+    <object idref="NoeudGrapheProbabiliste0"/>
+   </void>
+   <void method="add">
+    <object idref="NoeudGrapheProbabiliste1"/>
+   </void>
+  </void>
+ </object>
+</java>
