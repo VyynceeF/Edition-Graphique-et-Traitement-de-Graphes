@@ -84,7 +84,10 @@ public class GrapheProbabiliste extends Graphe {
         }
         
         l.source.successeurs.add(l);
-        l.destinataire.successeurs.add(l);
+        
+        NoeudGrapheProbabiliste tmp = (NoeudGrapheProbabiliste) l.source;
+        tmp.successeursProbabilistes.add((ArcProbabiliste) l);
+        l.destinataire.predecesseurs.add(l);
         liens.add(l);
         NoeudGrapheProbabiliste noeudSource = (NoeudGrapheProbabiliste)l.source;
         
@@ -312,11 +315,14 @@ public class GrapheProbabiliste extends Graphe {
         double somme; // Somme des valeurs sortant du noeud n
         
         somme = 0;
-        for (int noLien = 0 ; noLien < n.successeurs.size() ; noLien++) {
+        System.out.println("successeurs " + n.successeursProbabilistes.size());
+        for (int noLien = 0 ; noLien < n.successeursProbabilistes.size() ; noLien++) {
             
-            somme += n.successeurs.get(noLien).coefficient;
+            somme += n.successeursProbabilistes.get(noLien).coefficient;
+            System.out.println("somme = " + somme);
         }
-        if (Math.abs(somme - 1) <= 10e-10) {
+        System.out.println("somme Totale = " + somme);
+        if (Math.abs(somme - 1) >= 10e-10) {
             n.c.setStroke(Color.RED);
             return false;
         }
@@ -667,11 +673,11 @@ public class GrapheProbabiliste extends Graphe {
     
     public double valeurEntreDeuxNoeud(NoeudGrapheProbabiliste n1, NoeudGrapheProbabiliste n2) {
         
-        for (int i = 0; i < n1.successeurs.size() ; i++) {
+        for (int i = 0; i < n1.successeursProbabilistes.size() ; i++) {
             
-            if (n1.successeurs.get(i).destinataire == n2) {
+            if (n1.successeursProbabilistes.get(i).destinataire == n2) {
                 
-                return n1.successeurs.get(i).coefficient;
+                return n1.successeursProbabilistes.get(i).coefficient;
             } 
         }
         return 0.0;
