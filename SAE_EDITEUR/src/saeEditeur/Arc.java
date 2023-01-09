@@ -28,6 +28,8 @@ public class Arc extends Lien {
     
     /** Extremite de la fleche */
     private Line arrow2 = null;
+    
+    private double xControl, yControl;
   
     public Arc(Noeud source,Noeud destinataire){
         super(source,destinataire);
@@ -45,8 +47,6 @@ public class Arc extends Lien {
         double yPrimeSource;
         double xPrimeDes;
         double yPrimeDes;
-        double xControl; 
-        double yControl; 
         double xVectDirect;
         double yVectDirect; 
         double xVectOrtho; 
@@ -139,6 +139,11 @@ public class Arc extends Lien {
      */
     @Override
     public boolean estClique(double x, double y) {
+        
+        double t = (x - source.position.x) / (destinataire.position.y - source.position.x);
+        System.out.println("yClic = " + y);
+        System.out.println("xClic = " + x);
+        System.out.println("y = " + ((1 - t)* (1 - t) * source.position.x + 2 * (1 - t) * t * yControl + t * t * destinataire.position.y));
         return false;
     }
     

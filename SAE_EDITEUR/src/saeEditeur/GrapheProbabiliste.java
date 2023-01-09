@@ -316,7 +316,7 @@ public class GrapheProbabiliste extends Graphe {
             
             somme += n.successeurs.get(noLien).coefficient;
         }
-        if (Math.abs(somme - 1) >= 10e-10) {
+        if (Math.abs(somme - 1) <= 10e-10) {
             n.c.setStroke(Color.RED);
             return false;
         }
