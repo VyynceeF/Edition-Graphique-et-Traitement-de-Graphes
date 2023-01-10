@@ -58,6 +58,12 @@ public class Arete extends Lien {
         a = (yPrimeDes - yPrimeSource) / (xPrimeDes - xPrimeSource);
         b = -(a * xPrimeDes) + yPrimeDes;
     }
+    
+    @Override
+    public void supprimer(AnchorPane zoneDessin) {
+        
+        zoneDessin.getChildren().removeAll(line);
+    }
 
     public Noeud getSource() {
         return source;

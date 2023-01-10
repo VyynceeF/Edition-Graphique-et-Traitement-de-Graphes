@@ -40,6 +40,8 @@ public abstract class Lien {
     public abstract void lienDeselectionne();
   
     public abstract void dessiner(AnchorPane zoneDessin);
+    
+    public abstract void supprimer(AnchorPane zoneDessin);
 
     public Noeud getSource() {
         return source;

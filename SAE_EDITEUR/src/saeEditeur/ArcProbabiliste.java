@@ -209,6 +209,12 @@ public class ArcProbabiliste extends Lien {
         
         return quadCurve.intersects(x, y, 1, 1);
     }
+    
+    @Override
+    public void supprimer(AnchorPane zoneDessin) {
+        
+        zoneDessin.getChildren().removeAll(quadCurve, arrow1, arrow2, valeur);
+    }
 
     public double getCoefficient() {
         return coefficient;

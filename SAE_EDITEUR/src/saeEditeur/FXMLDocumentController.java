@@ -5,6 +5,7 @@
  */
 package saeEditeur;
 
+import java.awt.event.KeyListener;
 import java.beans.XMLDecoder;
 import java.io.File;
 import java.io.FileInputStream;
@@ -506,6 +507,29 @@ public class FXMLDocumentController implements Initializable {
         pane.getChildren().add(gridPane);
         popUp.setScene(new Scene(pane, 500, 200));
         popUp.showAndWait();
+    }
+
+    /**
+     * Supprime le lien sélectionné lors du relachement de la touche "SUPPR"
+     * Supprime le noeud sélectionné et tous ses liens predecesseurs ou 
+     * successeurs lors du relachement de la touche "SUPPR"
+     * @param event 
+     */
+    @FXML
+    private void supprimer(KeyEvent event) {
+        
+        KeyCode keyCode = event.getCode();
+        System.out.println(keyCode);
+        // Suppression du noeud selectionne
+        if (graphe.noeudSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
+            System.out.println("Supp");
+            
+        }
+        // Suppression du lien selectionne
+        if (graphe.lienSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
+            
+            graphe.supprimerLien(graphe.lienSelectionne, zoneDessin);
+        }
     }
 
 }

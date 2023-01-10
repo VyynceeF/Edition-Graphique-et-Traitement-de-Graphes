@@ -319,6 +319,14 @@ public abstract class Graphe {
             lienSelectionne = null;
         }
     }
+
+    void supprimerLien(Lien lienSelectionne, AnchorPane zoneDessin) {
+        
+        liens.remove(lienSelectionne);
+        lienSelectionne.source.successeurs.remove(lienSelectionne);
+        lienSelectionne.destinataire.predecesseurs.remove(lienSelectionne);
+        lienSelectionne.supprimer(zoneDessin);
+    }
     
     
 }

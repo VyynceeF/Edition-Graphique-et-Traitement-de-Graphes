@@ -160,4 +160,10 @@ public class Arc extends Lien {
         arrow1.setStrokeWidth(1);
         arrow2.setStrokeWidth(1);
     }
+    
+    @Override
+    public void supprimer(AnchorPane zoneDessin) {
+        
+        zoneDessin.getChildren().removeAll(quadCurve, arrow1, arrow2);
+    }
 }
