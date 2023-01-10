@@ -20,8 +20,8 @@ public class Arete extends Lien {
     
     private Line line = null;
     
-    public Arete(Noeud source , Noeud destinataire){
-        super(source,destinataire);
+    public Arete(Noeud source , Noeud destinataire, Graphe g){
+        super(source,destinataire, g);
     }
     
     public Arete() {

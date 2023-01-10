@@ -13,8 +13,8 @@ import javafx.scene.text.Text;
  */
 public class NoeudGrapheNonOriente extends Noeud {
     
-    public NoeudGrapheNonOriente(double x, double y){
-        super(x,y);
+    public NoeudGrapheNonOriente(double x, double y, Graphe g){
+        super(x,y,g);
     }
 
     public NoeudGrapheNonOriente() {

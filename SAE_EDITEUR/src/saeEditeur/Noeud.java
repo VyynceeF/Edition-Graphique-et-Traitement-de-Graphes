@@ -22,7 +22,7 @@ import javafx.scene.text.*;
  *
  * @author amine.daamouch
  */
-public abstract class Noeud {
+public abstract class Noeud extends ElementGraphe {
     
     /** Position du point sur l'axe(x,y) */
     Point position ; 
@@ -57,20 +57,21 @@ public abstract class Noeud {
      */
     public static int noNoeud = 0 ;
     
-    public Noeud(double x, double y){
+    public Noeud(double x, double y, Graphe g){
         position = new Point(x,y);
         nom = NOM + noNoeud;
         noNoeud++;
         successeurs = new ArrayList<>();
         predecesseurs = new ArrayList<>();
-        
+        this.g = g;
     }
     
-    public Noeud(double x, double y, String nom){
+    public Noeud(double x, double y, String nom, Graphe g){
         position = new Point(x,y);
         this.nom = nom ; 
         successeurs = new ArrayList<>();
         predecesseurs = new ArrayList<>();
+        this.g = g;
     }
     
     public String toString() {

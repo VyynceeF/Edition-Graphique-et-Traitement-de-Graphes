@@ -319,20 +319,6 @@ public abstract class Graphe {
             lienSelectionne = null;
         }
     }
-
-    /**
-     * Verifie si le nom n'est pas deja utiliser
-     * @param aVerifier nouveau nom du noeud
-     * @return true si valide sinon false
-     */
-    public boolean estNomNoeudValide(String aVerifier) {
-        for (int i = 0; i < noeuds.size(); i++) {
-            if(aVerifier.equals(noeuds.get(i).nom)){
-                return false;
-            }
-        }
-        return true;
-    }
     
     /**
      * Renvoie le nom du noeud a creer

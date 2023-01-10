@@ -21,12 +21,12 @@ public class FactoryGrapheProbabiliste implements AbstractFactoryGraphe{
     }
 
     @Override
-    public Noeud creerNoeud(double x, double y) throws NoeudException {
-        return new NoeudGrapheProbabiliste(x, y);
+    public Noeud creerNoeud(double x, double y, Graphe g) throws NoeudException {
+        return new NoeudGrapheProbabiliste(x, y, g);
     }
 
-    public Lien creerLien(Noeud source, Noeud destinataire) throws LienException {
-        return new ArcProbabiliste(source,destinataire);
+    public Lien creerLien(Noeud source, Noeud destinataire, Graphe g) throws LienException {
+        return new ArcProbabiliste(source,destinataire,g);
     }
 
     

@@ -146,7 +146,7 @@ public class FXMLDocumentController implements Initializable {
             graphe.deselectionnerAll();
             
             /* Clear le grid des proprietees*/
-            gridProprietees.getChildren().clear();
+            EditeurDeProprietes.fermer(gridProprietees);
 
             /* Execution de l'action en fonction de la selection */
             // l'action du noeudCliquer
@@ -154,7 +154,7 @@ public class FXMLDocumentController implements Initializable {
 
                 try{
                     graphe.estNoeudValide(x, y);
-                    Noeud n = factory.creerNoeud(x, y);
+                    Noeud n = factory.creerNoeud(x, y, graphe);
 
                     graphe.ajouterNoeud(n);         
                     n.dessiner(zoneDessin);
@@ -170,14 +170,19 @@ public class FXMLDocumentController implements Initializable {
                     xAncien = graphe.noeudSelectionne.position.x;
                     yAncien = graphe.noeudSelectionne.position.y;
                     
+                    //Propriete du Noeud
                     Noeud noeudSelect = graphe.estNoeud(x, y);
-                    Proprietees.updateNameNoeud(noeudSelect, graphe, gridProprietees);
+                    EditeurDeProprietes.afficher(noeudSelect,gridProprietees,zoneDessin);
                 }
                 // Cas - Clic sur Lien
                 if (graphe.estLien(x, y) != null && graphe.noeudSelectionne == null) {
 
                     scrollpane.setPannable(false);
                     graphe.lienSelectionne(graphe.estLien(x, y));
+                    
+                    //Propriete du Lien
+                    Lien lienSelect = graphe.estLien(x, y);
+                    EditeurDeProprietes.afficher(lienSelect,gridProprietees, zoneDessin);
                 }
 
             }
@@ -302,7 +307,7 @@ public class FXMLDocumentController implements Initializable {
 
             if (destinataire != null) {
                 try{
-                    Lien l = graphe.ajouterLien(factory.creerLien(premierNoeud, destinataire));               
+                    Lien l = graphe.ajouterLien(factory.creerLien(premierNoeud, destinataire, graphe));               
                     l.dessiner(zoneDessin);
                     
                 }catch(LienException e){

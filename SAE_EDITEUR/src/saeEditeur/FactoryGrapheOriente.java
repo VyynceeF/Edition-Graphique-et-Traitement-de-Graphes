@@ -21,13 +21,13 @@ public class FactoryGrapheOriente implements AbstractFactoryGraphe{
     }
 
     @Override
-    public Noeud creerNoeud(double x, double y) throws NoeudException{
-        return new NoeudGrapheOriente(x, y) ;
+    public Noeud creerNoeud(double x, double y, Graphe g) throws NoeudException{
+        return new NoeudGrapheOriente(x, y, g) ;
     }
 
     @Override
-    public Lien creerLien(Noeud source, Noeud destinataire) throws LienException{
-        return new Arc(source, destinataire);
+    public Lien creerLien(Noeud source, Noeud destinataire, Graphe g) throws LienException{
+        return new Arc(source, destinataire, g);
     }
     
 }

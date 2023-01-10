@@ -13,9 +13,9 @@ public interface AbstractFactoryGraphe {
     
     public Graphe creerGraphe() ;
     
-    public Noeud creerNoeud(double x, double y) throws NoeudException ;
+    public Noeud creerNoeud(double x, double y, Graphe g) throws NoeudException ;
     
-    public Lien creerLien(Noeud source, Noeud destinataire) throws LienException;
+    public Lien creerLien(Noeud source, Noeud destinataire, Graphe g) throws LienException;
     
     
 }

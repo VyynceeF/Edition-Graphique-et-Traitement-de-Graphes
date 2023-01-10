@@ -11,17 +11,17 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author amine.daamouch
  */
-public abstract class Lien {
+public abstract class Lien extends ElementGraphe {
     
     /** premier noeud partant du lien */
     Noeud source ;
      /** deuxieme noeud partant du lien */
-    Noeud destinataire;
+    Noeud destinataire; 
     
-    
-    public Lien(Noeud source , Noeud destinataire){
+    public Lien(Noeud source , Noeud destinataire, Graphe g){
         this.source = source;
         this.destinataire= destinataire;
+        this.g = g;
     }
 
     public Lien() {

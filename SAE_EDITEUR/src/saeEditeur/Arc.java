@@ -31,8 +31,8 @@ public class Arc extends Lien {
     
     private double xControl, yControl;
   
-    public Arc(Noeud source,Noeud destinataire){
-        super(source,destinataire);
+    public Arc(Noeud source,Noeud destinataire, Graphe g){
+        super(source,destinataire,g);
     }
     
     public Arc() {
@@ -140,19 +140,7 @@ public class Arc extends Lien {
     @Override
     public boolean estClique(double x, double y) {
         
-        System.out.println("yClic = " + y);
-        System.out.println("xClic = " + x);
-        for (double t = 0.0 ; t <= 1.0 ; t = t + 0.0001) {
-            if (Math.abs((x - (1 - t)*(1 - t) * source.position.y + 2 * (1 - t) * t * yControl + t * t * destinataire.position.y) - x) <= 5) {
-                System.out.println("test Ok - " + (x - (1 - t)*(1 - t) * source.position.y + 2 * (1 - t) * t * yControl + t * t * destinataire.position.y));
-                return true;
-            }
-            System.out.println("test - " + (x - (1 - t)*(1 - t) * source.position.y + 2 * (1 - t) * t * yControl + t * t * destinataire.position.y));
-        } 
-        System.out.println("x = " + x);
-        System.out.println("y = " + y);
-        System.out.println("faux");
-        return false;
+        return quadCurve.intersects(x,y,1,1);
     }
     
     /**

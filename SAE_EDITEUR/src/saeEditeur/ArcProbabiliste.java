@@ -43,8 +43,8 @@ public class ArcProbabiliste extends Lien {
     /** Ligne (courbee) de la fleche */
     private QuadCurve quadCurve = null;
     
-    public ArcProbabiliste(Noeud source , Noeud destinataire){
-        super(source,destinataire);
+    public ArcProbabiliste(Noeud source , Noeud destinataire, Graphe g){
+        super(source,destinataire,g);
         coefficient = 0 ;
     }
     
@@ -52,8 +52,8 @@ public class ArcProbabiliste extends Lien {
         
     }
     
-    public ArcProbabiliste(Noeud source, Noeud destinataire, double valeur) throws ArcProbabilisteException {
-        super(source, destinataire);
+    public ArcProbabiliste(Noeud source, Noeud destinataire, double valeur, Graphe g) throws ArcProbabilisteException {
+        super(source, destinataire, g);
         if(valeur < 0 || valeur > 1  ){
             throw new ArcProbabilisteException("la probabilités de cette arc ne peut"
                     + "pas être supérieur à 1 ou inférieur à 0 ");
@@ -260,7 +260,7 @@ public class ArcProbabiliste extends Lien {
      */
     @Override
     public boolean estClique(double x, double y) {
-        return false;
+        return quadCurve.intersects(x,y,1,1);
     }
     
     /**

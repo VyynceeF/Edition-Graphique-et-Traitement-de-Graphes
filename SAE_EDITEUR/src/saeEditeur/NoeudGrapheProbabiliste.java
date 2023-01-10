@@ -27,8 +27,8 @@ public class NoeudGrapheProbabiliste extends Noeud {
     /** Nom de la classe */
     Text nomClasse;
     
-    public NoeudGrapheProbabiliste(double x, double y) {
-        super(x, y);
+    public NoeudGrapheProbabiliste(double x, double y, Graphe g) {
+        super(x, y, g);
         successeursProbabilistes = new ArrayList<>();
         nomClasse = null;
     }
@@ -49,8 +49,8 @@ public class NoeudGrapheProbabiliste extends Noeud {
         
     }
     
-    public NoeudGrapheProbabiliste(String nom, double x, double y) {
-        super(x, y, nom);
+    public NoeudGrapheProbabiliste(String nom, double x, double y, Graphe g) {
+        super(x, y, nom, g);
         successeurs = new ArrayList<>();
     }
     
