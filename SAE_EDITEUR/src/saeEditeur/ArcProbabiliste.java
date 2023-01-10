@@ -197,6 +197,18 @@ public class ArcProbabiliste extends Lien {
         valeur.setFont(new Font(12));     
         zoneDessin.getChildren().add(valeur);
     }
+    
+    /**
+     * Predicat verifiant si le point (x, y) est sur le lien)
+     * @param x Abscisse du point a tester
+     * @param y Ordonnee du point a tester
+     * @return Le lien s'il existe un lien sur la position (x, y), false sinon
+     */
+    @Override
+    public boolean estClique(double x, double y) {
+        
+        return quadCurve.intersects(x, y, 1, 1);
+    }
 
     public double getCoefficient() {
         return coefficient;
@@ -255,22 +267,13 @@ public class ArcProbabiliste extends Lien {
     }
     
     /**
-     * Predicat verifiant si le point (x, y) est sur le lien)
-     * @param x Abscisse du point a tester
-     * @param y Ordonnee du point a tester
-     * @return Le lien s'il existe un lien sur la position (x, y), false sinon
-     */
-    @Override
-    public boolean estClique(double x, double y) {
-        return false;
-    }
-    
-    /**
      * Augmente l'epaisseur du lien
      */
     public void lienSelectionne() {
         
-        
+        quadCurve.setStrokeWidth(3);
+        arrow1.setStrokeWidth(3);
+        arrow2.setStrokeWidth(3);
     }
     
     /**
@@ -279,5 +282,8 @@ public class ArcProbabiliste extends Lien {
     @Override
     public void lienDeselectionne() {
         
+        quadCurve.setStrokeWidth(1);
+        arrow1.setStrokeWidth(1);
+        arrow2.setStrokeWidth(1);
     }
 }
