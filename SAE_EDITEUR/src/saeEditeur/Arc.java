@@ -5,13 +5,10 @@
  */
 package saeEditeur;
 
-import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
-import javafx.scene.text.Font;
 import static saeEditeur.ArcProbabiliste.FLECHE_LONGUEUR;
 
 /**
@@ -137,7 +134,7 @@ public class Arc extends Lien {
      * @param y Ordonnee du point a tester
      * @return Le lien s'il existe un lien sur la position (x, y), false sinon
      */
-    @Override
+     @Override
     public boolean estClique(double x, double y) {
         
         System.out.println("yClic = " + y);

@@ -21,20 +21,28 @@ import javafx.scene.text.TextBoundsType;
  */
 public class NoeudGrapheProbabiliste extends Noeud {
     
-    /** Liste des successeurs  */
-    ArrayList<ArcProbabiliste> successeursProbabilistes ;
-    
     /** Nom de la classe */
     Text nomClasse;
     
     public NoeudGrapheProbabiliste(double x, double y) {
         super(x, y);
-        successeursProbabilistes = new ArrayList<>();
         nomClasse = null;
     }
     
     public NoeudGrapheProbabiliste() {
         
+    }
+
+    public ArrayList<Lien> getSuccesseurs() {
+        return successeurs;
+    }
+
+    public ArrayList<Lien> getPredecesseurs() {
+        return predecesseurs;
+    }
+
+    public void setPredecesseurs(ArrayList<Lien> predecesseurs) {
+        this.predecesseurs = predecesseurs;
     }
     
     public NoeudGrapheProbabiliste(String nom, double x, double y) {
@@ -75,12 +83,8 @@ public class NoeudGrapheProbabiliste extends Noeud {
         c.setStroke(Color.BLUE);
     }
 
-    public ArrayList<ArcProbabiliste> getSuccesseursProbabilistes() {
-        return successeursProbabilistes;
-    }
-
-    public void setSuccesseurs(ArrayList<ArcProbabiliste> successeurs) {
-        this.successeursProbabilistes = successeursProbabilistes;
+    public void setSuccesseurs(ArrayList<Lien> successeurs) {
+        this.successeurs = successeurs;
     }
 
     public Text getNomClasse() {

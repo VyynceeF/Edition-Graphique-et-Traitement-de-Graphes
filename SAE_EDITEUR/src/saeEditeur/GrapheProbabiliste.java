@@ -83,10 +83,8 @@ public class GrapheProbabiliste extends Graphe {
             throw new LienException("impossible de créer un arcs probabiliste");
         }
         
-        l.source.successeurs.add(l);
-        
         NoeudGrapheProbabiliste tmp = (NoeudGrapheProbabiliste) l.source;
-        tmp.successeursProbabilistes.add((ArcProbabiliste) l);
+        tmp.successeurs.add(l);
         l.destinataire.predecesseurs.add(l);
         liens.add(l);
         NoeudGrapheProbabiliste noeudSource = (NoeudGrapheProbabiliste)l.source;
@@ -315,10 +313,20 @@ public class GrapheProbabiliste extends Graphe {
         double somme; // Somme des valeurs sortant du noeud n
         
         somme = 0;
-        System.out.println("successeurs " + n.successeursProbabilistes.size());
-        for (int noLien = 0 ; noLien < n.successeursProbabilistes.size() ; noLien++) {
+        System.out.println("successeurs " + n.successeurs.size());
+        for (int noLien = 0 ; noLien < n.successeurs.size() ; noLien++) {
             
-            somme += n.successeursProbabilistes.get(noLien).coefficient;
+            ArcProbabiliste tmp = (ArcProbabiliste) n.successeurs.get(noLien);
+            
+            // Si un lien de ce noeud est inférieur ou égal à 0, 
+            // Les conditions sont fausses.
+            if (tmp.coefficient <= 0.0) {
+                System.out.println(tmp.coefficient + " => true");
+                n.c.setStroke(Color.RED);
+                return false;
+            }
+            
+            somme += tmp.coefficient;
             System.out.println("somme = " + somme);
         }
         System.out.println("somme Totale = " + somme);
@@ -673,11 +681,12 @@ public class GrapheProbabiliste extends Graphe {
     
     public double valeurEntreDeuxNoeud(NoeudGrapheProbabiliste n1, NoeudGrapheProbabiliste n2) {
         
-        for (int i = 0; i < n1.successeursProbabilistes.size() ; i++) {
+        for (int i = 0; i < n1.successeurs.size() ; i++) {
             
-            if (n1.successeursProbabilistes.get(i).destinataire == n2) {
+            if (n1.successeurs.get(i).destinataire == n2) {
                 
-                return n1.successeursProbabilistes.get(i).coefficient;
+                ArcProbabiliste tmp = (ArcProbabiliste) n1.successeurs.get(i);
+                return tmp.coefficient;
             } 
         }
         return 0.0;

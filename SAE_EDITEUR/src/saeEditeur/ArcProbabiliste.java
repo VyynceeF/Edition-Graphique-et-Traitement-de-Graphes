@@ -185,6 +185,8 @@ public class ArcProbabiliste extends Lien {
                 arrow1.setStroke(Color.RED);
                 arrow2.setStroke(Color.RED);
                 quadCurve.setStroke(Color.RED);
+                // Modification (utilisé pour la vérification d'un graphe)
+                this.coefficient = Double.valueOf(valeur.getText());
             }
         });
         
