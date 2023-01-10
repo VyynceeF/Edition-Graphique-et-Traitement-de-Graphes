@@ -522,8 +522,8 @@ public class FXMLDocumentController implements Initializable {
         System.out.println(keyCode);
         // Suppression du noeud selectionne
         if (graphe.noeudSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
-            System.out.println("Supp");
             
+            graphe.supprmierNoeud(graphe.noeudSelectionne, zoneDessin);
         }
         // Suppression du lien selectionne
         if (graphe.lienSelectionne != null && keyCode.equals(KeyCode.DELETE)) {

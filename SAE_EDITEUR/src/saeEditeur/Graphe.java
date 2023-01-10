@@ -323,13 +323,16 @@ public abstract class Graphe {
     void supprimerLien(Lien lienSelectionne, AnchorPane zoneDessin) {
         
         liens.remove(lienSelectionne);
-        lienSelectionne.source.successeurs.remove(lienSelectionne);
-        lienSelectionne.destinataire.predecesseurs.remove(lienSelectionne);
         lienSelectionne.supprimer(zoneDessin);
     }
     
     void supprmierNoeud(Noeud noeudSelectionne,AnchorPane zoneDessin) {
         
+        noeuds.remove(noeudSelectionne);
+        /* Suppression dans la zone de dessin */
+        noeudSelectionne.supprimer(zoneDessin);
+        
+        deselectionnerAll();
     }
     
     

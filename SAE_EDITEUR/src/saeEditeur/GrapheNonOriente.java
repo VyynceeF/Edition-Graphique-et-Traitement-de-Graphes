@@ -30,7 +30,7 @@ public class GrapheNonOriente extends Graphe {
     }
     
     @Override
-    public void ajouterNoeud(Noeud n) throws NoeudException{
+    public void ajouterNoeud(Noeud n) throws NoeudException {
         if (n instanceof NoeudGrapheNonOriente){
             noeuds.add(n);
         }else{

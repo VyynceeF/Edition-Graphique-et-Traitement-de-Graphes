@@ -213,6 +213,8 @@ public class ArcProbabiliste extends Lien {
     @Override
     public void supprimer(AnchorPane zoneDessin) {
         
+        source.successeurs.remove(this);
+        destinataire.predecesseurs.remove(this);
         zoneDessin.getChildren().removeAll(quadCurve, arrow1, arrow2, valeur);
     }
 
