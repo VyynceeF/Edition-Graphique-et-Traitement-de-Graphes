@@ -135,4 +135,6 @@ public class NoeudGrapheProbabiliste extends Noeud {
         Noeud.noNoeud = noNoeud;
     }
     
+   
+    
 }

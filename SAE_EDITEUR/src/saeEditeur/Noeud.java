@@ -181,5 +181,7 @@ public abstract class Noeud {
         
         c.setStrokeWidth(1);
     }
-   
+    
+    
+
 }

@@ -49,7 +49,7 @@ public abstract class Graphe {
     
     public abstract void ajouterNoeud(Noeud n) throws NoeudException;
     
-    public abstract Lien ajouterLien(Lien l ) throws LienException;
+    public abstract Lien ajouterLien(Lien l) throws LienException;
     
     public Noeud estNoeud(double x, double y) {
         
@@ -326,6 +326,10 @@ public abstract class Graphe {
         lienSelectionne.source.successeurs.remove(lienSelectionne);
         lienSelectionne.destinataire.predecesseurs.remove(lienSelectionne);
         lienSelectionne.supprimer(zoneDessin);
+    }
+    
+    void supprmierNoeud(Noeud noeudSelectionne,AnchorPane zoneDessin) {
+        
     }
     
     

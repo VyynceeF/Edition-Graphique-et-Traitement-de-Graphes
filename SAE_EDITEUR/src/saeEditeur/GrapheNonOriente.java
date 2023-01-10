@@ -45,7 +45,7 @@ public class GrapheNonOriente extends Graphe {
            // TODO Lève l'exception
         }
         l.source.successeurs.add(l);
-        l.destinataire.successeurs.add(l);
+        l.destinataire.predecesseurs.add(l);
         for (Lien aTester : liens) {
             if ((l.destinataire == aTester.destinataire
                    && l.source == aTester.source)

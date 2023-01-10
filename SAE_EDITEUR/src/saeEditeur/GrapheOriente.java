@@ -48,7 +48,7 @@ public class GrapheOriente extends Graphe {
         }
         
         l.source.successeurs.add(l);
-        l.destinataire.successeurs.add(l);
+        l.destinataire.predecesseurs.add(l);
         
         for (Lien aTester : liens) {
             if ((l.destinataire == aTester.destinataire
