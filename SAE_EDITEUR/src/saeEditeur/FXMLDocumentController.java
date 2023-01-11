@@ -332,10 +332,26 @@ public class FXMLDocumentController implements Initializable {
             } else if (graphe.lienSelectionne != null) {
                 
                 Noeud nouveauNoeud = graphe.estNoeud(x, y);
+                Lien nouveauLien;
                 
+              
                 if (nouveauNoeud != null) {
-                    // Changement l'extremité
-                    graphe.changementExtremiteLien(nouveauNoeud, graphe.lienSelectionne.estExtremite(x, y), zoneDessin);
+                    // Créer un nouveau lien pour le comparer a ceux existant
+                    if (graphe.lienSelectionne.estExtremite(x, y) == 1) {
+                        nouveauLien = factory.creerLien(nouveauNoeud, graphe.lienSelectionne.destinataire);
+                    } else {
+                        nouveauLien = factory.creerLien(graphe.lienSelectionne.source, nouveauNoeud);
+                    }
+                    // Test la presence ou non d'un lien entre le nouveau noeud et l'autre
+                    if (graphe.estLienValide(nouveauLien)) {
+                        
+                        // Changement l'extremité
+                        graphe.changementExtremiteLien(nouveauNoeud, graphe.lienSelectionne.estExtremite(x, y), zoneDessin);
+                    } else {
+                        // Remise par defaut de l'extremite du lien
+                        graphe.lienSelectionne.remiseDefaut();
+                        graphe.deselectionnerAll(zoneDessin);
+                    }
                     
                 } else {
                     // Remise par defaut de l'extremite du lien

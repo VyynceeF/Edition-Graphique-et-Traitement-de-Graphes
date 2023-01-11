@@ -3,13 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Graphe.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/ArcProbabiliste.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Arete.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Noeud.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Lien.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/FXMLDocumentController.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Arc.java</file>
+            <file>file:/Z:/u/www/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Arc.java</file>
+            <file>file:/Z:/u/www/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Graphe.java</file>
+            <file>file:/Z:/u/www/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/ArcProbabiliste.java</file>
+            <file>file:/Z:/u/www/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/GrapheProbabiliste.java</file>
+            <file>file:/Z:/u/www/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/FXMLDocumentController.java</file>
+            <file>file:/Z:/u/www/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/GrapheOriente.java</file>
+            <file>file:/Z:/u/www/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Arete.java</file>
+            <file>file:/Z:/u/www/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/ArcProbabilisteException.java</file>
+            <file>file:/Z:/u/www/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Noeud.java</file>
         </group>
     </open-files>
 </project-private>

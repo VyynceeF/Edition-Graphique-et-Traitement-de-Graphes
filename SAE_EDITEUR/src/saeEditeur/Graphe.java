@@ -51,6 +51,8 @@ public abstract class Graphe {
     
     public abstract Lien ajouterLien(Lien l) throws LienException;
     
+    public abstract boolean estLienValide(Lien l);
+
     public Noeud estNoeud(double x, double y) {
         
         for (Noeud aTester : noeuds) {
@@ -198,6 +200,7 @@ public abstract class Graphe {
         return true;
     }
     
+   
     /**
      * Permet d'enregistrer le graphe dans un fichier
      * @param chemin Chemin et nom du fichier

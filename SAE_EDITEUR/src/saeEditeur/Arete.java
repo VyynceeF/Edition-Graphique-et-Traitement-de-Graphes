@@ -124,6 +124,7 @@ public class Arete extends Lien {
         }
     }
     
+    
     @Override
     public void supprimer(AnchorPane zoneDessin) {
         

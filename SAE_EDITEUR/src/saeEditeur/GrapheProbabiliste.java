@@ -83,12 +83,8 @@ public class GrapheProbabiliste extends Graphe {
             throw new LienException("impossible de créer un arcs probabiliste");
         }
         
-        for (Lien aTester : liens) {
-            if ((l.destinataire == aTester.destinataire
-                   && l.source == aTester.source)) {      
-                throw new LienException("Impossible de créer un lien sur un lien");
-            }
-                     
+        if (!estLienValide(l)) {
+            throw new LienException("Impossible de créer un lien sur un lien");
         }
         
         NoeudGrapheProbabiliste tmp = (NoeudGrapheProbabiliste) l.source;
@@ -98,6 +94,17 @@ public class GrapheProbabiliste extends Graphe {
         NoeudGrapheProbabiliste noeudSource = (NoeudGrapheProbabiliste)l.source;
         
         return l; 
+    }
+    
+    public boolean estLienValide(Lien l)  {
+        for (Lien aTester : liens) {
+            if ((l.destinataire == aTester.destinataire
+                   && l.source == aTester.source)) {      
+                return false;
+            }
+                     
+        } 
+        return true; 
     }
     
     /**
@@ -686,6 +693,8 @@ public class GrapheProbabiliste extends Graphe {
         }
         return m;
     }
+    
+    
     
     public double valeurEntreDeuxNoeud(NoeudGrapheProbabiliste n1, NoeudGrapheProbabiliste n2) {
         
