@@ -5,6 +5,7 @@
  */
 package saeEditeur;
 
+import java.awt.event.KeyListener;
 import java.beans.XMLDecoder;
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,6 +30,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -147,6 +149,7 @@ public class FXMLDocumentController implements Initializable {
             
             /* Clear le grid des proprietees*/
             EditeurDeProprietes.fermer(gridProprietees);
+
 
             /* Execution de l'action en fonction de la selection */
             // l'action du noeudCliquer
@@ -281,12 +284,19 @@ public class FXMLDocumentController implements Initializable {
                 x = event.getX();
                 y = event.getY();
 
-                // Créer une nouvelle enveloppe ou modifier l'enveloppe en cours
+                // Permet de deplacer un noeud
                 if (graphe.noeudSelectionne != null) {
 
                     // 1er point cliqué : il faut créer une nouvelle enveloppe
                     graphe.noeudSelectionne.modifierPosition(x, y, zoneDessin);
                 }
+                // Permet de deplacer un lien
+                if (graphe.lienSelectionne != null) {
+
+                    // 1er point cliqué : il faut créer une nouvelle enveloppe
+                    graphe.lienSelectionne.modifierPosition(x, y, graphe.lienSelectionne.estExtremite(x, y), zoneDessin);
+                }
+                
             }
         } else {
             // Affichage alerte aucun graphe selectionne
@@ -317,24 +327,53 @@ public class FXMLDocumentController implements Initializable {
             }
             zoneDessin.getChildren().remove(lineMouseDrag);
             lineMouseDrag = null;
-        } else if (selection == 3 && graphe.noeudSelectionne != null) {
+        } else if (selection == 3) {
                 
-                double x, y; // Position souris
+            double x, y; // Position souris
 
-                // Récupérer position souris en évitant de déborder de la zone de dessin
-                x = event.getX();
-                y = event.getY();
+            // Récupérer position souris en évitant de déborder de la zone de dessin
+            x = event.getX();
+            y = event.getY();
 
-                if (graphe.noeudSelectionne != null) {
-                    // Si la position du noeud est invalide 
-                    // Alors on le remet sur son ancienne position
-                    if (!graphe.estNoeudValideApresDeplacement(x, y, graphe.noeudSelectionne)) {
-                        
-                        graphe.noeudSelectionne.modifierPosition(xAncien, yAncien, zoneDessin);
-                        graphe.noeudSelectionne.noeudSelectionne();
+            if (graphe.noeudSelectionne != null) {
+                // Si la position du noeud est invalide 
+                // Alors on le remet sur son ancienne position
+                if (!graphe.estNoeudValideApresDeplacement(x, y, graphe.noeudSelectionne)) {
+
+                    graphe.noeudSelectionne.modifierPosition(xAncien, yAncien, zoneDessin);
+                    graphe.noeudSelectionne.noeudSelectionne();
+                }
+            } else if (graphe.lienSelectionne != null) {
+                
+                Noeud nouveauNoeud = graphe.estNoeud(x, y);
+                Lien nouveauLien;
+                
+              
+                if (nouveauNoeud != null) {
+                    // Créer un nouveau lien pour le comparer a ceux existant
+                    if (graphe.lienSelectionne.estExtremite(x, y) == 1) {
+                        nouveauLien = factory.creerLien(nouveauNoeud, graphe.lienSelectionne.destinataire);
+                    } else {
+                        nouveauLien = factory.creerLien(graphe.lienSelectionne.source, nouveauNoeud);
                     }
+                    // Test la presence ou non d'un lien entre le nouveau noeud et l'autre
+                    if (graphe.estLienValide(nouveauLien)) {
+                        
+                        // Changement l'extremité
+                        graphe.changementExtremiteLien(nouveauNoeud, graphe.lienSelectionne.estExtremite(x, y), zoneDessin);
+                    } else {
+                        // Remise par defaut de l'extremite du lien
+                        graphe.lienSelectionne.remiseDefaut();
+                        graphe.deselectionnerAll(zoneDessin);
+                    }
+                    
+                } else {
+                    // Remise par defaut de l'extremite du lien
+                    graphe.lienSelectionne.remiseDefaut();
+                    graphe.deselectionnerAll(zoneDessin);
                 }
             }
+        }
     }
 
     @FXML
@@ -521,6 +560,26 @@ public class FXMLDocumentController implements Initializable {
         popUp.showAndWait();
     }
 
+    @FXML
+    private void raccourci(KeyEvent event) {
+        
+        KeyCode keyCode = event.getCode();
+        System.out.println(keyCode);
+        
+        System.out.println("root click(handler)");
+        event.consume();
+        // Suppression du noeud selectionne
+        if (graphe.noeudSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
+            
+            graphe.supprmierNoeud(graphe.noeudSelectionne, zoneDessin);
+        }
+        // Suppression du lien selectionne
+        if (graphe.lienSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
+            
+            graphe.supprimerLien(graphe.lienSelectionne, zoneDessin);
+        }
+    }
+    
 }
    
  

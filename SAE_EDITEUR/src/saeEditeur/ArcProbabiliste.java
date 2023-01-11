@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.text.Font;
@@ -185,6 +186,8 @@ public class ArcProbabiliste extends Lien {
                 arrow1.setStroke(Color.RED);
                 arrow2.setStroke(Color.RED);
                 quadCurve.setStroke(Color.RED);
+                // Modification (utilisé pour la vérification d'un graphe)
+                this.coefficient = Double.valueOf(valeur.getText());
             }
         });
         
@@ -194,6 +197,26 @@ public class ArcProbabiliste extends Lien {
         valeur.setBackground(Background.EMPTY);
         valeur.setFont(new Font(12));     
         zoneDessin.getChildren().add(valeur);
+    }
+    
+    /**
+     * Predicat verifiant si le point (x, y) est sur le lien)
+     * @param x Abscisse du point a tester
+     * @param y Ordonnee du point a tester
+     * @return Le lien s'il existe un lien sur la position (x, y), false sinon
+     */
+    @Override
+    public boolean estClique(double x, double y) {
+        
+        return quadCurve.intersects(x, y, 1, 1);
+    }
+    
+    @Override
+    public void supprimer(AnchorPane zoneDessin) {
+        
+        source.successeurs.remove(this);
+        destinataire.predecesseurs.remove(this);
+        zoneDessin.getChildren().removeAll(quadCurve, arrow1, arrow2, valeur);
     }
 
     public double getCoefficient() {
@@ -266,16 +289,123 @@ public class ArcProbabiliste extends Lien {
     /**
      * Augmente l'epaisseur du lien
      */
-    public void lienSelectionne() {
+    public void lienSelectionne(AnchorPane zoneDessin) {
         
-        
+        pointDepart = new Circle(quadCurve.getStartX(), quadCurve.getStartY(), 5);
+        pointArrive = new Circle(quadCurve.getEndX(), quadCurve.getEndY(), 5);
+        zoneDessin.getChildren().addAll(pointDepart, pointArrive);
+        quadCurve.setStrokeWidth(3);
+        arrow1.setStrokeWidth(3);
+        arrow2.setStrokeWidth(3);
     }
     
     /**
      * Augmente l'epaisseur du lien
      */
     @Override
-    public void lienDeselectionne() {
+    public void lienDeselectionne(AnchorPane zoneDessin) {
+        
+        quadCurve.setStrokeWidth(1);
+        arrow1.setStrokeWidth(1);
+        arrow2.setStrokeWidth(1);
+        zoneDessin.getChildren().removeAll(pointDepart, pointArrive);
+    }
+    
+    @Override
+    public int estExtremite(double x, double y) {
+        
+        if (Math.sqrt((x - quadCurve.getStartX())*(x - quadCurve.getStartX())
+                      + (y - quadCurve.getStartY())*(y - quadCurve.getStartY())) <= 5) {
+            
+            return 1;
+        } else if (Math.sqrt((x - quadCurve.getEndX())*(x - quadCurve.getEndX())
+                             + (y - quadCurve.getEndY())*(y - quadCurve.getEndY())) <= 5) {
+            
+            return 2;
+        }
+        return 0;
+    }
+    
+    /**
+     * Permet de deplacer l'extremite en position x, y
+     * @param x Nouvelle abscisse
+     * @param y Nouvelle ordonnee
+     * @param extremite 1 -> Premiere extremite | 2 -> Derniere extremite
+     * @param zoneDessin Zone de dessin
+     */
+    public void modifierPosition(double x, double y, int extremite,AnchorPane zoneDessin){ 
+        
+        
+        if (extremite == 1) {
+                      
+            quadCurve.setStartX(x);
+            quadCurve.setStartY(y);
+            pointDepart.setCenterX(x);
+            pointDepart.setCenterY(y);
+            zoneDessin.getChildren().remove(valeur);
+            
+            
+        } else if (extremite == 2) {
+                      
+            quadCurve.setEndX(x);
+            quadCurve.setEndY(y);
+            pointArrive.setCenterX(x);
+            pointArrive.setCenterY(y);
+            arrow1.setVisible(false);            
+            arrow2.setVisible(false);
+            valeur.setVisible(false); 
+            
+        }
         
     }
+    
+    @Override
+    public void remiseDefaut() {
+        
+        double distance = Math.sqrt(Math.pow(destinataire.position.x - source.position.x, 2) + Math.pow(destinataire.position.y - source.position.y, 2));
+        double xPrimeSource = source.position.x + (destinataire.position.x - source.position.x) / distance * Noeud.RAYON;
+        double yPrimeSource = source.position.y + (destinataire.position.y - source.position.y) / distance * Noeud.RAYON;
+        double xPrimeDes = destinataire.position.x - (destinataire.position.x - source.position.x) / distance * Noeud.RAYON;
+        double yPrimeDes = destinataire.position.y - (destinataire.position.y - source.position.y) / distance * Noeud.RAYON;
+        quadCurve.setStartX(xPrimeSource);
+        quadCurve.setStartY(yPrimeSource);
+        quadCurve.setEndX(xPrimeDes);
+        quadCurve.setEndY(yPrimeDes);
+        arrow1.setVisible(true);            
+        arrow2.setVisible(true);
+        valeur.setVisible(true); 
+        
+    }
+    
+    @Override
+    public void changementExtremite(Noeud nouveauNoeud, int extremite, AnchorPane zoneDessin) {
+        
+        if (extremite == 1) {
+        /* Noeud source */
+                      
+            // Le noeud source n'a plus ce lien comme predecesseur
+            source.successeurs.remove(this);
+            
+            // Modification de l'extremite du lien
+            source = nouveauNoeud;
+            source.successeurs.add(this);
+            
+            // On redessine correctement le lien
+            this.dessiner(zoneDessin);
+            
+        } else if (extremite == 2) {
+        /* Noeud destinataire */
+                      
+            // Le noeud source n'a plus ce lien comme predecesseur
+            destinataire.predecesseurs.remove(this);
+            
+            // Modification de l'extremite du lien
+            destinataire = nouveauNoeud;
+            destinataire.predecesseurs.add(this);
+            
+            // On redessine correctement le lien
+            this.dessiner(zoneDessin);
+        }
+    }
+    
 }

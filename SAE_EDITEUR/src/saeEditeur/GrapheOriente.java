@@ -49,18 +49,25 @@ public class GrapheOriente extends Graphe {
         }
         
         l.source.successeurs.add(l);
-        l.destinataire.successeurs.add(l);
+        l.destinataire.predecesseurs.add(l);
         
-        for (Lien aTester : liens) {
-            if ((l.destinataire == aTester.destinataire
-                   && l.source == aTester.source)) {      
-                throw new LienException("Impossible de créer un lien sur un lien");
-            }
-                     
+        if (!estLienValide(l)) {
+            throw new LienException("Impossible de créer un lien sur un lien");
         }
         
         liens.add(l);
         return l;
+    }
+    
+    public boolean estLienValide(Lien l)  {
+        for (Lien aTester : liens) {
+            if ((l.destinataire == aTester.destinataire
+                   && l.source == aTester.source)) {      
+                return false;
+            }
+                     
+        } 
+        return true; 
     }
 
     public ArrayList<Noeud> getNoeuds() {

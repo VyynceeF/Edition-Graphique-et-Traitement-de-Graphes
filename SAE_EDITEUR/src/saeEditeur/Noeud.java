@@ -182,5 +182,24 @@ public abstract class Noeud extends ElementGraphe {
         
         c.setStrokeWidth(1);
     }
-   
+
+    void supprimer(AnchorPane zoneDessin) {
+        
+        /* Suppression de tous les liens */
+        
+        // Suppression des liens successeurs
+        for (int i = 0; i < successeurs.size() ; i++) {
+            
+            successeurs.get(i).supprimer(zoneDessin);
+        }
+        // Suppression des liens predecesseurs
+        for (int i = 0; i < predecesseurs.size() ; i++) {
+            
+            predecesseurs.get(i).supprimer(zoneDessin);
+        }
+        zoneDessin.getChildren().removeAll(c, nomText);
+    }
+    
+    
+
 }

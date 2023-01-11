@@ -49,8 +49,10 @@ public abstract class Graphe {
     
     public abstract void ajouterNoeud(Noeud n) throws NoeudException;
     
-    public abstract Lien ajouterLien(Lien l ) throws LienException;
+    public abstract Lien ajouterLien(Lien l) throws LienException;
     
+    public abstract boolean estLienValide(Lien l);
+
     public Noeud estNoeud(double x, double y) {
         
         for (Noeud aTester : noeuds) {
@@ -198,6 +200,7 @@ public abstract class Graphe {
         return true;
     }
     
+   
     /**
      * Permet d'enregistrer le graphe dans un fichier
      * @param chemin Chemin et nom du fichier
@@ -261,7 +264,7 @@ public abstract class Graphe {
         }
         if (lienSelectionne != null) {
             
-            lienSelectionne.lienSelectionne();
+            lienSelectionne.lienSelectionne(zoneDessin);
         }
     }
 
@@ -297,16 +300,16 @@ public abstract class Graphe {
      * Et Augmente l'epaisseur du lien
      * @param lienSelectionne Noeud selectionne
      */
-    public void lienSelectionne(Lien lienSelectionne) {
+    public void lienSelectionne(Lien lienSelectionne, AnchorPane zoneDessin) {
         
-        lienSelectionne.lienSelectionne();
+        lienSelectionne.lienSelectionne(zoneDessin);
         this.lienSelectionne = lienSelectionne;
     }
     
     /**
      * Deselectionne tous les elements du graphe
      */
-    public void deselectionnerAll() {
+    public void deselectionnerAll(AnchorPane zoneDessin) {
         
         if (noeudSelectionne != null) {
             
@@ -315,9 +318,35 @@ public abstract class Graphe {
         }
         if (lienSelectionne != null) {
             
-            lienSelectionne.lienDeselectionne();
+            lienSelectionne.lienDeselectionne(zoneDessin);
             lienSelectionne = null;
         }
+    }
+
+    void supprimerLien(Lien lienSelectionne, AnchorPane zoneDessin) {
+        
+        liens.remove(lienSelectionne);
+        lienSelectionne.supprimer(zoneDessin);
+    }
+    
+    void supprmierNoeud(Noeud noeudSelectionne,AnchorPane zoneDessin) {
+        
+        noeuds.remove(noeudSelectionne);
+        /* Suppression dans la zone de dessin */
+        noeudSelectionne.supprimer(zoneDessin);
+        
+        deselectionnerAll(zoneDessin);
+    }
+    
+    /**
+     * Modifie l'extremite du lien selectionne par le nouveau noeud
+     * @param nouveauNoeud Nouveau noeud extremite
+     * @param extremite 1 -> Premiere extremite | 2 -> Derniere extremite
+     * @param zoneDessin Zone de dessin
+     */
+    void changementExtremiteLien(Noeud nouveauNoeud, int extremite, AnchorPane zoneDessin) {
+        
+        lienSelectionne.changementExtremite(nouveauNoeud, extremite, zoneDessin);
     }
     
     /**
