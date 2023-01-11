@@ -55,18 +55,24 @@ public abstract class Propriete {
     public abstract String[] getListeChoix();
     
     /**
-     * Convertit valeur au type approprie et verifie si elle est valide
+     * Verifie si  valeur est valide
      * @param valeur valeur de la saisie
      * @return true si valide sinon false
      */
     public abstract boolean validerSaisie(String valeur);
     
+    /**
+     * Set la Valeur de o
+     * @param o En fonction de l'object en parametre (TextField ou BoxChoice)
+     */
     public abstract void setObject(Object o);
     
     /**
-     * Convertit valeur au type approprie 
-     * et l'affecte a l'attribut associeNoeud
-     * @param valeur 
+     * Si saisie valide, applique les modification sur l'elementGraphe 
+     * (Aussi sur la zone de dessin)
+     * @param valeur valeur saisie
+     * @param o En fonction de l'object en parametre (TextField ou BoxChoice)
+     * @param zoneDessin
      */
     public abstract void setValeur(String valeur, Object o, AnchorPane zoneDessin);
 

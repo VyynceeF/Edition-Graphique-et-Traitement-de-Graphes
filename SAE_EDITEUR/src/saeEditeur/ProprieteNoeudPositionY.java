@@ -36,25 +36,31 @@ public class ProprieteNoeudPositionY extends Propriete {
     }
     
     /**
-     * Convertit valeur au type approprie et verifie si elle est valide
+     * Verifie si valeur est valide
      * @param valeur valeur de la saisie
      * @return true si valide sinon false
      */
     @Override
     public boolean validerSaisie(String valeur){
         
-        Noeud n = (Noeud) elementGraphe;
-        try {        
-            if(Double.parseDouble(valeur) > 56.0 
-               && Double.parseDouble(valeur) < 1945.0
-               && n.g.estNoeudValideApresDeplacement(n.position.x, Double.parseDouble(valeur), n)){
+        Noeud n = (Noeud) elementGraphe; //Noeud select
+        try {    
+            /* 
+             * Verifie que valeur est bien dans l'intervalle
+             * Et que le noeud ne ce retrouve pas sur un autre noeud
+             */
+            if(n.g.estNoeudValideApresDeplacement(n.position.x, Double.parseDouble(valeur), n)){
                 return true;
             }
-        } catch(NumberFormatException e){};
+        } catch(NumberFormatException e){}; //Catch si la valeur saisie n'est pas un double
         
         return false;
     }
     
+    /**
+     * Set la Valeur de o
+     * @param o En fonction de l'object en parametre (TextField ou BoxChoice)
+     */
     @Override
     public void setObject(Object o){
         TextField field = (TextField) o;
@@ -63,16 +69,17 @@ public class ProprieteNoeudPositionY extends Propriete {
     }
     
     /**
-     * Convertit valeur au type approprie 
-     * et l'affecte a l'attribut associeNoeud
-     * @param valeur 
-     * @param field 
+     * Si saisie valide, applique les modification sur le Noeud 
+     * (Aussi sur la zone de dessin)
+     * @param valeur valeur saisie
+     * @param o En fonction de l'object en parametre (TextField ou BoxChoice)
+     * @param zoneDessin
      */
     @Override
     public void setValeur(String valeur, Object o, AnchorPane zoneDessin){
         
-        TextField field = (TextField) o;
-        Noeud n = (Noeud) elementGraphe;
+        TextField field = (TextField) o; //o est instance de TextField
+        Noeud n = (Noeud) elementGraphe; //Noeud select
         
         if(validerSaisie(valeur)){ //Valeur est ok
             n.modifierPosition(n.position.x, Double.parseDouble(valeur), zoneDessin);

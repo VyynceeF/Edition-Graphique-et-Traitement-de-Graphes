@@ -38,14 +38,15 @@ public class ProprieteNomNoeud extends Propriete {
     }
     
     /**
-     * Convertit valeur au type approprie et verifie si elle est valide
+     * Verifie si valeur est valide
      * @param valeur valeur de la saisie
      * @return true si valide sinon false
      */
     @Override
     public boolean validerSaisie(String valeur){
 
-        for (int i = 0; i < elementGraphe.g.noeuds.size() ; i++) {
+        for (int i = 0; i < elementGraphe.g.noeuds.size() ; i++) { //Boucle sur les noeuds
+            //Si la valeur est equale à un nom de noeud
             if(valeur.equals(elementGraphe.g.noeuds.get(i).nom)){
                 return false;
             }
@@ -54,6 +55,10 @@ public class ProprieteNomNoeud extends Propriete {
         
     }
     
+    /**
+     * Set la Valeur de o
+     * @param o En fonction de l'object en parametre (TextField ou BoxChoice)
+     */
     @Override
     public void setObject(Object o){
         TextField field = (TextField) o;
@@ -62,19 +67,25 @@ public class ProprieteNomNoeud extends Propriete {
     }
     
     /**
-     * Convertit valeur au type approprie 
-     * et l'affecte a l'attribut associeNoeud
-     * @param valeur 
+     * Si saisie valide, applique les modification sur le Noeud 
+     * (Aussi sur la zone de dessin)
+     * @param valeur valeur saisie
+     * @param o En fonction de l'object en parametre (TextField ou BoxChoice)
+     * @param zoneDessin
      */
     @Override
     public void setValeur(String valeur, Object o, AnchorPane zoneDessin){
-        TextField field = (TextField) o;
-        Noeud n = (Noeud) elementGraphe;
+        
+        TextField field = (TextField) o; // o instance de TextField
+        Noeud n = (Noeud) elementGraphe; //Noeud select
         
         if(validerSaisie(field.getText())){
-            n.setNom(field.getText());
-            n.nomText.setText(field.getText());
+            
+            n.setNom(field.getText());//Set du nom de n
+            n.nomText.setText(field.getText()); //Set du TextField nomText
+            
         }else{
+            //Si la saisie n'est pas valide, valeur du TextField reviens à l'initiale
             field.setText(n.nom);
         }
     }

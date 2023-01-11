@@ -33,27 +33,37 @@ public class ProprieteNoeudCibleLien extends Propriete {
     @Override
     public String[] getListeChoix(){
         
-        Lien l = (Lien) elementGraphe;
-        String[] liste = new String[l.g.noeuds.size()];
+        Lien l = (Lien) elementGraphe; //Lien select
+        String[] liste = new String[l.g.noeuds.size()];//Creer la liste a return
         
-        for(int i = 0; i < l.g.noeuds.size(); i++) {
-            liste[i] = l.g.noeuds.get(i).nom;
+        for(int i = 0; i < l.g.noeuds.size(); i++) {//Boucle sur les noeuds
+            liste[i] = l.g.noeuds.get(i).nom;//Ajoute dans la liste tous les nom
         }
                 
         return liste;
     }
     
     /**
-     * Convertit valeur au type approprie et verifie si elle est valide
+     * Verifie si valeur est valide
      * @param valeur valeur de la saisie
      * @return true si valide sinon false
      */
     @Override
     public boolean validerSaisie(String valeur){
-
-        return true;
+        Lien l = (Lien) elementGraphe; //Lien selectionner
+        
+        //Cas pour un graphe non orienté (Boucle)
+        if(l.g instanceof GrapheNonOriente && valeur.equals(l.source.nom)){
+            return false;
+        }
+        
+        return true; //Si aucune erreur
     }
     
+    /**
+     * Set la Valeur de o
+     * @param o En fonction de l'object en parametre (TextField ou BoxChoice)
+     */
     @Override
     public void setObject(Object o){
         ChoiceBox box = (ChoiceBox) o;
@@ -62,22 +72,46 @@ public class ProprieteNoeudCibleLien extends Propriete {
     }
     
     /**
-     * Convertit valeur au type approprie 
-     * et l'affecte a l'attribut associeNoeud
+     * Si saisie valide, applique les modification sur le Lien 
+     * (Aussi sur la zone de dessin)
      * @param valeur 
-     * @param field 
+     * @param o En fonction de l'object en parametre (TextField ou BoxChoice)
+     * @param zoneDessin
      */
     @Override
     public void setValeur(String valeur, Object o, AnchorPane zoneDessin){
         
-        ChoiceBox box = (ChoiceBox) o;
-        Lien l = (Lien) elementGraphe;
+        ChoiceBox box = (ChoiceBox) o; //o est instance de ChoiceBox
+        Lien l = (Lien) elementGraphe; //Lien select
         
         if(validerSaisie(valeur)){
             
+            //Recuperation du noeud grace au nom
+            Noeud n = getNoeud(valeur);
+            
+            //Appel a la fonction de modification
+            
         }else{
-            box.setValue(l.destinataire.nom);
+            //Si la saisie n'est pas correcte (on set o a la valeur initiale)
+            box.setValue(l.destinataire.nom);                                             
         } 
+    }
+    
+    /**
+     * Recuperer un Noeud grace au nom du noeud
+     * @param nom Nom du noeud
+     * @return null si le noeud n'est pas trouver sinon il renvoie le noeud
+     */
+    private Noeud getNoeud(String nom){
+        Lien l = (Lien) elementGraphe; //Lien select
+        
+        for (int i = 0; i < l.g.noeuds.size(); i++) { //On boucle sur les noeuds
+            if (l.g.noeuds.get(i).nom.equals(nom)) { //On verifie si un noeud
+                return l.g.noeuds.get(i);            //correspond au nom rentrer
+            }
+        }
+        
+        return null; // Return null si aucun noeud trouver
     }
     
 }
