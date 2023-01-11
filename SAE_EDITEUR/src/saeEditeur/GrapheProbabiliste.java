@@ -83,6 +83,14 @@ public class GrapheProbabiliste extends Graphe {
             throw new LienException("impossible de créer un arcs probabiliste");
         }
         
+        for (Lien aTester : liens) {
+            if ((l.destinataire == aTester.destinataire
+                   && l.source == aTester.source)) {      
+                throw new LienException("Impossible de créer un lien sur un lien");
+            }
+                     
+        }
+        
         NoeudGrapheProbabiliste tmp = (NoeudGrapheProbabiliste) l.source;
         tmp.successeurs.add(l);
         l.destinataire.predecesseurs.add(l);

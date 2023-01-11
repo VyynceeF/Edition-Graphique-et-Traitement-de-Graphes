@@ -322,33 +322,79 @@ public class ArcProbabiliste extends Lien {
      * @param extremite 1 -> Premiere extremite | 2 -> Derniere extremite
      * @param zoneDessin Zone de dessin
      */
-    public void modifierPosition(double x, double y, int extremite, AnchorPane zoneDessin){
-        
-        double xPrimeSource;
-        double yPrimeSource;
-        double xPrimeDes;
-        double yPrimeDes;
-        
-        double distance;
+    public void modifierPosition(double x, double y, int extremite,AnchorPane zoneDessin){ 
         
         
         if (extremite == 1) {
+                      
+            quadCurve.setStartX(x);
+            quadCurve.setStartY(y);
+            pointDepart.setCenterX(x);
+            pointDepart.setCenterY(y);
+            zoneDessin.getChildren().remove(valeur);
             
             
         } else if (extremite == 2) {
+                      
+            quadCurve.setEndX(x);
+            quadCurve.setEndY(y);
+            pointArrive.setCenterX(x);
+            pointArrive.setCenterY(y);
+            arrow1.setVisible(false);            
+            arrow2.setVisible(false);
+            valeur.setVisible(false); 
             
-           
         }
+        
+    }
+    
+    @Override
+    public void remiseDefaut() {
+        
+        double distance = Math.sqrt(Math.pow(destinataire.position.x - source.position.x, 2) + Math.pow(destinataire.position.y - source.position.y, 2));
+        double xPrimeSource = source.position.x + (destinataire.position.x - source.position.x) / distance * Noeud.RAYON;
+        double yPrimeSource = source.position.y + (destinataire.position.y - source.position.y) / distance * Noeud.RAYON;
+        double xPrimeDes = destinataire.position.x - (destinataire.position.x - source.position.x) / distance * Noeud.RAYON;
+        double yPrimeDes = destinataire.position.y - (destinataire.position.y - source.position.y) / distance * Noeud.RAYON;
+        quadCurve.setStartX(xPrimeSource);
+        quadCurve.setStartY(yPrimeSource);
+        quadCurve.setEndX(xPrimeDes);
+        quadCurve.setEndY(yPrimeDes);
+        arrow1.setVisible(true);            
+        arrow2.setVisible(true);
+        valeur.setVisible(true); 
         
     }
     
     @Override
     public void changementExtremite(Noeud nouveauNoeud, int extremite, AnchorPane zoneDessin) {
         
+        if (extremite == 1) {
+        /* Noeud source */
+                      
+            // Le noeud source n'a plus ce lien comme predecesseur
+            source.successeurs.remove(this);
+            
+            // Modification de l'extremite du lien
+            source = nouveauNoeud;
+            source.successeurs.add(this);
+            
+            // On redessine correctement le lien
+            this.dessiner(zoneDessin);
+            
+        } else if (extremite == 2) {
+        /* Noeud destinataire */
+                      
+            // Le noeud source n'a plus ce lien comme predecesseur
+            destinataire.predecesseurs.remove(this);
+            
+            // Modification de l'extremite du lien
+            destinataire = nouveauNoeud;
+            destinataire.predecesseurs.add(this);
+            
+            // On redessine correctement le lien
+            this.dessiner(zoneDessin);
+        }
     }
     
-    public void remiseDefaut() {
-        
-        
-    }
 }
