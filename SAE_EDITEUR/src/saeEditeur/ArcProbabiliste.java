@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.text.Font;
@@ -277,8 +278,11 @@ public class ArcProbabiliste extends Lien {
     /**
      * Augmente l'epaisseur du lien
      */
-    public void lienSelectionne() {
+    public void lienSelectionne(AnchorPane zoneDessin) {
         
+        pointDepart = new Circle(quadCurve.getStartX(), quadCurve.getStartY(), 5);
+        pointArrive = new Circle(quadCurve.getEndX(), quadCurve.getEndY(), 5);
+        zoneDessin.getChildren().addAll(pointDepart, pointArrive);
         quadCurve.setStrokeWidth(3);
         arrow1.setStrokeWidth(3);
         arrow2.setStrokeWidth(3);
@@ -288,10 +292,63 @@ public class ArcProbabiliste extends Lien {
      * Augmente l'epaisseur du lien
      */
     @Override
-    public void lienDeselectionne() {
+    public void lienDeselectionne(AnchorPane zoneDessin) {
         
         quadCurve.setStrokeWidth(1);
         arrow1.setStrokeWidth(1);
         arrow2.setStrokeWidth(1);
+        zoneDessin.getChildren().removeAll(pointDepart, pointArrive);
+    }
+    
+    @Override
+    public int estExtremite(double x, double y) {
+        
+        if (Math.sqrt((x - quadCurve.getStartX())*(x - quadCurve.getStartX())
+                      + (y - quadCurve.getStartY())*(y - quadCurve.getStartY())) <= 5) {
+            
+            return 1;
+        } else if (Math.sqrt((x - quadCurve.getEndX())*(x - quadCurve.getEndX())
+                             + (y - quadCurve.getEndY())*(y - quadCurve.getEndY())) <= 5) {
+            
+            return 2;
+        }
+        return 0;
+    }
+    
+    /**
+     * Permet de deplacer l'extremite en position x, y
+     * @param x Nouvelle abscisse
+     * @param y Nouvelle ordonnee
+     * @param extremite 1 -> Premiere extremite | 2 -> Derniere extremite
+     * @param zoneDessin Zone de dessin
+     */
+    public void modifierPosition(double x, double y, int extremite, AnchorPane zoneDessin){
+        
+        double xPrimeSource;
+        double yPrimeSource;
+        double xPrimeDes;
+        double yPrimeDes;
+        
+        double distance;
+        
+        
+        if (extremite == 1) {
+            
+            
+        } else if (extremite == 2) {
+            
+           
+        }
+        
+    }
+    
+    @Override
+    public void changementExtremite(Noeud nouveauNoeud, int extremite, AnchorPane zoneDessin) {
+        
+    }
+    
+    public void remiseDefaut() {
+        
+        
     }
 }

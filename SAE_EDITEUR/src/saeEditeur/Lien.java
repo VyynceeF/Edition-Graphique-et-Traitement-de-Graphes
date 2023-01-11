@@ -6,6 +6,7 @@
 package saeEditeur;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
 
 /**
  *
@@ -15,10 +16,20 @@ public abstract class Lien {
     
     /** premier noeud partant du lien */
     Noeud source ;
-     /** deuxieme noeud partant du lien */
+    /** deuxieme noeud partant du lien */
     Noeud destinataire;
     
+    /** Cercle représentant la premiere extremite du lien */
+    Circle pointDepart;
     
+    /** Cercle représentant la derniere extremite du lien */
+    Circle pointArrive;
+    
+    /**
+     * 
+     * @param source
+     * @param destinataire 
+     */
     public Lien(Noeud source , Noeud destinataire){
         this.source = source;
         this.destinataire= destinataire;
@@ -35,11 +46,41 @@ public abstract class Lien {
      */
     public abstract boolean estClique(double x, double y);
     
-    public abstract void lienSelectionne();
+    public abstract void lienSelectionne(AnchorPane zoneDessin);
     
-    public abstract void lienDeselectionne();
+    /**
+     * Vérifie si une des extremite du lien est en position x, y
+     * @param x Abscisse du point
+     * @param y Ordonnee du point
+     * @return 0 si aucunes extremites
+     *         1 si l'extremite est le depart du lien
+     *         2 si l'extremite est l'arrive du lien
+     */
+    public abstract int estExtremite(double x, double y);
+    
+    public abstract void lienDeselectionne(AnchorPane zoneDessin);
   
     public abstract void dessiner(AnchorPane zoneDessin);
+    
+    public abstract void remiseDefaut();
+    
+    /**
+     * Permet de deplacer l'extremite en position x, y
+     * @param x Nouvelle abscisse
+     * @param y Nouvelle ordonnee
+     * @param extremite 1 -> Premiere extremite | 2 -> Derniere extremite
+     * @param zoneDessin Zone de dessin
+     */
+    public abstract void modifierPosition(double x, double y, int extremite, AnchorPane zoneDessin);
+    
+    /**
+     * Permet le changement du noeud extremite par un nouveauNoeud
+     * 1 -> Premiere extremite | 2 -> Derniere extremite
+     * @param nouveauNoeud Nouveau noeud pour l'extremite
+     * @param extremite 1 -> Premiere extremite | 2 -> Derniere extremite
+     * @param zoneDessin Zone de dessin
+     */
+    public abstract void changementExtremite(Noeud nouveauNoeud, int extremite, AnchorPane zoneDessin);
     
     public abstract void supprimer(AnchorPane zoneDessin);
 
