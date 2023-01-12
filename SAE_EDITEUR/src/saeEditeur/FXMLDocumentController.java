@@ -5,12 +5,18 @@
  */
 package saeEditeur;
 
-import java.awt.event.KeyListener;
-import java.beans.XMLDecoder;
+import saeEditeur.graphe.AbstractFactoryGraphe;
+import saeEditeur.graphe.FactoryManager;
+import saeEditeur.graphe.EditeurDeProprietes;
+import saeEditeur.graphe.lien.LienException;
+import saeEditeur.graphe.lien.ArcProbabilisteException;
+import saeEditeur.graphe.lien.Lien;
+import saeEditeur.graphe.noeud.Noeud;
+import saeEditeur.graphe.noeud.NoeudException;
+import saeEditeur.graphe.typegraphe.GrapheProbabiliste;
+import saeEditeur.graphe.typegraphe.Graphe;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.StringWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -30,7 +36,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -41,9 +46,6 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
 /**
  *
@@ -145,9 +147,9 @@ public class FXMLDocumentController implements Initializable {
         if (graphe != null) {
             
             /* Deselectionner de tous les elements */
-            graphe.deselectionnerAll();
+            graphe.deselectionnerAll(zoneDessin);
             
-            /* Clear le grid des proprietees*/
+            /* Clear le grid des proprietees */
             EditeurDeProprietes.fermer(gridProprietees);
 
 
@@ -174,20 +176,17 @@ public class FXMLDocumentController implements Initializable {
                     yAncien = graphe.noeudSelectionne.position.y;
                     
                     //Propriete du Noeud
-                    Noeud noeudSelect = graphe.estNoeud(x, y);
-                    EditeurDeProprietes.afficher(noeudSelect,gridProprietees,zoneDessin);
+                    EditeurDeProprietes.afficher(graphe.noeudSelectionne,gridProprietees,zoneDessin);;
                 }
                 // Cas - Clic sur Lien
                 if (graphe.estLien(x, y) != null && graphe.noeudSelectionne == null) {
 
                     scrollpane.setPannable(false);
-                    graphe.lienSelectionne(graphe.estLien(x, y));
+                    graphe.lienSelectionne(graphe.estLien(x, y), zoneDessin);
                     
                     //Propriete du Lien
-                    Lien lienSelect = graphe.estLien(x, y);
-                    EditeurDeProprietes.afficher(lienSelect,gridProprietees, zoneDessin);
+                    EditeurDeProprietes.afficher(graphe.lienSelectionne,gridProprietees, zoneDessin);
                 }
-
             }
         } else {
             // Affichage alerte aucun graphe selectionne
@@ -352,9 +351,9 @@ public class FXMLDocumentController implements Initializable {
                 if (nouveauNoeud != null) {
                     // Créer un nouveau lien pour le comparer a ceux existant
                     if (graphe.lienSelectionne.estExtremite(x, y) == 1) {
-                        nouveauLien = factory.creerLien(nouveauNoeud, graphe.lienSelectionne.destinataire);
+                        nouveauLien = factory.creerLien(nouveauNoeud, graphe.lienSelectionne.destinataire,graphe);
                     } else {
-                        nouveauLien = factory.creerLien(graphe.lienSelectionne.source, nouveauNoeud);
+                        nouveauLien = factory.creerLien(graphe.lienSelectionne.source, nouveauNoeud,graphe);
                     }
                     // Test la presence ou non d'un lien entre le nouveau noeud et l'autre
                     if (graphe.estLienValide(nouveauLien)) {
@@ -365,12 +364,14 @@ public class FXMLDocumentController implements Initializable {
                         // Remise par defaut de l'extremite du lien
                         graphe.lienSelectionne.remiseDefaut();
                         graphe.deselectionnerAll(zoneDessin);
+                        EditeurDeProprietes.fermer(gridProprietees);
                     }
                     
                 } else {
                     // Remise par defaut de l'extremite du lien
                     graphe.lienSelectionne.remiseDefaut();
                     graphe.deselectionnerAll(zoneDessin);
+                    EditeurDeProprietes.fermer(gridProprietees);
                 }
             }
         }
@@ -519,6 +520,13 @@ public class FXMLDocumentController implements Initializable {
                     // Factory
                     factory = factoryManager.getFactory(graphe.getFactory());
                     
+                    // Supprimer bouton Verifier graphe
+                    if (btnVerifier != null) {
+                        paneSelection.getChildren().remove(btnVerifier);
+                        navbar.getMenus().remove(menuEdition);
+                        btnVerifier = null;
+                    }
+                    
                     // Ajoute le bouton de verification si graphe probabiliste
                     if (graphe.getFactory().equals("Graphe probabiliste")) {
                         btnVerifier = GrapheProbabiliste.ajouterBoutonVerification(paneSelection, 
@@ -564,19 +572,20 @@ public class FXMLDocumentController implements Initializable {
     private void raccourci(KeyEvent event) {
         
         KeyCode keyCode = event.getCode();
-        System.out.println(keyCode);
         
-        System.out.println("root click(handler)");
-        event.consume();
         // Suppression du noeud selectionne
         if (graphe.noeudSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
             
             graphe.supprmierNoeud(graphe.noeudSelectionne, zoneDessin);
+            graphe.deselectionnerAll(zoneDessin);
+            EditeurDeProprietes.fermer(gridProprietees);
         }
         // Suppression du lien selectionne
         if (graphe.lienSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
             
             graphe.supprimerLien(graphe.lienSelectionne, zoneDessin);
+            graphe.deselectionnerAll(zoneDessin);
+            EditeurDeProprietes.fermer(gridProprietees);
         }
     }
     

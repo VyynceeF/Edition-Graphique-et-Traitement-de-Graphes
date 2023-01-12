@@ -1,0 +1,910 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_172" class="java.beans.XMLDecoder">
+ <object class="saeEditeur.graphe.typegraphe.GraphePondere" id="GraphePondere0">
+  <void property="liens">
+   <void method="add">
+    <object class="saeEditeur.graphe.lien.ArcPondere" id="ArcPondere0">
+     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+      <string>coefficient</string>
+      <void method="set">
+       <object idref="ArcPondere0"/>
+       <double>14.0</double>
+      </void>
+     </void>
+     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+      <string>valeur</string>
+      <void method="set">
+       <object idref="ArcPondere0"/>
+       <object class="javafx.scene.control.TextField">
+        <void property="layoutX">
+         <double>268.71605708848074</double>
+        </void>
+        <void property="layoutY">
+         <double>403.9801071997809</double>
+        </void>
+        <void property="text">
+         <string>14.0</string>
+        </void>
+       </object>
+      </void>
+     </void>
+     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+      <string>arrow1</string>
+      <void method="set">
+       <object idref="ArcPondere0"/>
+       <object class="javafx.scene.shape.Line">
+        <void property="endX">
+         <double>336.17643531942394</double>
+        </void>
+        <void property="endY">
+         <double>332.6085162798242</double>
+        </void>
+        <void property="startX">
+         <double>355.012433000137</double>
+        </void>
+        <void property="startY">
+         <double>325.88503568030046</double>
+        </void>
+       </object>
+      </void>
+     </void>
+     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+      <string>arrow2</string>
+      <void method="set">
+       <object idref="ArcPondere0"/>
+       <object class="javafx.scene.shape.Line">
+        <void property="endX">
+         <double>346.4475900347901</double>
+        </void>
+        <void property="endY">
+         <double>343.95831609584616</double>
+        </void>
+        <void property="startX">
+         <double>355.012433000137</double>
+        </void>
+        <void property="startY">
+         <double>325.88503568030046</double>
+        </void>
+       </object>
+      </void>
+     </void>
+     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+      <string>quadCurve</string>
+      <void method="set">
+       <object idref="ArcPondere0"/>
+       <object class="javafx.scene.shape.QuadCurve">
+        <void property="controlX">
+         <double>268.71605708848074</double>
+        </void>
+        <void property="controlY">
+         <double>403.9801071997809</double>
+        </void>
+        <void property="endX">
+         <double>355.012433000137</double>
+        </void>
+        <void property="endY">
+         <double>325.88503568030046</double>
+        </void>
+        <void property="fill">
+         <null/>
+        </void>
+        <void property="startX">
+         <double>185.98756699986305</double>
+        </void>
+        <void property="startY">
+         <double>322.11496431969954</double>
+        </void>
+        <void property="stroke">
+         <void class="javafx.scene.text.Text" id="Text0">
+          <void property="boundsType">
+           <object class="java.lang.Enum" id="TextBoundsType0" method="valueOf">
+            <class>javafx.scene.text.TextBoundsType</class>
+            <string>VISUAL</string>
+           </object>
+          </void>
+          <void property="text">
+           <string>Gestion de projet</string>
+          </void>
+          <void property="x">
+           <double>90.5224609375</double>
+          </void>
+          <void property="y">
+           <double>321.0</double>
+          </void>
+          <void id="Color0" property="fill"/>
+         </void>
+         <object idref="Color0"/>
+        </void>
+       </object>
+      </void>
+     </void>
+     <void class="saeEditeur.graphe.lien.Lien" method="getField">
+      <string>source</string>
+      <void method="set">
+       <object idref="ArcPondere0"/>
+       <object class="saeEditeur.graphe.noeud.NoeudGraphePondere" id="NoeudGraphePondere0">
+        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+         <string>position</string>
+         <void method="set">
+          <object idref="NoeudGraphePondere0"/>
+          <object class="saeEditeur.Point" id="Point0">
+           <void class="saeEditeur.Point" method="getField">
+            <string>x</string>
+            <void method="set">
+             <object idref="Point0"/>
+             <double>136.0</double>
+            </void>
+           </void>
+           <void class="saeEditeur.Point" method="getField">
+            <string>y</string>
+            <void method="set">
+             <object idref="Point0"/>
+             <double>321.0</double>
+            </void>
+           </void>
+          </object>
+         </void>
+        </void>
+        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+         <string>nom</string>
+         <void method="set">
+          <object idref="NoeudGraphePondere0"/>
+          <string>Gestion de projet</string>
+         </void>
+        </void>
+        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+         <string>nomText</string>
+         <void method="set">
+          <object idref="NoeudGraphePondere0"/>
+          <object idref="Text0"/>
+         </void>
+        </void>
+        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+         <string>c</string>
+         <void method="set">
+          <object idref="NoeudGraphePondere0"/>
+          <object class="javafx.scene.shape.Circle">
+           <void property="centerX">
+            <double>136.0</double>
+           </void>
+           <void property="centerY">
+            <double>321.0</double>
+           </void>
+           <void property="radius">
+            <double>50.0</double>
+           </void>
+           <void property="stroke">
+            <object idref="Color0"/>
+           </void>
+          </object>
+         </void>
+        </void>
+        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+         <string>successeurs</string>
+         <void method="set">
+          <object idref="NoeudGraphePondere0"/>
+          <object class="java.util.ArrayList">
+           <void method="add">
+            <object idref="ArcPondere0"/>
+           </void>
+          </object>
+         </void>
+        </void>
+        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+         <string>predecesseurs</string>
+         <void method="set">
+          <object idref="NoeudGraphePondere0"/>
+          <object class="java.util.ArrayList">
+           <void method="add">
+            <object class="saeEditeur.graphe.lien.ArcPondere" id="ArcPondere1">
+             <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+              <string>coefficient</string>
+              <void method="set">
+               <object idref="ArcPondere1"/>
+               <double>14.0</double>
+              </void>
+             </void>
+             <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+              <string>valeur</string>
+              <void method="set">
+               <object idref="ArcPondere1"/>
+               <object class="javafx.scene.control.TextField">
+                <void property="layoutX">
+                 <double>314.0089601976101</double>
+                </void>
+                <void property="layoutY">
+                 <double>181.18204661287</double>
+                </void>
+                <void property="text">
+                 <string>14.0</string>
+                </void>
+               </object>
+              </void>
+             </void>
+             <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+              <string>arrow1</string>
+              <void method="set">
+               <object idref="ArcPondere1"/>
+               <object class="javafx.scene.shape.Line">
+                <void property="endX">
+                 <double>202.33659543235615</double>
+                </void>
+                <void property="endY">
+                 <double>298.7509718294846</double>
+                </void>
+                <void property="startX">
+                 <double>183.69872086695625</double>
+                </void>
+                <void property="startY">
+                 <double>306.0056001235063</double>
+                </void>
+               </object>
+              </void>
+             </void>
+             <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+              <string>arrow2</string>
+              <void method="set">
+               <object idref="ArcPondere1"/>
+               <object class="javafx.scene.shape.Line">
+                <void property="endX">
+                 <double>191.74789149736426</double>
+                </void>
+                <void property="endY">
+                 <double>287.69683576971727</double>
+                </void>
+                <void property="startX">
+                 <double>183.69872086695625</double>
+                </void>
+                <void property="startY">
+                 <double>306.0056001235063</double>
+                </void>
+               </object>
+              </void>
+             </void>
+             <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+              <string>quadCurve</string>
+              <void method="set">
+               <object idref="ArcPondere1"/>
+               <object class="javafx.scene.shape.QuadCurve">
+                <void property="controlX">
+                 <double>314.0089601976101</double>
+                </void>
+                <void property="controlY">
+                 <double>181.18204661287</double>
+                </void>
+                <void property="endX">
+                 <double>183.69872086695625</double>
+                </void>
+                <void property="endY">
+                 <double>306.0056001235063</double>
+                </void>
+                <void property="fill">
+                 <null/>
+                </void>
+                <void property="startX">
+                 <double>492.30127913304375</double>
+                </void>
+                <void property="startY">
+                 <double>208.99439987649367</double>
+                </void>
+                <void property="stroke">
+                 <object idref="Color0"/>
+                </void>
+               </object>
+              </void>
+             </void>
+             <void class="saeEditeur.graphe.lien.Lien" method="getField">
+              <string>source</string>
+              <void method="set">
+               <object idref="ArcPondere1"/>
+               <object class="saeEditeur.graphe.noeud.NoeudGraphePondere" id="NoeudGraphePondere1">
+                <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                 <string>position</string>
+                 <void method="set">
+                  <object idref="NoeudGraphePondere1"/>
+                  <object class="saeEditeur.Point" id="Point1">
+                   <void class="saeEditeur.Point" method="getField">
+                    <string>x</string>
+                    <void method="set">
+                     <object idref="Point1"/>
+                     <double>540.0</double>
+                    </void>
+                   </void>
+                   <void class="saeEditeur.Point" method="getField">
+                    <string>y</string>
+                    <void method="set">
+                     <object idref="Point1"/>
+                     <double>194.0</double>
+                    </void>
+                   </void>
+                  </object>
+                 </void>
+                </void>
+                <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                 <string>nom</string>
+                 <void method="set">
+                  <object idref="NoeudGraphePondere1"/>
+                  <string>Sprint</string>
+                 </void>
+                </void>
+                <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                 <string>nomText</string>
+                 <void method="set">
+                  <object idref="NoeudGraphePondere1"/>
+                  <object class="javafx.scene.text.Text">
+                   <void property="boundsType">
+                    <object idref="TextBoundsType0"/>
+                   </void>
+                   <void property="text">
+                    <string>Sprint</string>
+                   </void>
+                   <void property="x">
+                    <double>524.8271484375</double>
+                   </void>
+                   <void property="y">
+                    <double>194.0</double>
+                   </void>
+                  </object>
+                 </void>
+                </void>
+                <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                 <string>c</string>
+                 <void method="set">
+                  <object idref="NoeudGraphePondere1"/>
+                  <object class="javafx.scene.shape.Circle">
+                   <void property="centerX">
+                    <double>540.0</double>
+                   </void>
+                   <void property="centerY">
+                    <double>194.0</double>
+                   </void>
+                   <void property="radius">
+                    <double>50.0</double>
+                   </void>
+                   <void property="stroke">
+                    <object idref="Color0"/>
+                   </void>
+                  </object>
+                 </void>
+                </void>
+                <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                 <string>successeurs</string>
+                 <void method="set">
+                  <object idref="NoeudGraphePondere1"/>
+                  <object class="java.util.ArrayList">
+                   <void method="add">
+                    <object idref="ArcPondere1"/>
+                   </void>
+                   <void method="add">
+                    <object class="saeEditeur.graphe.lien.ArcPondere" id="ArcPondere2">
+                     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+                      <string>coefficient</string>
+                      <void method="set">
+                       <object idref="ArcPondere2"/>
+                       <double>1.0</double>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+                      <string>valeur</string>
+                      <void method="set">
+                       <object idref="ArcPondere2"/>
+                       <object class="javafx.scene.control.TextField">
+                        <void property="layoutX">
+                         <double>581.4554040240439</double>
+                        </void>
+                        <void property="layoutY">
+                         <double>343.5524973954072</double>
+                        </void>
+                        <void property="text">
+                         <string>1.0</string>
+                        </void>
+                       </object>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+                      <string>arrow1</string>
+                      <void method="set">
+                       <object idref="ArcPondere2"/>
+                       <object class="javafx.scene.shape.Line">
+                        <void property="endX">
+                         <double>678.1767964205872</double>
+                        </void>
+                        <void property="endY">
+                         <double>335.09687163541145</double>
+                        </void>
+                        <void property="startX">
+                         <double>696.7171891278705</double>
+                        </void>
+                        <void property="startY">
+                         <double>342.59712751502747</double>
+                        </void>
+                       </object>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+                      <string>arrow2</string>
+                      <void method="set">
+                       <object idref="ArcPondere2"/>
+                       <object class="javafx.scene.shape.Line">
+                        <void property="endX">
+                         <double>678.303669925578</double>
+                        </void>
+                        <void property="endY">
+                         <double>350.4036831310983</double>
+                        </void>
+                        <void property="startX">
+                         <double>696.7171891278705</double>
+                        </void>
+                        <void property="startY">
+                         <double>342.59712751502747</double>
+                        </void>
+                       </object>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+                      <string>quadCurve</string>
+                      <void method="set">
+                       <object idref="ArcPondere2"/>
+                       <object class="javafx.scene.shape.QuadCurve">
+                        <void property="controlX">
+                         <double>581.4554040240439</double>
+                        </void>
+                        <void property="controlY">
+                         <double>343.5524973954072</double>
+                        </void>
+                        <void property="endX">
+                         <double>696.7171891278705</double>
+                        </void>
+                        <void property="endY">
+                         <double>342.59712751502747</double>
+                        </void>
+                        <void property="fill">
+                         <null/>
+                        </void>
+                        <void property="startX">
+                         <double>576.2828108721295</double>
+                        </void>
+                        <void property="startY">
+                         <double>228.40287248497253</double>
+                        </void>
+                        <void property="stroke">
+                         <object idref="Color0"/>
+                        </void>
+                       </object>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.graphe.lien.Lien" method="getField">
+                      <string>source</string>
+                      <void method="set">
+                       <object idref="ArcPondere2"/>
+                       <object idref="NoeudGraphePondere1"/>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.graphe.lien.Lien" method="getField">
+                      <string>destinataire</string>
+                      <void method="set">
+                       <object idref="ArcPondere2"/>
+                       <object class="saeEditeur.graphe.noeud.NoeudGraphePondere" id="NoeudGraphePondere2">
+                        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                         <string>position</string>
+                         <void method="set">
+                          <object idref="NoeudGraphePondere2"/>
+                          <object class="saeEditeur.Point" id="Point2">
+                           <void class="saeEditeur.Point" method="getField">
+                            <string>x</string>
+                            <void method="set">
+                             <object idref="Point2"/>
+                             <double>733.0</double>
+                            </void>
+                           </void>
+                           <void class="saeEditeur.Point" method="getField">
+                            <string>y</string>
+                            <void method="set">
+                             <object idref="Point2"/>
+                             <double>377.0</double>
+                            </void>
+                           </void>
+                          </object>
+                         </void>
+                        </void>
+                        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                         <string>nom</string>
+                         <void method="set">
+                          <object idref="NoeudGraphePondere2"/>
+                          <string>Recette</string>
+                         </void>
+                        </void>
+                        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                         <string>nomText</string>
+                         <void method="set">
+                          <object idref="NoeudGraphePondere2"/>
+                          <object class="javafx.scene.text.Text">
+                           <void property="boundsType">
+                            <object idref="TextBoundsType0"/>
+                           </void>
+                           <void property="text">
+                            <string>Recette</string>
+                           </void>
+                           <void property="x">
+                            <double>713.951171875</double>
+                           </void>
+                           <void property="y">
+                            <double>377.0</double>
+                           </void>
+                          </object>
+                         </void>
+                        </void>
+                        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                         <string>c</string>
+                         <void method="set">
+                          <object idref="NoeudGraphePondere2"/>
+                          <object class="javafx.scene.shape.Circle">
+                           <void property="centerX">
+                            <double>733.0</double>
+                           </void>
+                           <void property="centerY">
+                            <double>377.0</double>
+                           </void>
+                           <void property="radius">
+                            <double>50.0</double>
+                           </void>
+                           <void property="stroke">
+                            <object idref="Color0"/>
+                           </void>
+                          </object>
+                         </void>
+                        </void>
+                        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                         <string>successeurs</string>
+                         <void method="set">
+                          <object idref="NoeudGraphePondere2"/>
+                          <object class="java.util.ArrayList"/>
+                         </void>
+                        </void>
+                        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                         <string>predecesseurs</string>
+                         <void method="set">
+                          <object idref="NoeudGraphePondere2"/>
+                          <object class="java.util.ArrayList">
+                           <void method="add">
+                            <object idref="ArcPondere2"/>
+                           </void>
+                          </object>
+                         </void>
+                        </void>
+                        <void class="saeEditeur.graphe.ElementGraphe" method="getField">
+                         <string>g</string>
+                         <void method="set">
+                          <object idref="NoeudGraphePondere2"/>
+                          <object idref="GraphePondere0"/>
+                         </void>
+                        </void>
+                       </object>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.graphe.ElementGraphe" method="getField">
+                      <string>g</string>
+                      <void method="set">
+                       <object idref="ArcPondere2"/>
+                       <object idref="GraphePondere0"/>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </object>
+                 </void>
+                </void>
+                <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                 <string>predecesseurs</string>
+                 <void method="set">
+                  <object idref="NoeudGraphePondere1"/>
+                  <object class="java.util.ArrayList">
+                   <void method="add">
+                    <object class="saeEditeur.graphe.lien.ArcPondere" id="ArcPondere3">
+                     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+                      <string>coefficient</string>
+                      <void method="set">
+                       <object idref="ArcPondere3"/>
+                       <double>14.0</double>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+                      <string>valeur</string>
+                      <void method="set">
+                       <object idref="ArcPondere3"/>
+                       <object class="javafx.scene.control.TextField">
+                        <void property="layoutX">
+                         <double>528.6448258143497</double>
+                        </void>
+                        <void property="layoutY">
+                         <double>317.4891089093024</double>
+                        </void>
+                        <void property="text">
+                         <string>14.0</string>
+                        </void>
+                       </object>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+                      <string>arrow1</string>
+                      <void method="set">
+                       <object idref="ArcPondere3"/>
+                       <object class="javafx.scene.shape.Line">
+                        <void property="endX">
+                         <double>501.8918252900254</double>
+                        </void>
+                        <void property="endY">
+                         <double>248.93491059245974</double>
+                        </void>
+                        <void property="startX">
+                         <double>504.381806931686</double>
+                        </void>
+                        <void property="startY">
+                         <double>229.0905161339686</double>
+                        </void>
+                       </object>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+                      <string>arrow2</string>
+                      <void method="set">
+                       <object idref="ArcPondere3"/>
+                       <object class="javafx.scene.shape.Line">
+                        <void property="endX">
+                         <double>516.6532299179776</double>
+                        </void>
+                        <void property="endY">
+                         <double>244.88330492795666</double>
+                        </void>
+                        <void property="startX">
+                         <double>504.381806931686</double>
+                        </void>
+                        <void property="startY">
+                         <double>229.0905161339686</double>
+                        </void>
+                       </object>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.graphe.lien.ArcPondere" method="getField">
+                      <string>quadCurve</string>
+                      <void method="set">
+                       <object idref="ArcPondere3"/>
+                       <object class="javafx.scene.shape.QuadCurve">
+                        <void property="controlX">
+                         <double>528.6448258143497</double>
+                        </void>
+                        <void property="controlY">
+                         <double>317.4891089093024</double>
+                        </void>
+                        <void property="endX">
+                         <double>504.381806931686</double>
+                        </void>
+                        <void property="endY">
+                         <double>229.0905161339686</double>
+                        </void>
+                        <void property="fill">
+                         <null/>
+                        </void>
+                        <void property="startX">
+                         <double>440.618193068314</double>
+                        </void>
+                        <void property="startY">
+                         <double>291.9094838660314</double>
+                        </void>
+                        <void property="stroke">
+                         <object idref="Color0"/>
+                        </void>
+                       </object>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.graphe.lien.Lien" method="getField">
+                      <string>source</string>
+                      <void method="set">
+                       <object idref="ArcPondere3"/>
+                       <object class="saeEditeur.graphe.noeud.NoeudGraphePondere" id="NoeudGraphePondere3">
+                        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                         <string>position</string>
+                         <void method="set">
+                          <object idref="NoeudGraphePondere3"/>
+                          <object class="saeEditeur.Point" id="Point3">
+                           <void class="saeEditeur.Point" method="getField">
+                            <string>x</string>
+                            <void method="set">
+                             <object idref="Point3"/>
+                             <double>405.0</double>
+                            </void>
+                           </void>
+                           <void class="saeEditeur.Point" method="getField">
+                            <string>y</string>
+                            <void method="set">
+                             <object idref="Point3"/>
+                             <double>327.0</double>
+                            </void>
+                           </void>
+                          </object>
+                         </void>
+                        </void>
+                        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                         <string>nom</string>
+                         <void method="set">
+                          <object idref="NoeudGraphePondere3"/>
+                          <string>Développement</string>
+                         </void>
+                        </void>
+                        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                         <string>nomText</string>
+                         <void method="set">
+                          <object idref="NoeudGraphePondere3"/>
+                          <object class="javafx.scene.text.Text">
+                           <void property="boundsType">
+                            <object idref="TextBoundsType0"/>
+                           </void>
+                           <void property="text">
+                            <string>Développement</string>
+                           </void>
+                           <void property="x">
+                            <double>363.4541015625</double>
+                           </void>
+                           <void property="y">
+                            <double>327.0</double>
+                           </void>
+                          </object>
+                         </void>
+                        </void>
+                        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                         <string>c</string>
+                         <void method="set">
+                          <object idref="NoeudGraphePondere3"/>
+                          <object class="javafx.scene.shape.Circle">
+                           <void property="centerX">
+                            <double>405.0</double>
+                           </void>
+                           <void property="centerY">
+                            <double>327.0</double>
+                           </void>
+                           <void property="radius">
+                            <double>50.0</double>
+                           </void>
+                           <void property="stroke">
+                            <object idref="Color0"/>
+                           </void>
+                          </object>
+                         </void>
+                        </void>
+                        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                         <string>successeurs</string>
+                         <void method="set">
+                          <object idref="NoeudGraphePondere3"/>
+                          <object class="java.util.ArrayList">
+                           <void method="add">
+                            <object idref="ArcPondere3"/>
+                           </void>
+                          </object>
+                         </void>
+                        </void>
+                        <void class="saeEditeur.graphe.noeud.Noeud" method="getField">
+                         <string>predecesseurs</string>
+                         <void method="set">
+                          <object idref="NoeudGraphePondere3"/>
+                          <object class="java.util.ArrayList">
+                           <void method="add">
+                            <object idref="ArcPondere0"/>
+                           </void>
+                          </object>
+                         </void>
+                        </void>
+                        <void class="saeEditeur.graphe.ElementGraphe" method="getField">
+                         <string>g</string>
+                         <void method="set">
+                          <object idref="NoeudGraphePondere3"/>
+                          <object idref="GraphePondere0"/>
+                         </void>
+                        </void>
+                       </object>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.graphe.lien.Lien" method="getField">
+                      <string>destinataire</string>
+                      <void method="set">
+                       <object idref="ArcPondere3"/>
+                       <object idref="NoeudGraphePondere1"/>
+                      </void>
+                     </void>
+                     <void class="saeEditeur.graphe.ElementGraphe" method="getField">
+                      <string>g</string>
+                      <void method="set">
+                       <object idref="ArcPondere3"/>
+                       <object idref="GraphePondere0"/>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </object>
+                 </void>
+                </void>
+                <void class="saeEditeur.graphe.ElementGraphe" method="getField">
+                 <string>g</string>
+                 <void method="set">
+                  <object idref="NoeudGraphePondere1"/>
+                  <object idref="GraphePondere0"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+             <void class="saeEditeur.graphe.lien.Lien" method="getField">
+              <string>destinataire</string>
+              <void method="set">
+               <object idref="ArcPondere1"/>
+               <object idref="NoeudGraphePondere0"/>
+              </void>
+             </void>
+             <void class="saeEditeur.graphe.ElementGraphe" method="getField">
+              <string>g</string>
+              <void method="set">
+               <object idref="ArcPondere1"/>
+               <object idref="GraphePondere0"/>
+              </void>
+             </void>
+            </object>
+           </void>
+          </object>
+         </void>
+        </void>
+        <void class="saeEditeur.graphe.ElementGraphe" method="getField">
+         <string>g</string>
+         <void method="set">
+          <object idref="NoeudGraphePondere0"/>
+          <object idref="GraphePondere0"/>
+         </void>
+        </void>
+       </object>
+      </void>
+     </void>
+     <void class="saeEditeur.graphe.lien.Lien" method="getField">
+      <string>destinataire</string>
+      <void method="set">
+       <object idref="ArcPondere0"/>
+       <object idref="NoeudGraphePondere3"/>
+      </void>
+     </void>
+     <void class="saeEditeur.graphe.ElementGraphe" method="getField">
+      <string>g</string>
+      <void method="set">
+       <object idref="ArcPondere0"/>
+       <object idref="GraphePondere0"/>
+      </void>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object idref="ArcPondere3"/>
+   </void>
+   <void method="add">
+    <object idref="ArcPondere1"/>
+   </void>
+   <void method="add">
+    <object idref="ArcPondere2"/>
+   </void>
+  </void>
+ </object>
+<void class="saeEditeur.graphe.typegraphe.Graphe" id="Field0" method="getField">
+ <string>noeuds</string>
+ <void id="ArrayList0" method="get">
+  <object idref="GraphePondere0"/>
+  <void method="add">
+   <object idref="NoeudGraphePondere3"/>
+  </void>
+  <void method="add">
+   <object idref="NoeudGraphePondere2"/>
+  </void>
+  <void method="add">
+   <object idref="NoeudGraphePondere1"/>
+  </void>
+  <void method="add">
+   <object idref="NoeudGraphePondere0"/>
+  </void>
+ </void>
+</void>
+<void idref="ArrayList0"/>
+</java>

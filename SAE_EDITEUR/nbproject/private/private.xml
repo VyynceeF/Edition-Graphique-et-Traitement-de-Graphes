@@ -4,33 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Graphe.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/ElementGraphe.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/FactoryGrapheOriente.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Arete.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/GrapheProbabiliste.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/FactoryGrapheProbabiliste.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/ProprieteNoeudPositionX.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/ProprieteNomNoeud.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Propriete.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Lien.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/AbstractFactoryGraphe.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/FXMLDocumentController.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/ProprieteNoeudPositionY.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/GrapheOriente.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Point.java</file>
             <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/ArcProbabiliste.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Noeud.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/NoeudGrapheProbabiliste.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/FactoryGrapheNonOriente.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/ProprieteNoeudSourceLien.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/EditeurGraphe.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/NoeudGrapheNonOriente.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/ProprieteNoeudCibleLien.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/NoeudGrapheOriente.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/EditeurDeProprietes.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Arc.java</file>
-            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/GrapheNonOriente.java</file>
-
+            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/Lien.java</file>
+            <file>file:/Z:/Edition-Graphique-et-Traitement-de-Graphes/SAE_EDITEUR/src/saeEditeur/FXMLDocumentController.java</file>
         </group>
     </open-files>
 </project-private>

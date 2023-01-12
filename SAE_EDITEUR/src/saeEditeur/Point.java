@@ -5,8 +5,6 @@
  */
 package saeEditeur;
 
-import java.io.Serializable;
-
 /**
  *
  * @author amine.daamouch
