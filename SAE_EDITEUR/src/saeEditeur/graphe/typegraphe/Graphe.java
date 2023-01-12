@@ -335,13 +335,11 @@ public abstract class Graphe {
     }
     
     public void supprmierNoeud(Noeud noeudSelectionne, AnchorPane zoneDessin) {
-        System.out.println("Liens => " + liens);
         
         noeuds.remove(noeudSelectionne);
         /* Suppression dans la zone de dessin */
         noeudSelectionne.supprimer(zoneDessin);
         
-        System.out.println("Liens => " + liens);
         deselectionnerAll(zoneDessin);
     }
     

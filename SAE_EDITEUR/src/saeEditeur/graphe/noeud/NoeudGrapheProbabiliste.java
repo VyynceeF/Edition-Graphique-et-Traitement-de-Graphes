@@ -184,14 +184,14 @@ public class NoeudGrapheProbabiliste extends Noeud {
         /* Suppression de tous les liens */
         
         // Suppression des liens successeurs
-        for (int i = 0; i < successeurs.size() ; i++) {
+        while (successeurs.size() != 0) {
             
-            successeurs.get(i).supprimer(zoneDessin);
+            successeurs.get(0).supprimer(zoneDessin);
         }
         // Suppression des liens predecesseurs
-        for (int i = 0; i < predecesseurs.size() ; i++) {
+        while (predecesseurs.size() != 0) {
             
-            predecesseurs.get(i).supprimer(zoneDessin);
+            predecesseurs.get(0).supprimer(zoneDessin);
         }
         zoneDessin.getChildren().removeAll(c, nomText);
     }
