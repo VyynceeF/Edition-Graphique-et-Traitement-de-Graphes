@@ -129,6 +129,7 @@ public class Arete extends Lien {
     @Override
     public void supprimer(AnchorPane zoneDessin) {
         
+        g.liens.remove(this);
         source.successeurs.remove(this);
         destinataire.predecesseurs.remove(this);
         zoneDessin.getChildren().removeAll(line);
