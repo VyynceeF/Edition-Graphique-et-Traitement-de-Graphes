@@ -123,7 +123,7 @@ public class ProprieteNoeudSourceLien extends Propriete {
             Noeud n = getNoeud(valeur);
             
             //Appel a la fonction de modification
-            l.g.changementExtremiteLien(n, 1, zoneDessin);
+            l.g.changementExtremiteLien(l.g.lienSelectionne, n, 1, zoneDessin);
 
         }else{
             //Si la saisie n'est pas correcte (on set o a la valeur initiale)

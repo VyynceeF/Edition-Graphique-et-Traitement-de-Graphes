@@ -18,6 +18,7 @@ import saeEditeur.graphe.typegraphe.Graphe;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,9 +34,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCharacterCombination;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -165,6 +164,7 @@ public class FXMLDocumentController implements Initializable {
 
                     graphe.ajouterNoeud(n);         
                     n.dessiner(zoneDessin);
+                    graphe.ajouterPile(0); // Ajout dans la pile (undo)
                 } catch (NoeudException e) {
                 }
             } else if (selection == 3) {
@@ -177,7 +177,7 @@ public class FXMLDocumentController implements Initializable {
                     xAncien = graphe.noeudSelectionne.position.x;
                     yAncien = graphe.noeudSelectionne.position.y;
                     
-                    //Propriete du Noeud
+                    // Propriete du Noeud
                     EditeurDeProprietes.afficher(graphe.noeudSelectionne,gridProprietees,zoneDessin);;
                 }
                 // Cas - Clic sur Lien
@@ -337,6 +337,7 @@ public class FXMLDocumentController implements Initializable {
                 try{
                     Lien l = graphe.ajouterLien(factory.creerLien(premierNoeud, destinataire, graphe));               
                     l.dessiner(zoneDessin);
+                    graphe.ajouterPile(1); // Ajout dans la pile (undo)
                     
                 }catch(LienException e){
                     System.out.println(e.getMessage());
@@ -360,6 +361,12 @@ public class FXMLDocumentController implements Initializable {
 
                     graphe.noeudSelectionne.modifierPosition(xAncien, yAncien, zoneDessin);
                     graphe.noeudSelectionne.noeudSelectionne();
+                } else {
+                    ArrayList<Object> ancienPosition = new ArrayList<>();
+                    ancienPosition.add(graphe.noeudSelectionne);
+                    ancienPosition.add(xAncien);
+                    ancienPosition.add(yAncien);
+                    graphe.ajouterPile(ancienPosition);
                 }
             } else if (graphe.lienSelectionne != null) {
                 
@@ -378,7 +385,12 @@ public class FXMLDocumentController implements Initializable {
                     if (graphe.estLienValide(nouveauLien)) {
                         
                         // Changement l'extremité
-                        graphe.changementExtremiteLien(nouveauNoeud, graphe.lienSelectionne.estExtremite(x, y), zoneDessin);
+                        graphe.changementExtremiteLien(graphe.lienSelectionne, nouveauNoeud, graphe.lienSelectionne.estExtremite(x, y), zoneDessin);
+                        ArrayList<Object> ancienPosition = new ArrayList<>();
+                        ancienPosition.add(graphe.lienSelectionne);
+                        ancienPosition.add(nouveauNoeud);
+                        ancienPosition.add(graphe.lienSelectionne.estExtremite(x, y));
+                        graphe.ajouterPile(ancienPosition);
                     } else {
                         // Remise par defaut de l'extremite du lien
                         graphe.lienSelectionne.remiseDefaut();
@@ -595,7 +607,7 @@ public class FXMLDocumentController implements Initializable {
         // Suppression du noeud selectionne
         if (graphe != null && graphe.noeudSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
             
-            graphe.supprmierNoeud(graphe.noeudSelectionne, zoneDessin);
+            graphe.supprimerNoeud(graphe.noeudSelectionne, zoneDessin);
             graphe.deselectionnerAll(zoneDessin);
             EditeurDeProprietes.fermer(gridProprietees);
         }
@@ -620,6 +632,12 @@ public class FXMLDocumentController implements Initializable {
         if (event.isControlDown() && event.getCode() == KeyCode.A){
             
             selectionSelection();
+        }
+        // Raccourci clavier - Annuler dernière action
+        if (event.isControlDown() && event.getCode() == KeyCode.Z){
+            
+            System.out.println("UNDO");
+            graphe.undo(zoneDessin);
         }
         
         // Raccourci clavier - Sélectionner l'option de vérification du graph

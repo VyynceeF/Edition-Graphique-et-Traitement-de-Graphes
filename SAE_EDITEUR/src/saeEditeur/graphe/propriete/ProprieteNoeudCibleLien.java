@@ -122,7 +122,7 @@ public class ProprieteNoeudCibleLien extends Propriete {
             Noeud n = getNoeud(valeur);
             
             //Appel a la fonction de modification
-            l.g.changementExtremiteLien(n, 2, zoneDessin);
+            l.g.changementExtremiteLien(l.g.lienSelectionne, n, 2, zoneDessin);
             
         }else{
             //Si la saisie n'est pas correcte (on set o a la valeur initiale)

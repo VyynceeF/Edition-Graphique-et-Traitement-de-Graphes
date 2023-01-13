@@ -91,7 +91,6 @@ public class GrapheProbabiliste extends Graphe {
         tmp.successeurs.add(l);
         l.destinataire.predecesseurs.add(l);
         liens.add(l);
-        NoeudGrapheProbabiliste noeudSource = (NoeudGrapheProbabiliste)l.source;
         
         return l; 
     }

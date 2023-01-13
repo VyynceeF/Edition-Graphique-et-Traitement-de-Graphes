@@ -6,18 +6,11 @@
 package saeEditeur.graphe.typegraphe;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import saeEditeur.graphe.lien.Lien;
 import saeEditeur.graphe.lien.LienException;
 import saeEditeur.graphe.noeud.Noeud;
@@ -27,6 +20,13 @@ import saeEditeur.graphe.noeud.NoeudException;
  * @author amine.daamouch
  */
 public abstract class Graphe {
+    
+    /**
+     * Stocke les dernières modifications sous la forme d'une pile
+     * 0 => Ajout d'un nouveau noeud
+     * 1 => Ajout d'un nouveau lien
+     */
+    private Stack<Object> stack;
     
     /** Noeud actuellement selectionne dans le graphe */
     public Noeud noeudSelectionne = null;
@@ -45,6 +45,7 @@ public abstract class Graphe {
         liens =  new ArrayList<>();
         noeuds = new ArrayList<>();
         noeudSelectionne = null;
+        stack = new Stack<>();
     }
     
     public abstract String toString();
@@ -67,6 +68,59 @@ public abstract class Graphe {
             }
         }
         return null;
+    }
+    
+    /**
+     * Ajoute dans la pile les modifications
+     * 0 => Ajout d'un nouveau noeud
+     * 1 => Ajout d'un nouveau lien
+     * @param ancienElement 
+     */
+    public void ajouterPile(Object ancienElement) {
+        
+        stack.push(ancienElement);
+    }
+    
+    /**
+     * Supprime les modifications
+     * @param zoneDessin Zone de dessin
+     * @return 
+     */
+    public boolean undo(AnchorPane zoneDessin) {
+        
+        // Aucune ancienne modification
+        if (stack.empty()) {
+            return false;
+        }
+        
+        Object ancienModification = stack.pop();
+        
+        // Integer => Ajout/Suppression
+        if (ancienModification instanceof Integer) {
+            
+            // La derniere modification a été un ajout de noeud
+            if (ancienModification.equals(0)) {
+                
+                supprimerNoeud(noeuds.remove(noeuds.size() - 1), zoneDessin);
+            }
+            // La derniere modification a été un ajout de lien
+            if (ancienModification.equals(1)) {
+                
+                supprimerLien(liens.remove(liens.size() - 1), zoneDessin);
+            }
+        } 
+        
+        // ArrayList => Modification
+        if (ancienModification instanceof ArrayList) {
+            ArrayList<Object> listeModif = (ArrayList) ancienModification;
+            
+            if (listeModif.get(0) instanceof Noeud) {
+                
+                ((Noeud) listeModif.get(0)).modifierPosition((double) listeModif.get(1), (double) listeModif.get(2), zoneDessin);
+            }
+        }
+        
+        return false;
     }
     
     /**
@@ -341,7 +395,7 @@ public abstract class Graphe {
         deselectionnerAll(zoneDessin);
     }
     
-    public void supprmierNoeud(Noeud noeudSelectionne, AnchorPane zoneDessin) {
+    public void supprimerNoeud(Noeud noeudSelectionne, AnchorPane zoneDessin) {
         
         noeuds.remove(noeudSelectionne);
         /* Suppression dans la zone de dessin */
@@ -352,11 +406,12 @@ public abstract class Graphe {
     
     /**
      * Modifie l'extremite du lien selectionne par le nouveau noeud
+     * @param lienSelectionne Lien à modifier
      * @param nouveauNoeud Nouveau noeud extremite
      * @param extremite 1 -> Premiere extremite | 2 -> Derniere extremite
      * @param zoneDessin Zone de dessin
      */
-    public void changementExtremiteLien(Noeud nouveauNoeud, int extremite, AnchorPane zoneDessin) {
+    public void changementExtremiteLien(Lien lienSelectionne, Noeud nouveauNoeud, int extremite, AnchorPane zoneDessin) {
         
         lienSelectionne.changementExtremite(nouveauNoeud, extremite, zoneDessin);
     }
