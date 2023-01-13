@@ -5,18 +5,12 @@
  */
 package saeEditeur.graphe.typegraphe;
 
-import saeEditeur.graphe.typegraphe.Graphe;
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -31,9 +25,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import jdk.nashorn.internal.ir.BreakNode;
 import saeEditeur.graphe.lien.ArcProbabiliste;
 import saeEditeur.graphe.lien.Lien;
 import saeEditeur.graphe.lien.LienException;
@@ -88,7 +80,7 @@ public class GrapheProbabiliste extends Graphe {
     @Override
     public Lien ajouterLien(Lien l) throws LienException {
         if(!(l instanceof ArcProbabiliste)){
-            throw new LienException("impossible de créer un arcs probabiliste");
+            throw new LienException("Impossible de créer un arcs probabiliste");
         }
         
         if (!estLienValide(l)) {
@@ -157,19 +149,19 @@ public class GrapheProbabiliste extends Graphe {
                 public void handle(ActionEvent e) {
                     
                     if (g.verifierGraphe()) {   // Verifie si le graphe est probabiliste
-                                            // Et change les couleurs sur les noeuds errones
-                        // Création de l'objet de la popup
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-
-                        // Définition du titre de la popup
-                        alert.setTitle("Matrice de transition");
-
-                        // Définition du contenu de la popup
-                        alert.setContentText("Matrice de transition\n\n"
-                                             + g.matriceTransitoireCanoniqueToString());
-
-                        // Affichage de la popup
-                        alert.show();
+                                                // Et change les couleurs sur les noeuds errones
+                        Stage popUp = new Stage();
+                        popUp.initModality(Modality.APPLICATION_MODAL);
+                        popUp.setTitle("Matrice de transition");
+                        StackPane pane = new StackPane();
+                        
+                        GridPane gridPane = g.afficheMatrice();
+                        gridPane.setAlignment(Pos.CENTER);
+                        
+                        pane.getChildren().add(gridPane);
+                        StackPane.setAlignment(gridPane, Pos.CENTER);
+                        popUp.setScene(new Scene(pane, 600, 400));
+                        popUp.showAndWait();
                     }
                 }
             }
@@ -181,7 +173,6 @@ public class GrapheProbabiliste extends Graphe {
                 public void handle(ActionEvent e) {
                     if (g.verifierGraphe()) {   // Verifie si le graphe est probabiliste
                                             // Et change les couleurs sur les noeuds errones
-                        System.out.println("Regroupement");
                         g.regroupementClasseEtAffiche(zoneDessin);
                     }
                 }
@@ -194,7 +185,6 @@ public class GrapheProbabiliste extends Graphe {
                 public void handle(ActionEvent e) {
                     if (g.verifierGraphe()) {   // Verifie si le graphe est probabiliste
                                             // Et change les couleurs sur les noeuds errones
-                        System.out.println("Classification");
                         g.regroupementEtatEtChangementCouleur(g.regroupementClasse());
                     }
                 }
@@ -210,6 +200,7 @@ public class GrapheProbabiliste extends Graphe {
                     if (g.verifierGraphe()) {   // Verifie si le graphe est probabiliste
                                             // Et change les couleurs sur les noeuds errones
                         Stage popUp = new Stage();
+                        popUp.setTitle("Probabilité de passer d’un sommet à un autre");
                         popUp.initModality(Modality.APPLICATION_MODAL);
                         StackPane pane = new StackPane();
                         GridPane gridPane = new GridPane();
@@ -303,6 +294,7 @@ public class GrapheProbabiliste extends Graphe {
 
                     Stage popUp = new Stage();
                     popUp.initModality(Modality.APPLICATION_MODAL);
+                    popUp.setTitle("Loi de probabilité atteinte après un nombre de transition(s) donné");
                     StackPane pane = new StackPane();
                     GridPane gridPane = new GridPane();
 
@@ -948,31 +940,46 @@ public class GrapheProbabiliste extends Graphe {
     }
     
     /**
-     * Affiche une matrice
+     * Affiche une matrice dans une GridPane
      * @param matrice
      * @return matrice
      */
-    public static String afficheMatrice(double[][] matrice){
-        String resultat = "";
-        String espaces;
-        int taille;
-        double number;
+    public GridPane afficheMatrice(){
         
-        for(int i = 0; i < matrice.length; i++){ //Ligne
-            for(int j = 0; j < matrice[i].length; j++){ //Colonne
-                number = Math.round(matrice[i][j]*1000.0)/1000.0;
-                taille = String.valueOf(number).length();
-                taille = 8 - taille;
-                espaces = "";
-                for(int k = 0; k < taille; k++){
-                    espaces += " ";
-                }
-                resultat += number + espaces;
-            }
-            resultat += "\n";
+        regroupementEtat(regroupementClasse());
+        double[][] matrice = matriceTransitoireCanonique();
+        
+        GridPane gridPane = new GridPane();
+        
+        // Affichage de la premiere ligne
+        Text textNoeud = new Text("Noeuds");
+        gridPane.add(textNoeud, 0, 0);
+        GridPane.setValignment(textNoeud, VPos.CENTER);
+        GridPane.setHalignment(textNoeud, HPos.CENTER);
+        for (int noNoeud = 0 ; noNoeud < noeudsOrdones.size() ; noNoeud++) {
+            
+            gridPane.add(new Text(noeudsOrdones.get(noNoeud).toString()), noNoeud + 1, 0);
         }
         
-        return resultat;
+        for (int x = 0 ; x < matrice.length ; x++) {
+            
+            Text nom = new Text(noeudsOrdones.get(x).toString());
+            gridPane.add(nom, 0, x + 1);
+            GridPane.setValignment(nom, VPos.CENTER);
+            GridPane.setHalignment(nom, HPos.CENTER);
+            for (int y = 0 ; y < matrice[x].length ; y++) {
+                
+                Text valeur = new Text(matrice[x][y] + "");
+                gridPane.add(valeur, y + 1, x + 1);
+                GridPane.setValignment(valeur, VPos.CENTER);
+                GridPane.setHalignment(valeur, HPos.CENTER);
+            }
+        }
+
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        
+        return gridPane;
     }
 
     public ArrayList<Noeud> getNoeudsFinales() {

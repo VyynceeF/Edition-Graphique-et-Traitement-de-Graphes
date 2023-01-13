@@ -33,7 +33,9 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCharacterCombination;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -207,6 +209,12 @@ public class FXMLDocumentController implements Initializable {
      */
     @FXML
     private void cliqueNoeud(MouseEvent event) {
+        
+        selectionNoeud();
+    }
+    
+    private void selectionNoeud() {
+        
         selection = 1 ;
         zoneDessin.setCursor(Cursor.HAND);
         textSelection.setStyle("-fx-font-weight: none");
@@ -221,17 +229,28 @@ public class FXMLDocumentController implements Initializable {
      */
     @FXML
     private void cliqueLien(MouseEvent event) {
+        
+        selectionLien();
+    }
+    
+    private void selectionLien() {
+        
         selection = 2 ;
         zoneDessin.setCursor(Cursor.CROSSHAIR);  // Change le curseur en main 
         textNoeud.setStyle("-fx-font-weight: none");
         textSelection.setStyle("-fx-font-weight: none");
         textLien.setStyle("-fx-font-weight: bold");
         scrollpane.setPannable(false);
-        
     }
 
     @FXML
     private void cliqueSelection(MouseEvent event) {
+        
+        selectionSelection();
+    }
+    
+    private void selectionSelection() {
+        
         selection = 3 ; 
         zoneDessin.setCursor(Cursor.DEFAULT);
         textNoeud.setStyle("-fx-font-weight: none");
@@ -574,18 +593,39 @@ public class FXMLDocumentController implements Initializable {
         KeyCode keyCode = event.getCode();
         
         // Suppression du noeud selectionne
-        if (graphe.noeudSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
+        if (graphe != null && graphe.noeudSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
             
             graphe.supprmierNoeud(graphe.noeudSelectionne, zoneDessin);
             graphe.deselectionnerAll(zoneDessin);
             EditeurDeProprietes.fermer(gridProprietees);
         }
         // Suppression du lien selectionne
-        if (graphe.lienSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
+        if (graphe != null && graphe.lienSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
             
             graphe.supprimerLien(graphe.lienSelectionne, zoneDessin);
             graphe.deselectionnerAll(zoneDessin);
             EditeurDeProprietes.fermer(gridProprietees);
+        }
+        // Raccourci clavier - Création d'un nouveau noeud
+        if (event.isControlDown() && event.getCode() == KeyCode.N){
+            
+            selectionNoeud();
+        }
+        // Raccourci clavier - Création d'un nouveau lien
+        if (event.isControlDown() && event.getCode() == KeyCode.L){
+            
+            selectionLien();
+        }
+        // Raccourci clavier - Sélectionner l'option de "Sélection"
+        if (event.isControlDown() && event.getCode() == KeyCode.A){
+            
+            selectionSelection();
+        }
+        
+        // Raccourci clavier - Sélectionner l'option de vérification du graph
+        if (graphe.getFactory().equals("Graphe probabiliste") && event.isControlDown() && event.getCode() == KeyCode.F){
+            
+            ((GrapheProbabiliste) graphe).verifierGraphe();
         }
     }
     
