@@ -31,7 +31,7 @@ public class Arc extends Lien {
     
     private double xControl, yControl;
   
-    public Arc(Noeud source,Noeud destinataire, Graphe g){
+    public Arc(Noeud source, Noeud destinataire, Graphe g) {
         super(source,destinataire,g);
     }
     
@@ -40,7 +40,7 @@ public class Arc extends Lien {
     
    
     @Override
-    public void dessiner(AnchorPane zoneDessin){
+    public void dessiner(AnchorPane zoneDessin) {
         
         final double EPSILON = 10E-15;
         double xPrimeSource;
@@ -157,21 +157,16 @@ public class Arc extends Lien {
         arrow2.setStrokeWidth(3);
     }
     
-    /**
-     * Augmente l'epaisseur du lien
-     */
     @Override
     public void lienDeselectionne(AnchorPane zoneDessin) {
-        
-        quadCurve.setStrokeWidth(1);
-        arrow1.setStrokeWidth(1);
-        arrow2.setStrokeWidth(1);
-        zoneDessin.getChildren().removeAll(pointDepart, pointArrive);
+        zoneDessin.getChildren().removeAll(pointDepart, pointArrive, quadCurve, arrow1,arrow2);
+        this.dessiner(zoneDessin);         
     }
     
     @Override
     public void supprimer(AnchorPane zoneDessin) {
         
+        lienDeselectionne(zoneDessin);
         g.liens.remove(this);
         source.successeurs.remove(this);
         destinataire.predecesseurs.remove(this);

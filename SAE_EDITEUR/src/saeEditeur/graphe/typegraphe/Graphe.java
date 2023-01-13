@@ -327,9 +327,16 @@ public abstract class Graphe {
         }
     }
 
+    /**
+     * Supprime le lien du graphe et supprime sa représentation
+     * @param lienSelectionne Lien à supprimer
+     * @param zoneDessin Zone de dessin
+     */
     public void supprimerLien(Lien lienSelectionne, AnchorPane zoneDessin) {
         liens.remove(lienSelectionne);
         lienSelectionne.supprimer(zoneDessin);
+        
+        this.lienSelectionne = null;
         
         deselectionnerAll(zoneDessin);
     }

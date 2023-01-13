@@ -51,9 +51,6 @@ public class GrapheOriente extends Graphe {
         if(!(l instanceof Arc)){
            throw new LienException("Impossible de créer un Lien");
         }
-        if (l.destinataire == l.source) {
-            throw new LienException("Impossible de créer un Lien");
-        }
         
         l.source.successeurs.add(l);
         l.destinataire.predecesseurs.add(l);

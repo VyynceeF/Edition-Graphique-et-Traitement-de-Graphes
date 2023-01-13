@@ -87,6 +87,11 @@ public abstract class Lien extends ElementGraphe {
      */
     public abstract void changementExtremite(Noeud nouveauNoeud, int extremite, AnchorPane zoneDessin);
     
+    /**
+     * Supprime le lien dans les listes des noeuds successeurs et predecesseurs
+     * Et supprime sa représentation dans la zone de dessin
+     * @param zoneDessin Zone de dessin
+     */
     public abstract void supprimer(AnchorPane zoneDessin);
 
     public Noeud getSource() {
