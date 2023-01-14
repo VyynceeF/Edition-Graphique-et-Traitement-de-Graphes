@@ -354,7 +354,10 @@ public class FXMLDocumentController implements Initializable {
             x = event.getX();
             y = event.getY();
 
-            if (graphe.noeudSelectionne != null) {
+            if (graphe.noeudSelectionne != null                   
+                && (xAncien != graphe.noeudSelectionne.position.x        // Vérifie que la position du
+                    || yAncien != graphe.noeudSelectionne.position.y)) { // noeud a été modifié
+                
                 // Si la position du noeud est invalide 
                 // Alors on le remet sur son ancienne position
                 if (!graphe.estNoeudValideApresDeplacement(x, y, graphe.noeudSelectionne)) {
@@ -372,25 +375,26 @@ public class FXMLDocumentController implements Initializable {
                 
                 Noeud nouveauNoeud = graphe.estNoeud(x, y);
                 Lien nouveauLien;
-                
+                int extremite = graphe.lienSelectionne.estExtremite(x, y);
               
                 if (nouveauNoeud != null) {
+                    
+                    ArrayList<Object> ancienPosition = new ArrayList<>(); // Liste pour la pile d'action
+                    ancienPosition.add(graphe.lienSelectionne);
                     // Créer un nouveau lien pour le comparer a ceux existant
-                    if (graphe.lienSelectionne.estExtremite(x, y) == 1) {
+                    if (extremite == 1) {
                         nouveauLien = factory.creerLien(nouveauNoeud, graphe.lienSelectionne.destinataire,graphe);
+                        ancienPosition.add(graphe.lienSelectionne.source); // Ajout dans la liste l'ancien noeud
                     } else {
                         nouveauLien = factory.creerLien(graphe.lienSelectionne.source, nouveauNoeud,graphe);
+                        ancienPosition.add(graphe.lienSelectionne.destinataire); // Ajout dans la liste l'ancien noeud
                     }
+                    ancienPosition.add(extremite); // Ajout dans la liste l'extremite
                     // Test la presence ou non d'un lien entre le nouveau noeud et l'autre
                     if (graphe.estLienValide(nouveauLien)) {
-                        
                         // Changement l'extremité
-                        graphe.changementExtremiteLien(graphe.lienSelectionne, nouveauNoeud, graphe.lienSelectionne.estExtremite(x, y), zoneDessin);
-                        ArrayList<Object> ancienPosition = new ArrayList<>();
-                        ancienPosition.add(graphe.lienSelectionne);
-                        ancienPosition.add(nouveauNoeud);
-                        ancienPosition.add(graphe.lienSelectionne.estExtremite(x, y));
-                        graphe.ajouterPile(ancienPosition);
+                        graphe.changementExtremiteLien(graphe.lienSelectionne, nouveauNoeud, extremite, zoneDessin);
+                        graphe.ajouterPile(ancienPosition); // Ajout dans la pile d'action
                     } else {
                         // Remise par defaut de l'extremite du lien
                         graphe.lienSelectionne.remiseDefaut();
@@ -607,6 +611,7 @@ public class FXMLDocumentController implements Initializable {
         // Suppression du noeud selectionne
         if (graphe != null && graphe.noeudSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
             
+            graphe.ajouterPile(graphe.noeudSelectionne);
             graphe.supprimerNoeud(graphe.noeudSelectionne, zoneDessin);
             graphe.deselectionnerAll(zoneDessin);
             EditeurDeProprietes.fermer(gridProprietees);

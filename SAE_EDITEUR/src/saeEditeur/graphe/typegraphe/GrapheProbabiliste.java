@@ -73,7 +73,7 @@ public class GrapheProbabiliste extends Graphe {
             n.setNom(nomNoeud(n.nom,0));
             noeuds.add(n);
         }else{
-            // thorw l'exception 
+            throw new NoeudException("Impossible de créer un Noeud");
         }
     }
 

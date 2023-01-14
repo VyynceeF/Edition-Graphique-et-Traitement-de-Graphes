@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.layout.AnchorPane;
 import saeEditeur.graphe.lien.Lien;
 import saeEditeur.graphe.lien.LienException;
@@ -25,6 +27,13 @@ public abstract class Graphe {
      * Stocke les dernières modifications sous la forme d'une pile
      * 0 => Ajout d'un nouveau noeud
      * 1 => Ajout d'un nouveau lien
+     * ArrayList => Modification
+     *      - ArrayList[0] == Noeud => Modification de la position d'un noeud
+     *        [0 => Noeud Modifié, 1 => Ancien X, 2 => Ancien Y]
+     *      - ArrayList[1] == Lien  => Modification de l'extremite d'un lien
+     *        [0 => Lien Modifié, 1 => Ancien Noeud extremité, 2 => Extremite]
+     * Noeud => Suppression de ce noeud
+     * Lien  => Suppression de ce lien
      */
     private Stack<Object> stack;
     
@@ -79,6 +88,7 @@ public abstract class Graphe {
     public void ajouterPile(Object ancienElement) {
         
         stack.push(ancienElement);
+        System.out.println("Ajout Action => " + ancienElement);
     }
     
     /**
@@ -114,10 +124,29 @@ public abstract class Graphe {
         if (ancienModification instanceof ArrayList) {
             ArrayList<Object> listeModif = (ArrayList) ancienModification;
             
+            // Modification de la position d'un noeud
             if (listeModif.get(0) instanceof Noeud) {
                 
                 ((Noeud) listeModif.get(0)).modifierPosition((double) listeModif.get(1), (double) listeModif.get(2), zoneDessin);
             }
+            // Modification d'une extremite d'un lien
+            if (listeModif.get(0) instanceof Lien) {
+                
+                changementExtremiteLien((Lien) listeModif.get(0), 
+                                        (Noeud) listeModif.get(1), 
+                                        (int) listeModif.get(2), 
+                                        zoneDessin);
+            }
+        }
+        
+        // Noeud => Suppression d'un noeud
+        if (ancienModification instanceof Noeud) {
+            
+            try {
+                System.out.println("AJOUTER NOEUD");
+                ajouterNoeud((Noeud) ancienModification);
+                ((Noeud) ancienModification).dessiner(zoneDessin);
+            } catch (NoeudException ex) {}
         }
         
         return false;
