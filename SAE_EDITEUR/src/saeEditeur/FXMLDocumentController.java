@@ -164,7 +164,7 @@ public class FXMLDocumentController implements Initializable {
 
                     graphe.ajouterNoeud(n);         
                     n.dessiner(zoneDessin);
-                    graphe.ajouterPile(0); // Ajout dans la pile (undo)
+                    graphe.ajouterPileUndo(0); // Ajout dans la pile (undo)
                 } catch (NoeudException e) {
                 }
             } else if (selection == 3) {
@@ -337,7 +337,7 @@ public class FXMLDocumentController implements Initializable {
                 try{
                     Lien l = graphe.ajouterLien(factory.creerLien(premierNoeud, destinataire, graphe));               
                     l.dessiner(zoneDessin);
-                    graphe.ajouterPile(1); // Ajout dans la pile (undo)
+                    graphe.ajouterPileUndo(1); // Ajout dans la pile (undo)
                     
                 }catch(LienException e){
                     System.out.println(e.getMessage());
@@ -369,7 +369,7 @@ public class FXMLDocumentController implements Initializable {
                     ancienPosition.add(graphe.noeudSelectionne);
                     ancienPosition.add(xAncien);
                     ancienPosition.add(yAncien);
-                    graphe.ajouterPile(ancienPosition);
+                    graphe.ajouterPileUndo(ancienPosition);
                 }
             } else if (graphe.lienSelectionne != null) {
                 
@@ -394,7 +394,7 @@ public class FXMLDocumentController implements Initializable {
                     if (graphe.estLienValide(nouveauLien)) {
                         // Changement l'extremité
                         graphe.changementExtremiteLien(graphe.lienSelectionne, nouveauNoeud, extremite, zoneDessin);
-                        graphe.ajouterPile(ancienPosition); // Ajout dans la pile d'action
+                        graphe.ajouterPileUndo(ancienPosition); // Ajout dans la pile d'action
                     } else {
                         // Remise par defaut de l'extremite du lien
                         graphe.lienSelectionne.remiseDefaut();
@@ -611,7 +611,7 @@ public class FXMLDocumentController implements Initializable {
         // Suppression du noeud selectionne
         if (graphe != null && graphe.noeudSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
             
-            graphe.ajouterPile(graphe.noeudSelectionne);
+            graphe.ajouterPileUndo(graphe.noeudSelectionne);
             graphe.supprimerNoeud(graphe.noeudSelectionne, zoneDessin);
             graphe.deselectionnerAll(zoneDessin);
             EditeurDeProprietes.fermer(gridProprietees);
@@ -619,6 +619,7 @@ public class FXMLDocumentController implements Initializable {
         // Suppression du lien selectionne
         if (graphe != null && graphe.lienSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
             
+            graphe.ajouterPileUndo(graphe.lienSelectionne);
             graphe.supprimerLien(graphe.lienSelectionne, zoneDessin);
             graphe.deselectionnerAll(zoneDessin);
             EditeurDeProprietes.fermer(gridProprietees);
@@ -643,6 +644,12 @@ public class FXMLDocumentController implements Initializable {
             
             System.out.println("UNDO");
             graphe.undo(zoneDessin);
+        }
+        // Raccourci clavier - Retablir dernière action
+        if (event.isControlDown() && event.getCode() == KeyCode.Y){
+            
+            System.out.println("REDO");
+            graphe.redo(zoneDessin);
         }
         
         // Raccourci clavier - Sélectionner l'option de vérification du graph

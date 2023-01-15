@@ -35,7 +35,21 @@ public abstract class Graphe {
      * Noeud => Suppression de ce noeud
      * Lien  => Suppression de ce lien
      */
-    private Stack<Object> stack;
+    private Stack<Object> stackUndo;
+    
+    /**
+     * Stocke les anciennes effacées modifications sous la forme d'une pile
+     * 0 => Ajout d'un nouveau noeud
+     * 1 => Ajout d'un nouveau lien
+     * ArrayList => Modification
+     *      - ArrayList[0] == Noeud => Modification de la position d'un noeud
+     *        [0 => Noeud Modifié, 1 => Ancien X, 2 => Ancien Y]
+     *      - ArrayList[1] == Lien  => Modification de l'extremite d'un lien
+     *        [0 => Lien Modifié, 1 => Ancien Noeud extremité, 2 => Extremite]
+     * Noeud => Suppression de ce noeud
+     * Lien  => Suppression de ce lien
+     */
+    private Stack<Object> stackRedo;
     
     /** Noeud actuellement selectionne dans le graphe */
     public Noeud noeudSelectionne = null;
@@ -54,7 +68,8 @@ public abstract class Graphe {
         liens =  new ArrayList<>();
         noeuds = new ArrayList<>();
         noeudSelectionne = null;
-        stack = new Stack<>();
+        stackUndo = new Stack<>();
+        stackRedo = new Stack<>();
     }
     
     public abstract String toString();
@@ -81,13 +96,21 @@ public abstract class Graphe {
     
     /**
      * Ajoute dans la pile les modifications
-     * 0 => Ajout d'un nouveau noeud
-     * 1 => Ajout d'un nouveau lien
      * @param ancienElement 
      */
-    public void ajouterPile(Object ancienElement) {
+    public void ajouterPileUndo(Object ancienElement) {
         
-        stack.push(ancienElement);
+        stackUndo.push(ancienElement);
+        System.out.println("Ajout Action => " + ancienElement);
+    }
+    
+    /**
+     * Ajoute dans la pile les modifications
+     * @param ancienElement 
+     */
+    public void ajouterPileRedo(Object ancienElement) {
+        
+        stackRedo.push(ancienElement);
         System.out.println("Ajout Action => " + ancienElement);
     }
     
@@ -99,13 +122,99 @@ public abstract class Graphe {
     public boolean undo(AnchorPane zoneDessin) {
         
         // Aucune ancienne modification
-        if (stack.empty()) {
+        if (stackUndo.empty()) {
             return false;
         }
         
-        Object ancienModification = stack.pop();
+        Object ancienModification = stackUndo.pop();
         
-        // Integer => Ajout/Suppression
+        // Integer => Ajout
+        if (ancienModification instanceof Integer) {
+            
+            // La derniere modification a été un ajout de noeud
+            if (ancienModification.equals(0)) {
+                
+                ajouterPileRedo(noeuds.get(noeuds.size() - 1));
+                supprimerNoeud(noeuds.remove(noeuds.size() - 1), zoneDessin);
+            }
+            // La derniere modification a été un ajout de lien
+            if (ancienModification.equals(1)) {
+                
+                ajouterPileRedo(liens.get(liens.size() - 1));
+                supprimerLien(liens.remove(liens.size() - 1), zoneDessin);
+            }
+        } 
+        
+        // ArrayList => Modification
+        if (ancienModification instanceof ArrayList) {
+            ArrayList<Object> listeModif = (ArrayList) ancienModification;
+            
+            // Modification de la position d'un noeud
+            if (listeModif.get(0) instanceof Noeud) {
+                
+                ArrayList<Object> modif = new ArrayList<>();
+                modif.add((Noeud) listeModif.get(0));
+                modif.add(((Noeud) listeModif.get(0)).position.x);
+                modif.add(((Noeud) listeModif.get(0)).position.y);
+                ajouterPileRedo(modif);
+                
+                ((Noeud) listeModif.get(0)).modifierPosition((double) listeModif.get(1), (double) listeModif.get(2), zoneDessin);
+            }
+            // Modification d'une extremite d'un lien
+            if (listeModif.get(0) instanceof Lien) {
+                
+                ArrayList<Object> modif = new ArrayList<>();
+                modif.add((Lien) listeModif.get(0));
+                modif.add((Noeud) listeModif.get(0));
+                modif.add((int) listeModif.get(2));
+                ajouterPileRedo(modif);
+                
+                changementExtremiteLien((Lien) listeModif.get(0), 
+                                        (Noeud) listeModif.get(1), 
+                                        (int) listeModif.get(2), 
+                                        zoneDessin);
+            }
+        }
+        
+        // Noeud => Suppression d'un noeud
+        if (ancienModification instanceof Noeud) {
+            
+            try {
+                ajouterPileRedo(0);
+                ajouterNoeud((Noeud) ancienModification);
+                System.out.println(((Noeud) ancienModification).successeurs.size());
+                ((Noeud) ancienModification).dessiner(zoneDessin);
+            } catch (NoeudException ex) {}
+        }
+        
+        // Lien => Suppression d'un lien
+        if (ancienModification instanceof Lien) {
+            
+            try {
+                ajouterPileRedo(1);
+                ajouterLien((Lien) ancienModification);
+                ((Lien) ancienModification).dessiner(zoneDessin);
+            } catch (LienException ex) {}
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Remets les anciennes modifications
+     * @param zoneDessin Zone de dessin
+     * @return 
+     */
+    public boolean redo(AnchorPane zoneDessin) {
+        
+        // Aucune ancienne modification
+        if (stackRedo.empty()) {
+            return false;
+        }
+        
+        Object ancienModification = stackRedo.pop();
+        
+        // Integer => Ajout
         if (ancienModification instanceof Integer) {
             
             // La derniere modification a été un ajout de noeud
@@ -147,6 +256,16 @@ public abstract class Graphe {
                 ajouterNoeud((Noeud) ancienModification);
                 ((Noeud) ancienModification).dessiner(zoneDessin);
             } catch (NoeudException ex) {}
+        }
+        
+        // Lien => Suppression d'un lien
+        if (ancienModification instanceof Lien) {
+            
+            try {
+                System.out.println("AJOUTER LIEN");
+                ajouterLien((Lien) ancienModification);
+                ((Lien) ancienModification).dessiner(zoneDessin);
+            } catch (LienException ex) {}
         }
         
         return false;

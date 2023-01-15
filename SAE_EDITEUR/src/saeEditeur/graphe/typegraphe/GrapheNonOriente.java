@@ -38,7 +38,8 @@ public class GrapheNonOriente extends Graphe {
     
     @Override
     public void ajouterNoeud(Noeud n) throws NoeudException {
-        if (n instanceof NoeudGrapheNonOriente){
+        
+        if (n instanceof NoeudGrapheNonOriente && estNoeudValide(n.position.x, n.position.y)){
             n.setNom(nomNoeud(n.nom,0));
             noeuds.add(n);
         }else{
@@ -51,12 +52,12 @@ public class GrapheNonOriente extends Graphe {
         if(!(l instanceof Arete)){
            // TODO Lève l'exception
         }
-        l.source.successeurs.add(l);
-        l.destinataire.predecesseurs.add(l);
-        
         if (!estLienValide(l)) {
             throw new LienException("Impossible de créer un lien sur un lien");
         }
+        l.source.successeurs.add(l);
+        l.destinataire.predecesseurs.add(l);
+        
         
         liens.add(l);
         return l;
