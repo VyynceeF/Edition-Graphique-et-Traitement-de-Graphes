@@ -37,7 +37,7 @@ public class EditeurDeProprietes {
         
         //Creation du bouton valider invisible
         Button valider = new Button("Valider"); //Creer
-        pane.add(valider,0,proprietees.length + 1); //Ajout au pane
+        pane.add(valider,0,proprietees.length); //Ajout au pane
         pane.setColumnSpan(valider,2); //Fusion colonne
         pane.setHalignment(valider, HPos.CENTER); //Alignement horizontal au centre
         valider.setVisible(false); //Invisible

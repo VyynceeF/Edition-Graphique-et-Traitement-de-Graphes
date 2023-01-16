@@ -5,6 +5,7 @@
  */
 package saeEditeur.graphe.propriete;
 
+import java.util.ArrayList;
 import saeEditeur.graphe.noeud.Noeud;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -84,6 +85,14 @@ public class ProprieteNoeudPositionY extends Propriete {
         Noeud n = (Noeud) elementGraphe; //Noeud select
         
         if(validerSaisie(valeur)){ //Valeur est ok
+            
+            // Ajout dans la pile d'action
+            ArrayList<Object> ancienPosition = new ArrayList<>();
+            ancienPosition.add(n.g.noeudSelectionne);
+            ancienPosition.add(n.position.x);
+            ancienPosition.add(n.position.y);
+            n.g.ajouterPileUndo(ancienPosition);
+            
             n.modifierPosition(n.position.x, Double.parseDouble(valeur), zoneDessin);
         }else{
             field.setText(Double.toString(n.position.y));

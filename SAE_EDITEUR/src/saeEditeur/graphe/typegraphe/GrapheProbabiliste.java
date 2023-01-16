@@ -23,6 +23,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -137,6 +138,37 @@ public class GrapheProbabiliste extends Graphe {
         return btnVerification;
     }
     
+    /**
+     * Ajout d'une pane pour afficher la légende des noeuds
+     * @param menu Menu de l'application
+     * @return 
+     */
+    public static Pane ajouterLegende(Pane menu) {
+        
+        Pane legende = new Pane();
+        
+        Text textTransitoire = new Text("Etat transitoire");
+        textTransitoire.relocate(28, 29);
+        Circle circleTransitoire = new Circle(15, Color.rgb(157, 255, 117));
+        circleTransitoire.relocate(162, 23);
+        Text textErgodique = new Text("Etat ergodique");
+        textErgodique.relocate(28, 66);
+        Circle circleErgodique = new Circle(15, Color.rgb(117, 208, 255));
+        circleErgodique.relocate(162, 60);
+        Text textAbsorbant = new Text("Etat absorbant");
+        textAbsorbant.relocate(28, 103);
+        Circle circleAbsorbant = new Circle(15, Color.rgb(141, 117, 255));
+        circleAbsorbant.relocate(162, 97);
+        
+        legende.getChildren().addAll(textAbsorbant, textErgodique, textTransitoire,
+                                     circleAbsorbant, circleErgodique, circleTransitoire);
+        legende.setLayoutX(0);
+        legende.setLayoutY(430);
+        menu.getChildren().add(legende);
+        
+        return legende;
+    }
+    
     public static Menu ajouterMenuNavBar(MenuBar menuBar, GrapheProbabiliste g, Pane zoneDessin) {
         
         Menu editMenu = new Menu("Edition");
@@ -185,6 +217,7 @@ public class GrapheProbabiliste extends Graphe {
                     if (g.verifierGraphe()) {   // Verifie si le graphe est probabiliste
                                             // Et change les couleurs sur les noeuds errones
                         g.regroupementEtatEtChangementCouleur(g.regroupementClasse());
+                        
                     }
                 }
             }
@@ -682,7 +715,11 @@ public class GrapheProbabiliste extends Graphe {
             
             // Ergodique
             if (!estTransitoire) {
-                changementCouleurErgodique(listeClasse.get(noClasse));
+                if (listeClasse.get(noClasse).size() == 1) {
+                    changementCouleurErgodiqueAbsorbant(listeClasse.get(noClasse));
+                } else {
+                    changementCouleurErgodique(listeClasse.get(noClasse));
+                }
                 ajouterListeFinale(listeClasse.get(noClasse));
             }
         }
@@ -728,7 +765,7 @@ public class GrapheProbabiliste extends Graphe {
     }
     
     /**
-     * Changement de la couleur de la bordure de tous les noeuds dans la classe
+     * Changement de la couleur de fond de tous les noeuds dans la classe
      * @param classe Ensemble des noeuds a modifier
      */
     public void changementCouleurTransitoire(ArrayList<Noeud> classe) {
@@ -743,7 +780,7 @@ public class GrapheProbabiliste extends Graphe {
     }
     
     /**
-     * Changement de la couleur de la bordure de tous les noeuds dans la classe
+     * Changement de la couleur de fond de tous les noeuds dans la classe
      * @param classe Ensemble des noeuds a modifier
      */
     public void changementCouleurErgodique(ArrayList<Noeud> classe) {
@@ -754,6 +791,21 @@ public class GrapheProbabiliste extends Graphe {
             
             noeud = (NoeudGrapheProbabiliste) classe.get(aChanger);
             noeud.changementCouleurErgodique();
+        }
+    }
+    
+    /**
+     * Changement de la couleur de fond de tous les noeuds dans la classe
+     * @param classe Ensemble des noeuds a modifier
+     */
+    public void changementCouleurErgodiqueAbsorbant(ArrayList<Noeud> classe) {
+        
+        NoeudGrapheProbabiliste noeud;
+        
+        for (int aChanger = 0 ; aChanger < classe.size() ; aChanger++) {
+            
+            noeud = (NoeudGrapheProbabiliste) classe.get(aChanger);
+            noeud.changementCouleurErgodiqueAbsorbant();
         }
     }
 

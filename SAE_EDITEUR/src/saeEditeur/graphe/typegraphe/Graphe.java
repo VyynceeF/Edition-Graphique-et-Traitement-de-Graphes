@@ -30,9 +30,10 @@ public abstract class Graphe {
      * ArrayList => Modification
      *      - ArrayList[0] == Noeud => Modification de la position d'un noeud
      *        [0 => Noeud Modifié, 1 => Ancien X, 2 => Ancien Y]
-     *      - ArrayList[1] == Lien  => Modification de l'extremite d'un lien
+     *      - ArrayList[0] == Lien  => Modification de l'extremite d'un lien
      *        [0 => Lien Modifié, 1 => Ancien Noeud extremité, 2 => Extremite]
-     * Noeud => Suppression de ce noeud
+     *      - ArrayList[0] == Noeud && ArrayList[1] == ArrayList<Lien> Suppression de ce noeud
+     *        [0 => Noeud, 1 => Lien Successeurs, 2 => Lien Predecesseurs]
      * Lien  => Suppression de ce lien
      */
     private Stack<Object> stackUndo;
@@ -134,7 +135,11 @@ public abstract class Graphe {
             // La derniere modification a été un ajout de noeud
             if (ancienModification.equals(0)) {
                 
-                ajouterPileRedo(noeuds.get(noeuds.size() - 1));
+                ArrayList<Object> modif = new ArrayList<>();
+                modif.add(noeuds.get(noeuds.size() - 1));
+                modif.add(noeuds.get(noeuds.size() - 1).successeurs.clone());
+                modif.add(noeuds.get(noeuds.size() - 1).predecesseurs.clone());
+                ajouterPileRedo(modif);
                 supprimerNoeud(noeuds.remove(noeuds.size() - 1), zoneDessin);
             }
             // La derniere modification a été un ajout de lien
@@ -145,27 +150,16 @@ public abstract class Graphe {
             }
         } 
         
-        // ArrayList => Modification
+        // ArrayList
         if (ancienModification instanceof ArrayList) {
             ArrayList<Object> listeModif = (ArrayList) ancienModification;
             
-            // Modification de la position d'un noeud
-            if (listeModif.get(0) instanceof Noeud) {
-                
-                ArrayList<Object> modif = new ArrayList<>();
-                modif.add((Noeud) listeModif.get(0));
-                modif.add(((Noeud) listeModif.get(0)).position.x);
-                modif.add(((Noeud) listeModif.get(0)).position.y);
-                ajouterPileRedo(modif);
-                
-                ((Noeud) listeModif.get(0)).modifierPosition((double) listeModif.get(1), (double) listeModif.get(2), zoneDessin);
-            }
             // Modification d'une extremite d'un lien
             if (listeModif.get(0) instanceof Lien) {
                 
                 ArrayList<Object> modif = new ArrayList<>();
                 modif.add((Lien) listeModif.get(0));
-                modif.add((Noeud) listeModif.get(0));
+                modif.add((Noeud) listeModif.get(1));
                 modif.add((int) listeModif.get(2));
                 ajouterPileRedo(modif);
                 
@@ -173,19 +167,57 @@ public abstract class Graphe {
                                         (Noeud) listeModif.get(1), 
                                         (int) listeModif.get(2), 
                                         zoneDessin);
+                return true;
+            }
+            // Noeud => Suppression d'un noeud
+            if (listeModif.get(0) instanceof Noeud
+                && listeModif.get(1) instanceof ArrayList) {
+                try {
+                    ajouterNoeud((Noeud) listeModif.get(0));
+                    ajouterPileRedo((Noeud) listeModif.get(0));
+                    ((Noeud) listeModif.get(0)).dessiner(zoneDessin);
+                    // Ajout des liens successeurs supprimes
+                    for (int noSuccesseur = 0 ; 
+                         noSuccesseur < ((ArrayList)listeModif.get(1)).size() ;
+                         noSuccesseur++) {
+                        
+                        try {
+                            ajouterLien((Lien) ((ArrayList)listeModif.get(1)).get(noSuccesseur));
+                            liens.get(liens.size() - 1).dessiner(zoneDessin); // Dessin du lien
+                        } catch (LienException ex) {
+                        }
+                    }
+                    // Ajout des liens predecesseurs supprimes
+                    for (int noPredecesseur = 0 ; 
+                         noPredecesseur < ((ArrayList)listeModif.get(2)).size() ;
+                         noPredecesseur++) {
+                        
+                        try {
+                            ajouterLien((Lien) ((ArrayList)listeModif.get(2)).get(noPredecesseur));
+                            liens.get(liens.size() - 1).dessiner(zoneDessin); // Dessin du lien
+                        } catch (LienException ex) {
+                        }
+                    }
+                    return true;
+                } catch (NoeudException ex) {}
+            }
+            
+            // Modification de la position d'un noeud
+            if (listeModif.get(0) instanceof Noeud) {
+                
+                System.out.println("MODIF POS");
+                ArrayList<Object> modif = new ArrayList<>();
+                modif.add((Noeud) listeModif.get(0));
+                modif.add(((Noeud) listeModif.get(0)).position.x);
+                modif.add(((Noeud) listeModif.get(0)).position.y);
+                ajouterPileRedo(modif);
+                
+                ((Noeud) listeModif.get(0)).modifierPosition((double) listeModif.get(1), (double) listeModif.get(2), zoneDessin);
+                return true;
             }
         }
         
-        // Noeud => Suppression d'un noeud
-        if (ancienModification instanceof Noeud) {
-            
-            try {
-                ajouterPileRedo(0);
-                ajouterNoeud((Noeud) ancienModification);
-                System.out.println(((Noeud) ancienModification).successeurs.size());
-                ((Noeud) ancienModification).dessiner(zoneDessin);
-            } catch (NoeudException ex) {}
-        }
+        
         
         // Lien => Suppression d'un lien
         if (ancienModification instanceof Lien) {
@@ -201,12 +233,12 @@ public abstract class Graphe {
     }
     
     /**
-     * Remets les anciennes modifications
+     * Rétablir les anciennes modifications
      * @param zoneDessin Zone de dessin
      * @return 
      */
     public boolean redo(AnchorPane zoneDessin) {
-        
+         
         // Aucune ancienne modification
         if (stackRedo.empty()) {
             return false;
@@ -220,51 +252,97 @@ public abstract class Graphe {
             // La derniere modification a été un ajout de noeud
             if (ancienModification.equals(0)) {
                 
+                ArrayList<Object> modif = new ArrayList<>();
+                modif.add(noeuds.get(noeuds.size() - 1));
+                modif.add(noeuds.get(noeuds.size() - 1).successeurs.clone());
+                modif.add(noeuds.get(noeuds.size() - 1).predecesseurs.clone());
+                ajouterPileUndo(modif);
                 supprimerNoeud(noeuds.remove(noeuds.size() - 1), zoneDessin);
             }
             // La derniere modification a été un ajout de lien
             if (ancienModification.equals(1)) {
                 
+                ajouterPileUndo(liens.get(liens.size() - 1));
                 supprimerLien(liens.remove(liens.size() - 1), zoneDessin);
             }
         } 
         
-        // ArrayList => Modification
+        // ArrayList
         if (ancienModification instanceof ArrayList) {
             ArrayList<Object> listeModif = (ArrayList) ancienModification;
             
-            // Modification de la position d'un noeud
-            if (listeModif.get(0) instanceof Noeud) {
-                
-                ((Noeud) listeModif.get(0)).modifierPosition((double) listeModif.get(1), (double) listeModif.get(2), zoneDessin);
-            }
             // Modification d'une extremite d'un lien
             if (listeModif.get(0) instanceof Lien) {
+                
+                ArrayList<Object> modif = new ArrayList<>();
+                modif.add((Lien) listeModif.get(0));
+                modif.add((Noeud) listeModif.get(1));
+                modif.add((int) listeModif.get(2));
+                ajouterPileUndo(modif);
                 
                 changementExtremiteLien((Lien) listeModif.get(0), 
                                         (Noeud) listeModif.get(1), 
                                         (int) listeModif.get(2), 
                                         zoneDessin);
+                return true;
+            }
+            // Noeud => Suppression d'un noeud
+            if (listeModif.get(0) instanceof Noeud
+                && listeModif.get(1) instanceof ArrayList) {
+                try {
+                    ajouterPileUndo((Noeud) listeModif.get(0));
+                    ajouterNoeud((Noeud) listeModif.get(0));
+                    ((Noeud) listeModif.get(0)).dessiner(zoneDessin);
+                    // Ajout des liens successeurs supprimes
+                    for (int noSuccesseur = 0 ; 
+                         noSuccesseur < ((ArrayList)listeModif.get(1)).size() ;
+                         noSuccesseur++) {
+                        
+                        try {
+                            ajouterLien((Lien) ((ArrayList)listeModif.get(1)).get(noSuccesseur));
+                            liens.get(liens.size() - 1).dessiner(zoneDessin); // Dessin du lien
+                        } catch (LienException ex) {
+                        }
+                    }
+                    // Ajout des liens predecesseurs supprimes
+                    for (int noPredecesseur = 0 ; 
+                         noPredecesseur < ((ArrayList)listeModif.get(2)).size() ;
+                         noPredecesseur++) {
+                        
+                        try {
+                            ajouterLien((Lien) ((ArrayList)listeModif.get(2)).get(noPredecesseur));
+                            liens.get(liens.size() - 1).dessiner(zoneDessin); // Dessin du lien
+                        } catch (LienException ex) {
+                        }
+                    }
+                    return true;
+                } catch (NoeudException ex) {}
+            }
+            
+            // Modification de la position d'un noeud
+            if (listeModif.get(0) instanceof Noeud) {
+                
+                ArrayList<Object> modif = new ArrayList<>();
+                modif.add((Noeud) listeModif.get(0));
+                modif.add(((Noeud) listeModif.get(0)).position.x);
+                modif.add(((Noeud) listeModif.get(0)).position.y);
+                ajouterPileUndo(modif);
+                
+                ((Noeud) listeModif.get(0)).modifierPosition((double) listeModif.get(1), (double) listeModif.get(2), zoneDessin);
+                return true;
             }
         }
         
-        // Noeud => Suppression d'un noeud
-        if (ancienModification instanceof Noeud) {
-            
-            try {
-                System.out.println("AJOUTER NOEUD");
-                ajouterNoeud((Noeud) ancienModification);
-                ((Noeud) ancienModification).dessiner(zoneDessin);
-            } catch (NoeudException ex) {}
-        }
+        
         
         // Lien => Suppression d'un lien
         if (ancienModification instanceof Lien) {
             
             try {
-                System.out.println("AJOUTER LIEN");
+                ajouterPileUndo(1);
                 ajouterLien((Lien) ancienModification);
                 ((Lien) ancienModification).dessiner(zoneDessin);
+                return true;
             } catch (LienException ex) {}
         }
         

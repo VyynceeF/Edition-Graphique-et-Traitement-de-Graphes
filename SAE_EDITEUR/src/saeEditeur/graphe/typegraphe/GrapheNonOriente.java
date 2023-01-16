@@ -58,7 +58,6 @@ public class GrapheNonOriente extends Graphe {
         l.source.successeurs.add(l);
         l.destinataire.predecesseurs.add(l);
         
-        
         liens.add(l);
         return l;
     }

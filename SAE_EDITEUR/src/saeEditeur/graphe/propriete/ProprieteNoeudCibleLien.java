@@ -5,6 +5,7 @@
  */
 package saeEditeur.graphe.propriete;
 
+import java.util.ArrayList;
 import saeEditeur.graphe.lien.Arc;
 import saeEditeur.graphe.lien.Arete;
 import saeEditeur.graphe.lien.Lien;
@@ -121,6 +122,12 @@ public class ProprieteNoeudCibleLien extends Propriete {
             //Recuperation du noeud grace au nom
             Noeud n = getNoeud(valeur);
             
+            // Ajout dans la pile d'action
+            ArrayList<Object> ancienPosition = new ArrayList<>();
+            ancienPosition.add(l.g.lienSelectionne);
+            ancienPosition.add(l.destinataire);
+            ancienPosition.add(2);
+            l.g.ajouterPileUndo(ancienPosition);
             //Appel a la fonction de modification
             l.g.changementExtremiteLien(l.g.lienSelectionne, n, 2, zoneDessin);
             

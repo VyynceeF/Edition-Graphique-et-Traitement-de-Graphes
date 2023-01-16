@@ -99,6 +99,16 @@ public class FXMLDocumentController implements Initializable {
     private double xAncien, yAncien;
     @FXML
     private GridPane gridProprietees;
+    @FXML
+    private Text textNoeud1;
+    @FXML
+    private Text textNoeud11;
+    @FXML
+    private Text textNoeud12;
+    @FXML
+    private Pane menu;
+    
+    private Pane legende;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -118,6 +128,8 @@ public class FXMLDocumentController implements Initializable {
                         if (btnVerifier != null) {
                             paneSelection.getChildren().remove(btnVerifier);
                             navbar.getMenus().remove(menuEdition);
+                            menu.getChildren().remove(legende);
+                            legende = null;
                             btnVerifier = null;
                         }
                         // Ajoute le bouton de verification si graphe probabiliste
@@ -125,6 +137,8 @@ public class FXMLDocumentController implements Initializable {
                             btnVerifier = GrapheProbabiliste.ajouterBoutonVerification(paneSelection, 
                                                                                        zoneDessin, 
                                                                                        (GrapheProbabiliste) graphe);
+                            
+                            legende = GrapheProbabiliste.ajouterLegende(menu);
                             
                             menuEdition = GrapheProbabiliste.ajouterMenuNavBar(navbar, (GrapheProbabiliste) graphe, zoneDessin);
                         } 
@@ -559,6 +573,8 @@ public class FXMLDocumentController implements Initializable {
                     if (btnVerifier != null) {
                         paneSelection.getChildren().remove(btnVerifier);
                         navbar.getMenus().remove(menuEdition);
+                        menu.getChildren().remove(legende);
+                        legende = null;
                         btnVerifier = null;
                     }
                     
@@ -567,6 +583,8 @@ public class FXMLDocumentController implements Initializable {
                         btnVerifier = GrapheProbabiliste.ajouterBoutonVerification(paneSelection, 
                                                                                    zoneDessin, 
                                                                                    (GrapheProbabiliste) graphe);
+                        
+                        legende = GrapheProbabiliste.ajouterLegende(menu);
 
                         menuEdition = GrapheProbabiliste.ajouterMenuNavBar(navbar, (GrapheProbabiliste) graphe, zoneDessin);
                     } 
@@ -611,7 +629,12 @@ public class FXMLDocumentController implements Initializable {
         // Suppression du noeud selectionne
         if (graphe != null && graphe.noeudSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
             
-            graphe.ajouterPileUndo(graphe.noeudSelectionne);
+            ArrayList<Object> noeudSupprimerUndo = new ArrayList<>();
+            noeudSupprimerUndo.add(graphe.noeudSelectionne);
+            noeudSupprimerUndo.add((ArrayList<Lien>) graphe.noeudSelectionne.successeurs.clone());
+            noeudSupprimerUndo.add((ArrayList<Lien>) graphe.noeudSelectionne.predecesseurs.clone());
+            
+            graphe.ajouterPileUndo(noeudSupprimerUndo);
             graphe.supprimerNoeud(graphe.noeudSelectionne, zoneDessin);
             graphe.deselectionnerAll(zoneDessin);
             EditeurDeProprietes.fermer(gridProprietees);
@@ -642,13 +665,11 @@ public class FXMLDocumentController implements Initializable {
         // Raccourci clavier - Annuler dernière action
         if (event.isControlDown() && event.getCode() == KeyCode.Z){
             
-            System.out.println("UNDO");
             graphe.undo(zoneDessin);
         }
         // Raccourci clavier - Retablir dernière action
         if (event.isControlDown() && event.getCode() == KeyCode.Y){
             
-            System.out.println("REDO");
             graphe.redo(zoneDessin);
         }
         

@@ -32,7 +32,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Pane maxWidth="200.0" prefHeight="565.0" prefWidth="200.0" style="-fx-border-color: black;" GridPane.rowIndex="1">
+      <Pane fx:id="menu" maxWidth="200.0" prefHeight="565.0" prefWidth="200.0" style="-fx-border-color: black;" GridPane.rowIndex="1">
          <children>
             <Pane fx:id="paneSelection" layoutX="-4.0" layoutY="-1.0" prefHeight="246.0" prefWidth="206.0">
                <children>
@@ -65,7 +65,7 @@
                   </Text>
                </children>
             </Pane>
-            <Pane layoutY="246.0" prefHeight="319.0" prefWidth="200.0">
+            <Pane layoutY="246.0" prefHeight="207.0" prefWidth="200.0">
                <children>
                   <Text layoutX="55.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Propriétés">
                      <font>

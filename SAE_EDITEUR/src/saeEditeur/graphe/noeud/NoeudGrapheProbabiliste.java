@@ -105,19 +105,27 @@ public class NoeudGrapheProbabiliste extends Noeud {
     }
     
     /**
-     * Changement de la couleur de la bordure en vert 
+     * Changement de la couleur de fond en vert 
      */
     public void changementCouleurTransitoire() {
         
-        c.setStroke(Color.GREEN);
+        c.setFill(Color.rgb(157,255,117));
     }
     
     /**
-     * Changement de la couleur de la bordure en bleu
+     * Changement de la couleur de fond en bleu
      */
     public void changementCouleurErgodique() {
         
-        c.setStroke(Color.BLUE);
+        c.setFill(Color.rgb(117, 208, 255));
+    }
+    
+    /**
+     * Changement de la couleur de fond en violet
+     */
+    public void changementCouleurErgodiqueAbsorbant() {
+        
+        c.setFill(Color.rgb(141, 117, 255));
     }
 
     public void setSuccesseurs(ArrayList<Lien> successeurs) {
