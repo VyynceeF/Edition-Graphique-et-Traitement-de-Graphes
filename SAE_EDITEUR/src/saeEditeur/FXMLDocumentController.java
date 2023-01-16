@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * FXMLDocumentController.java    16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur;
 
@@ -34,6 +36,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -49,7 +52,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- *
+ * Gestion de toutes les actions et affichage possible sur "Editeur de graphe"
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public class FXMLDocumentController implements Initializable {
@@ -57,57 +64,82 @@ public class FXMLDocumentController implements Initializable {
     /*
      * 1 => Création de Noeud
      * 2 => Création de Lien
-     * 3 => Curseur
+     * 3 => Sélection
      */
     int selection = 0 ;
     
-   
+    /** Factory contenant tous les types de graphe */
     public static FactoryManager factoryManager = new FactoryManager();
     
+    /** 
+     * Permet la création d'une nouvelle instance d'un graphe en fonction d'un
+     * certain type de graphe
+     */
     public AbstractFactoryGraphe factory;
     
+    /** Graphe actuel (null si aucun graphe ouvert/sélectionné)
+     */
     Graphe graphe;    
+    
+    /** Zone de dessin contenant les noeuds et les liens */
     @FXML
     private AnchorPane zoneDessin;
+    
+    /** Texte sur lequel l'utilisateur clique pour avoir la "Création d'un noeud" */
     @FXML
     private Text textNoeud;
+    
+    /** Texte sur lequel l'utilisateur clique pour avoir la "Création d'un lien" */
     @FXML
     private Text textLien;
+    
+    /** Texte sur lequel l'utilisateur clique pour avoir la "Sélection" */
     @FXML
     private Text textSelection;
+    
+    /** 
+     * Menu déroulant permettant la création d'un nouveau graphe 
+     * ou bien l'enregistrement/ouverture d'un graphe
+     */
     @FXML
     public Menu menuNouveauGraphe;
     
+    /** Ligne représentant un lien lors de la création */
     public Line lineMouseDrag = null;
+    
+    /** Scroll pane de la zone de dessin */
     @FXML
     private javafx.scene.control.ScrollPane scrollpane;
     
+    /** Premier noeud lors de la création d'un lien */
     private Noeud premierNoeud;
+    
+    /** Pane contenant les différentes actions de sélection (Noeud, Lien, ...) */
     @FXML
     private Pane paneSelection;
     
+    /** Bouton pour la vérification d'un graphe probabiliste */
     private Button btnVerifier = null;
     
+    /** NavBar du logiciel */
     @FXML
     private MenuBar navbar;
     
+    /** Menu contenant les traitements d'un graphe probabiliste */
     private Menu menuEdition = null;
     
-    /**
-     * Anciennes coordonnées d'un éléments du graphe (lors du déplacement)
-     */
+    /** Anciennes coordonnées d'un éléments du graphe (lors du déplacement) */
     private double xAncien, yAncien;
+    
+    /** Grid pane contenant les propriétés d'un élément sélectionné */
     @FXML
     private GridPane gridProprietees;
-    @FXML
-    private Text textNoeud1;
-    @FXML
-    private Text textNoeud11;
-    @FXML
-    private Text textNoeud12;
+    
+    /** Menu contenant toutes la partie de gauche du logiciel (Sélection, Propriétés ...) */
     @FXML
     private Pane menu;
     
+    /** Zone contenant la légende du graphe probabiliste */
     private Pane legende;
    
     @Override
@@ -150,8 +182,16 @@ public class FXMLDocumentController implements Initializable {
         }catch(Exception e ){ }
     }
     
-    
-    
+    /**
+     * Action sur la zone de dessin
+     * Si aucun graphe n'a été sélection alors l'utilisateur est prévenu
+     * Si Sélection == 1 => Création d'un nouveau noeud en (x, y) sur la zone de dessin
+     * Si Sélection == 3 => Si le curseur est sur un lien ou un noeud alors sélection
+     *                      sinon désélection de tous les éléments du graphe
+     * @param event Evenement sur la zone de dessin
+     * @throws NoeudException Impossible de créer un noeud invalide
+     * @throws ArcProbabilisteException  Impossible de créer un lien invalide
+     */
     @FXML
     private void cliqueZoneDessin(MouseEvent event) throws NoeudException , ArcProbabilisteException{
         // récupere Position du clique sur la zone de dessin
@@ -215,11 +255,9 @@ public class FXMLDocumentController implements Initializable {
         }
     }  
 
-    
-
     /**
-     * évenement dès lors que l'on clique sur la sélection de la création
-     * d'un noeud
+     * La sélection passe à 1 (Création d'un noeud)
+     * @param event Evenement sur le texte ou le cercle
      */
     @FXML
     private void cliqueNoeud(MouseEvent event) {
@@ -227,6 +265,10 @@ public class FXMLDocumentController implements Initializable {
         selectionNoeud();
     }
     
+    /**
+     * L'utilisateur a choisi la sélection 1 (Création d'un noeud)
+     * Le texte est épaissi et la sélection passe à 1
+     */
     private void selectionNoeud() {
         
         selection = 1 ;
@@ -238,8 +280,8 @@ public class FXMLDocumentController implements Initializable {
     }
 
     /**
-     * évenement dès lors que l'on clique sur la sélection de la création
-     * d'un lien
+     * La sélection passe à 2 (Création d'un lien)
+     * @param event Evenement sur le texte ou la ligne
      */
     @FXML
     private void cliqueLien(MouseEvent event) {
@@ -247,6 +289,10 @@ public class FXMLDocumentController implements Initializable {
         selectionLien();
     }
     
+    /**
+     * L'utilisateur a choisi la sélection 2 (Création d'un Lien)
+     * Le texte est épaissi et la sélection passe à 2
+     */
     private void selectionLien() {
         
         selection = 2 ;
@@ -257,12 +303,20 @@ public class FXMLDocumentController implements Initializable {
         scrollpane.setPannable(false);
     }
 
+    /**
+     * La sélection passe à 3 (Sélection)
+     * @param event Evenement sur le texte ou le curseur
+     */
     @FXML
     private void cliqueSelection(MouseEvent event) {
         
         selectionSelection();
     }
     
+    /**
+     * L'utilisateur a choisi la sélection 3 (Sélection)
+     * Le texte est épaissi et la sélection passe à 3
+     */
     private void selectionSelection() {
         
         selection = 3 ; 
@@ -273,6 +327,14 @@ public class FXMLDocumentController implements Initializable {
         scrollpane.setPannable(true);
     }
     
+    /**
+     * L'utilisateur réalise un glisser/déposer     
+     * Si aucun graphe n'a été sélection alors l'utilisateur est prévenu
+     * Si Sélection == 2 => Pré visualisation d'un lien
+     * Si Sélection == 3 => Noeud sélectionné -- Le noeud est déplacé
+     *                      Lien  sélectionné -- Le lien est déplacé
+     * @param event Evenement sur la zone de dessin
+     */
     @FXML
     private void zoneDessinMouseDragged(MouseEvent event) {
         
@@ -341,6 +403,18 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    /**
+     * L'utilisateur réalise un glisser/déposer     
+     * Si aucun graphe n'a été sélection alors l'utilisateur est prévenu
+     * Si Sélection == 2 => Si le lien peut être créé alors il est ajouté
+     * Si Sélection == 3 => Noeud sélectionné -- Si le noeud est valide après 
+     *                                           déplacement alors la modification
+     *                                           est réalisée
+     *                      Lien  sélectionné -- Si le lien est valide après 
+     *                                           déplacement alors la modification
+     *                                           est réalisée
+     * @param event Evenement sur la zone de dessin
+     */
     @FXML
     private void zoneDessinMouseReleased(MouseEvent event) throws LienException {
         
@@ -426,14 +500,13 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
-    @FXML
-    private void deplacement(KeyEvent event) {
-        if(event.getCode() == KeyCode.CONTROL){  
-            zoneDessin.setCursor(Cursor.E_RESIZE);
-            scrollpane.setPannable(true);
-        }
-    }
-
+    /**
+     * Si aucun graphe n'a été sélection alors l'utilisateur est prévenu
+     * Ouvre une popup pour l'enregistrement d'un graphe
+     * L'utilisateur choisit un dossier et nom pour l'enregistrement
+     * Si ses données sont éronées alors il est prévenu
+     * @param event Action sur l'enregistrement d'un graphe
+     */
     @FXML
     private void enregistrerGraphe(ActionEvent event) {
         
@@ -442,6 +515,7 @@ public class FXMLDocumentController implements Initializable {
             
             
             Stage popUp = new Stage();
+            popUp.getIcons().add(new Image("/saeEditeur/logo.png"));
             popUp.initModality(Modality.APPLICATION_MODAL);
             StackPane pane = new StackPane();
             GridPane gridPane = new GridPane();
@@ -523,13 +597,17 @@ public class FXMLDocumentController implements Initializable {
     }
 
     /**
-     * Ouvre un graphe
-     * @param event 
+     * Ouvre une popup pour l'ouverture d'un graphe
+     * L'utilisateur choisit un fichier
+     * Si ses données sont éronées alors il est prévenu
+     * Sinon il est averti de la bonne ouverture de son graphe
+     * @param event Action sur l'ouverture d'un graphe
      */
     @FXML
     private void ouvrirGraphe(ActionEvent event) {
         
         Stage popUp = new Stage();
+        popUp.getIcons().add(new Image("/saeEditeur/logo.png"));
         popUp.initModality(Modality.APPLICATION_MODAL);
         StackPane pane = new StackPane();
         GridPane gridPane = new GridPane();
@@ -621,63 +699,88 @@ public class FXMLDocumentController implements Initializable {
         popUp.showAndWait();
     }
 
+    /**
+     * Si aucun graphe n'a été sélection alors l'utilisateur est prévenu
+     * Ctrl + Suppr => Supprime l'élément sélectionné
+     * Ctrl + N     => Passe la sélection à 1 (Création d'un noeud)
+     * Ctrl + L     => Passe la sélection à 2 (Création d'un lien)
+     * Ctrl + A     => Passe la sélection à 3 (Sélection)
+     * Ctrl + Z     => Annuler l'action précédente
+     * Ctrl + Y     => Rétablir l'acion annuler
+     * Ctrl + F     => Vérifier le graphe si le graphe est probabiliste
+     * @param event Action sur le clavier
+     */
     @FXML
     private void raccourci(KeyEvent event) {
         
         KeyCode keyCode = event.getCode();
         
-        // Suppression du noeud selectionne
-        if (graphe != null && graphe.noeudSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
-            
-            ArrayList<Object> noeudSupprimerUndo = new ArrayList<>();
-            noeudSupprimerUndo.add(graphe.noeudSelectionne);
-            noeudSupprimerUndo.add((ArrayList<Lien>) graphe.noeudSelectionne.successeurs.clone());
-            noeudSupprimerUndo.add((ArrayList<Lien>) graphe.noeudSelectionne.predecesseurs.clone());
-            
-            graphe.ajouterPileUndo(noeudSupprimerUndo);
-            graphe.supprimerNoeud(graphe.noeudSelectionne, zoneDessin);
-            graphe.deselectionnerAll(zoneDessin);
-            EditeurDeProprietes.fermer(gridProprietees);
+        if (graphe != null) {
+            // Suppression du noeud selectionne
+            if (graphe.noeudSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
+
+                ArrayList<Object> noeudSupprimerUndo = new ArrayList<>();
+                noeudSupprimerUndo.add(graphe.noeudSelectionne);
+                noeudSupprimerUndo.add((ArrayList<Lien>) graphe.noeudSelectionne.successeurs.clone());
+                noeudSupprimerUndo.add((ArrayList<Lien>) graphe.noeudSelectionne.predecesseurs.clone());
+
+                graphe.ajouterPileUndo(noeudSupprimerUndo);
+                graphe.supprimerNoeud(graphe.noeudSelectionne, zoneDessin);
+                graphe.deselectionnerAll(zoneDessin);
+                EditeurDeProprietes.fermer(gridProprietees);
+            }
+            // Suppression du lien selectionne
+            if (graphe != null && graphe.lienSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
+
+                graphe.ajouterPileUndo(graphe.lienSelectionne);
+                graphe.supprimerLien(graphe.lienSelectionne, zoneDessin);
+                graphe.deselectionnerAll(zoneDessin);
+                EditeurDeProprietes.fermer(gridProprietees);
+            }
+            // Raccourci clavier - Création d'un nouveau noeud
+            if (event.isControlDown() && event.getCode() == KeyCode.N){
+
+                selectionNoeud();
+            }
+            // Raccourci clavier - Création d'un nouveau lien
+            if (event.isControlDown() && event.getCode() == KeyCode.L){
+
+                selectionLien();
+            }
+            // Raccourci clavier - Sélectionner l'option de "Sélection"
+            if (event.isControlDown() && event.getCode() == KeyCode.A){
+
+                selectionSelection();
+            }
+            // Raccourci clavier - Annuler dernière action
+            if (event.isControlDown() && event.getCode() == KeyCode.Z){
+
+                graphe.undo(zoneDessin);
+            }
+            // Raccourci clavier - Retablir dernière action
+            if (event.isControlDown() && event.getCode() == KeyCode.Y){
+
+                graphe.redo(zoneDessin);
+            }
+
+            // Raccourci clavier - Sélectionner l'option de vérification du graph
+            if (graphe.getFactory().equals("Graphe probabiliste") && event.isControlDown() && event.getCode() == KeyCode.F){
+
+                ((GrapheProbabiliste) graphe).verifierGraphe();
+            }
+        } else {
+            // Affichage alerte aucun graphe selectionne
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Attention");
+            alert.setHeaderText("Aucun graphe sélectionné");
+            alert.setContentText("Veuillez créer ou ouvrir un graphe avant toutes actions.");
+
+            alert.showAndWait();
         }
-        // Suppression du lien selectionne
-        if (graphe != null && graphe.lienSelectionne != null && keyCode.equals(KeyCode.DELETE)) {
-            
-            graphe.ajouterPileUndo(graphe.lienSelectionne);
-            graphe.supprimerLien(graphe.lienSelectionne, zoneDessin);
-            graphe.deselectionnerAll(zoneDessin);
-            EditeurDeProprietes.fermer(gridProprietees);
-        }
-        // Raccourci clavier - Création d'un nouveau noeud
-        if (event.isControlDown() && event.getCode() == KeyCode.N){
-            
-            selectionNoeud();
-        }
-        // Raccourci clavier - Création d'un nouveau lien
-        if (event.isControlDown() && event.getCode() == KeyCode.L){
-            
-            selectionLien();
-        }
-        // Raccourci clavier - Sélectionner l'option de "Sélection"
-        if (event.isControlDown() && event.getCode() == KeyCode.A){
-            
-            selectionSelection();
-        }
-        // Raccourci clavier - Annuler dernière action
-        if (event.isControlDown() && event.getCode() == KeyCode.Z){
-            
-            graphe.undo(zoneDessin);
-        }
-        // Raccourci clavier - Retablir dernière action
-        if (event.isControlDown() && event.getCode() == KeyCode.Y){
-            
-            graphe.redo(zoneDessin);
-        }
-        
-        // Raccourci clavier - Sélectionner l'option de vérification du graph
-        if (graphe.getFactory().equals("Graphe probabiliste") && event.isControlDown() && event.getCode() == KeyCode.F){
-            
-            ((GrapheProbabiliste) graphe).verifierGraphe();
-        }
+    }
+
+    @FXML
+    private void deplacement(KeyEvent event) {
     }
     
 }

@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * EditeurDeProprietes.java       16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe;
 
@@ -18,8 +20,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 /**
- *
+ * Permet l'affichage des propriétées des éléments d'un graphe
+ * @author romain.courbaize
+ * @author thibauld.cosatti
  * @author vincent.faure
+ * @author jules.blanchard
+ * @author amine.daamouch
  */
 public class EditeurDeProprietes {
         

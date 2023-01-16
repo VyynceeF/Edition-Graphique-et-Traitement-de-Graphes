@@ -1,8 +1,13 @@
+/*
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * NoeudGrapheNonOriente.java     16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
+ */
 package saeEditeur.graphe.noeud;
 
 import saeEditeur.graphe.typegraphe.Graphe;
-import java.io.Serializable;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -11,10 +16,12 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 import static saeEditeur.graphe.noeud.Noeud.RAYON;
 
-
-
 /**
- *
+ * Représentation d'un noeud pour un graphe non orienté
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public class NoeudGrapheNonOriente extends Noeud {

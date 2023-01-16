@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * FactoryGrapheNonOriente.java   16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe;
 
@@ -15,13 +17,17 @@ import saeEditeur.graphe.typegraphe.GrapheNonOriente;
 import saeEditeur.graphe.typegraphe.Graphe;
 
 /**
- *
+ * Classe permettant la création d'un graphe non orienté, 
+ * de noeud non orienté et de lien non orienté
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public class FactoryGrapheNonOriente implements AbstractFactoryGraphe {
     
-    public FactoryGrapheNonOriente(){
-        
+    public FactoryGrapheNonOriente() {
     }
     
     @Override
@@ -30,13 +36,13 @@ public class FactoryGrapheNonOriente implements AbstractFactoryGraphe {
     }
 
     @Override
-    public Noeud creerNoeud(double x, double y, Graphe g) throws NoeudException{
+    public Noeud creerNoeud(double x, double y, Graphe g) throws NoeudException {
        
         return new NoeudGrapheNonOriente(x, y, g) ;
     }
 
     @Override
-    public Lien creerLien(Noeud source, Noeud destinataire, Graphe g) throws LienException{
+    public Lien creerLien(Noeud source, Noeud destinataire, Graphe g) throws LienException {
         return new Arete(source, destinataire, g);
     }
     

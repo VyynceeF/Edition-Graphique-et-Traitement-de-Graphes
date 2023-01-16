@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * NoeudGrapheProbabiliste.java   16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe.noeud;
 
@@ -21,7 +23,11 @@ import saeEditeur.Point;
 import static saeEditeur.graphe.noeud.Noeud.RAYON;
 
 /**
- *
+ * Représentation d'un noeud pour un graphe probabiliste
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public class NoeudGrapheProbabiliste extends Noeud {
@@ -47,7 +53,6 @@ public class NoeudGrapheProbabiliste extends Noeud {
     }
     
     public NoeudGrapheProbabiliste() {
-        
     }
     
     @Override
@@ -87,6 +92,11 @@ public class NoeudGrapheProbabiliste extends Noeud {
         successeurs = new ArrayList<>();
     }
     
+    /**
+     * Ajout le nom de la classe sur le noeud
+     * @param zoneDessin
+     * @param textNomClasse 
+     */
     public void ajouterNomClasse(Pane zoneDessin, String textNomClasse) {
         
         // Suppression du nom de la classe s'il existe deja
@@ -105,7 +115,7 @@ public class NoeudGrapheProbabiliste extends Noeud {
     }
     
     /**
-     * Changement de la couleur de fond en vert 
+     * Changement de la couleur de fond en RGB(157,255,117)
      */
     public void changementCouleurTransitoire() {
         
@@ -113,7 +123,7 @@ public class NoeudGrapheProbabiliste extends Noeud {
     }
     
     /**
-     * Changement de la couleur de fond en bleu
+     * Changement de la couleur de fond en RGB(117, 208, 255)
      */
     public void changementCouleurErgodique() {
         
@@ -121,7 +131,7 @@ public class NoeudGrapheProbabiliste extends Noeud {
     }
     
     /**
-     * Changement de la couleur de fond en violet
+     * Changement de la couleur de fond en RGB(117, 208, 255)
      */
     public void changementCouleurErgodiqueAbsorbant() {
         

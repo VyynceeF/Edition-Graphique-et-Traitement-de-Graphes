@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * ProprieteNoeudSourceLien.java  16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe.propriete;
 
@@ -13,13 +15,16 @@ import saeEditeur.graphe.lien.ArcProbabiliste;
 import saeEditeur.graphe.noeud.Noeud;
 import saeEditeur.graphe.typegraphe.GrapheNonOriente;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import saeEditeur.graphe.ElementGraphe;
 
 /**
- *
+ * Représentation des propriétés d'un Noeud
+ * @author romain.courbaize
+ * @author thibauld.cosatti
  * @author vincent.faure
+ * @author jules.blanchard
+ * @author amine.daamouch
  */
 public class ProprieteNoeudSourceLien extends Propriete {
     
@@ -33,11 +38,6 @@ public class ProprieteNoeudSourceLien extends Propriete {
         super("Source",true,elg);
     }
     
-    /**
-     * Fournit la liste des valeurs pour la ChoiceBox
-     * @return Liste valeur si saisiDansListe = vrai, 
-     *         null si saisiDansListe = false
-     */
     @Override
     public String[] getListeChoix(){
 
@@ -51,11 +51,6 @@ public class ProprieteNoeudSourceLien extends Propriete {
         return liste;
     }
     
-    /**
-     * Verifie si valeur est valide
-     * @param valeur valeur de la saisie
-     * @return true si valide sinon false
-     */
     @Override
     public boolean validerSaisie(String valeur){
         
@@ -94,10 +89,6 @@ public class ProprieteNoeudSourceLien extends Propriete {
         return true; //Si aucune erreur
     }
     
-    /**
-     * Set la Valeur de o
-     * @param o En fonction de l'object en parametre (TextField ou BoxChoice)
-     */
     @Override
     public void setObject(Object o){
         ChoiceBox box = (ChoiceBox) o;
@@ -105,13 +96,6 @@ public class ProprieteNoeudSourceLien extends Propriete {
         box.setValue(l.source.nom);
     }
     
-    /**
-     * Si saisie valide, applique les modification sur le Lien 
-     * (Aussi sur la zone de dessin)
-     * @param valeur 
-     * @param o En fonction de l'object en parametre (TextField ou BoxChoice)
-     * @param zoneDessin
-     */
     @Override
     public void setValeur(String valeur, Object o, AnchorPane zoneDessin){
         

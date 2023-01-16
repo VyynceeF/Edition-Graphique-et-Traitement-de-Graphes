@@ -1,49 +1,40 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * ProprieteNomNoeud.java         16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe.propriete;
 
 import saeEditeur.graphe.noeud.Noeud;
-import javafx.geometry.Pos;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import saeEditeur.graphe.ElementGraphe;
 
 /**
- *
+ * Représentation des propriétés d'un Noeud
+ * @author romain.courbaize
+ * @author thibauld.cosatti
  * @author vincent.faure
+ * @author jules.blanchard
+ * @author amine.daamouch
  */
 public class ProprieteNomNoeud extends Propriete {
     
     /**
      * Construit une proprietee
-     * @param n nom propriete
-     * @param sdl mode de saisie
      * @param elg element du graphe
      */
     public ProprieteNomNoeud(ElementGraphe elg){
         super("Nom",false,elg);
     }
     
-    /**
-     * Fournit la liste des valeurs pour la ChoiceBox
-     * @return Liste valeur si saisiDansListe = vrai, 
-     *         null si saisiDansListe = false
-     */
     @Override
     public String[] getListeChoix(){
         return null;
     }
     
-    /**
-     * Verifie si valeur est valide
-     * @param valeur valeur de la saisie
-     * @return true si valide sinon false
-     */
     @Override
     public boolean validerSaisie(String valeur){
 
@@ -57,10 +48,6 @@ public class ProprieteNomNoeud extends Propriete {
         
     }
     
-    /**
-     * Set la Valeur de o
-     * @param o En fonction de l'object en parametre (TextField ou BoxChoice)
-     */
     @Override
     public void setObject(Object o){
         TextField field = (TextField) o;
@@ -68,13 +55,6 @@ public class ProprieteNomNoeud extends Propriete {
         field.setText(n.nom);
     }
     
-    /**
-     * Si saisie valide, applique les modification sur le Noeud 
-     * (Aussi sur la zone de dessin)
-     * @param valeur valeur saisie
-     * @param o En fonction de l'object en parametre (TextField ou BoxChoice)
-     * @param zoneDessin
-     */
     @Override
     public void setValeur(String valeur, Object o, AnchorPane zoneDessin){
         

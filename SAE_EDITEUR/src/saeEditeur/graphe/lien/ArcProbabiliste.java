@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * ArcProbabiliste.java           16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe.lien;
 
@@ -20,16 +22,22 @@ import javafx.scene.text.Font;
 
 
 /**
- *
+ * Représentation d'un lien pour un graphe probabiliste
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public class ArcProbabiliste extends Lien {
     
-    
+    /** Longueur de la flèche */
     final static double FLECHE_LONGUEUR = 20;
     
+    /** Coefficient associé à l'arc */
     public double coefficient;
     
+    /** Texte sur le graphe du coefficient */
     public TextField valeur;
     
     /** Extremite de la fleche */
@@ -38,7 +46,7 @@ public class ArcProbabiliste extends Lien {
     /** Extremite de la fleche */
     public Line arrow2 = null;
     
-    /** Ligne (courbee) de la fleche */
+    /** Ligne (courbée) de la fleche */
     public QuadCurve quadCurve = null;
     
     public ArcProbabiliste(Noeud source , Noeud destinataire, Graphe g){
@@ -47,7 +55,6 @@ public class ArcProbabiliste extends Lien {
     }
     
     public ArcProbabiliste() {
-        
     }
     
     public ArcProbabiliste(Noeud source, Noeud destinataire, double valeur, Graphe g) throws ArcProbabilisteException {
@@ -59,6 +66,11 @@ public class ArcProbabiliste extends Lien {
         coefficient = valeur;
     }
     
+    /**
+     * Modifie la valeur du coefficient du lien
+     * @param val Nouvelle valeur
+     * @throws ArcProbabilisteException Si la nouvelle valeur est invalide
+     */
     public void setCoeff(double val) throws ArcProbabilisteException{
         if(val <= 0 || val > 1  ){
              throw new ArcProbabilisteException("la probabilités de cette arc ne peut"
@@ -68,10 +80,6 @@ public class ArcProbabiliste extends Lien {
         valeur.setText(Double.toString(val)); 
     }
     
-    /**
-     *
-     * @param zoneDessin
-     */
     @Override
     public void dessiner(AnchorPane zoneDessin)  {
         String coeff = ""+coefficient;
@@ -195,12 +203,6 @@ public class ArcProbabiliste extends Lien {
         zoneDessin.getChildren().add(valeur);
     }
     
-    /**
-     * Predicat verifiant si le point (x, y) est sur le lien)
-     * @param x Abscisse du point a tester
-     * @param y Ordonnee du point a tester
-     * @return Le lien s'il existe un lien sur la position (x, y), false sinon
-     */
     @Override
     public boolean estClique(double x, double y) {
         
@@ -273,9 +275,7 @@ public class ArcProbabiliste extends Lien {
         this.destinataire = destinataire;
     }
     
-    /**
-     * Augmente l'epaisseur du lien
-     */
+    @Override
     public void lienSelectionne(AnchorPane zoneDessin) {
         
         pointDepart = new Circle(quadCurve.getStartX(), quadCurve.getStartY(), 5);
@@ -307,13 +307,7 @@ public class ArcProbabiliste extends Lien {
         return 0;
     }
     
-    /**
-     * Permet de deplacer l'extremite en position x, y
-     * @param x Nouvelle abscisse
-     * @param y Nouvelle ordonnee
-     * @param extremite 1 -> Premiere extremite | 2 -> Derniere extremite
-     * @param zoneDessin Zone de dessin
-     */
+    @Override
     public void modifierPosition(double x, double y, int extremite,AnchorPane zoneDessin){ 
         
         

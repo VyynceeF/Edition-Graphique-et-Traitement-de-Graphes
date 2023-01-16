@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * Arc.java                       16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe.lien;
 
@@ -15,12 +17,16 @@ import javafx.scene.shape.QuadCurve;
 import static saeEditeur.graphe.lien.ArcProbabiliste.FLECHE_LONGUEUR;
 
 /**
- *
+ * Représentation d'un lien pour un graphe orienté
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public class Arc extends Lien {
     
-    /** Ligne (courbee) de la fleche */
+    /** Ligne (courbée) de la fleche */
     private QuadCurve quadCurve = null;
     
     /** Extremite de la fleche */
@@ -29,6 +35,7 @@ public class Arc extends Lien {
     /** Extremite de la fleche */
     private Line arrow2 = null;
     
+    /** Points de contrôle de la ligne (courbée) */
     private double xControl, yControl;
   
     public Arc(Noeud source, Noeud destinataire, Graphe g) {
@@ -37,8 +44,7 @@ public class Arc extends Lien {
     
     public Arc() {
     }
-    
-   
+
     @Override
     public void dessiner(AnchorPane zoneDessin) {
         
@@ -131,12 +137,6 @@ public class Arc extends Lien {
         return destinataire;
     }
     
-    /**
-     * Predicat verifiant si le point (x, y) est sur le lien)
-     * @param x Abscisse du point a tester
-     * @param y Ordonnee du point a tester
-     * @return Le lien s'il existe un lien sur la position (x, y), false sinon
-     */
     @Override
     public boolean estClique(double x, double y) {
         
@@ -144,9 +144,7 @@ public class Arc extends Lien {
 
     }
     
-    /**
-     * Augmente l'epaisseur du lien
-     */
+    @Override
     public void lienSelectionne(AnchorPane zoneDessin) {
         
         pointDepart = new Circle(quadCurve.getStartX(), quadCurve.getStartY(), 5);
@@ -187,23 +185,8 @@ public class Arc extends Lien {
         }
         return 0;
     }
-  
-    
-    
-    /**
-     * Permet de deplacer l'extremite en position x, y
-     * @param x Nouvelle abscisse
-     * @param y Nouvelle ordonnee
-     * @param extremite 1 -> Premiere extremite | 2 -> Derniere extremite
-     * @param zoneDessin Zone de dessin
-     */
-    /**
-     * Permet de deplacer l'extremite en position x, y
-     * @param x Nouvelle abscisse
-     * @param y Nouvelle ordonnee
-     * @param extremite 1 -> Premiere extremite | 2 -> Derniere extremite
-     * @param zoneDessin Zone de dessin
-     */
+ 
+    @Override
     public void modifierPosition(double x, double y, int extremite, AnchorPane zoneDessin){ 
         if (extremite == 1) {
                       
@@ -274,6 +257,4 @@ public class Arc extends Lien {
             this.dessiner(zoneDessin);
         }
     }
-    
-   
 }

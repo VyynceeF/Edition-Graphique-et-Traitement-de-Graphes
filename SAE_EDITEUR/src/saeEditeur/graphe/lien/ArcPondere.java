@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * ArcPondere.java                16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe.lien;
 
@@ -18,18 +20,23 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.text.Font;
 
-
 /**
- *
+ * Représentation d'un lien pour un graphe pondéré
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public class ArcPondere extends Lien {
     
-    
+    /** Longueur de la flèche */
     final static double FLECHE_LONGUEUR = 20;
     
+    /** Coefficient associé à l'arc */
     public double coefficient;
     
+    /** Texte sur le graphe du coefficient */
     public TextField valeur;
     
     /** Extremite de la fleche */
@@ -47,7 +54,6 @@ public class ArcPondere extends Lien {
     }
     
     public ArcPondere() {
-        
     }
     
     public ArcPondere(Noeud source, Noeud destinataire, double valeur, Graphe g) {
@@ -56,15 +62,15 @@ public class ArcPondere extends Lien {
         coefficient = valeur;
     }
     
+    /**
+     * Modifie la valeur du coefficient du lien
+     * @param val Nouvelle valeur
+     */
     public void setCoeff(double val) {
         coefficient = val;
         valeur.setText(Double.toString(val)); 
     }
     
-    /**
-     *
-     * @param zoneDessin
-     */
     @Override
     public void dessiner(AnchorPane zoneDessin)  {
         String coeff = ""+coefficient;
@@ -181,12 +187,6 @@ public class ArcPondere extends Lien {
         zoneDessin.getChildren().add(valeur);
     }
     
-    /**
-     * Predicat verifiant si le point (x, y) est sur le lien)
-     * @param x Abscisse du point a tester
-     * @param y Ordonnee du point a tester
-     * @return Le lien s'il existe un lien sur la position (x, y), false sinon
-     */
     @Override
     public boolean estClique(double x, double y) {
         
@@ -291,15 +291,8 @@ public class ArcPondere extends Lien {
         return 0;
     }
     
-    /**
-     * Permet de deplacer l'extremite en position x, y
-     * @param x Nouvelle abscisse
-     * @param y Nouvelle ordonnee
-     * @param extremite 1 -> Premiere extremite | 2 -> Derniere extremite
-     * @param zoneDessin Zone de dessin
-     */
-    public void modifierPosition(double x, double y, int extremite,AnchorPane zoneDessin){ 
-        
+    @Override
+    public void modifierPosition(double x, double y, int extremite, AnchorPane zoneDessin){ 
         
         if (extremite == 1) {
                       
@@ -319,9 +312,7 @@ public class ArcPondere extends Lien {
             arrow1.setVisible(false);            
             arrow2.setVisible(false);
             valeur.setVisible(false); 
-            
         }
-        
     }
     
     @Override
@@ -372,5 +363,4 @@ public class ArcPondere extends Lien {
             this.dessiner(zoneDessin);
         }
     }
-    
 }

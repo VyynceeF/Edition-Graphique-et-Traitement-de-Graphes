@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * EditeurGraphe.java             16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur;
 
@@ -9,10 +11,15 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
- *
+ * Ouvre l'application "Editeur de graphe"
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public class EditeurGraphe extends Application {
@@ -27,6 +34,7 @@ public class EditeurGraphe extends Application {
         stage.setMinWidth(1050);
         stage.setMinHeight(650);
         stage.setTitle("Editeur de graphe");
+        stage.getIcons().add(new Image("/saeEditeur/logo.png"));
         stage.show();
     }
 

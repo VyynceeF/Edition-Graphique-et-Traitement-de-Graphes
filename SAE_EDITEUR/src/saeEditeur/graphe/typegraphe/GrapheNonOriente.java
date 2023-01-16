@@ -1,12 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * GrapheNonOriente.java          16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe.typegraphe;
 
-import saeEditeur.graphe.typegraphe.Graphe;
-import java.io.Serializable;
 import java.util.ArrayList;
 import saeEditeur.graphe.lien.Arete;
 import saeEditeur.graphe.lien.Lien;
@@ -16,7 +16,11 @@ import saeEditeur.graphe.noeud.NoeudException;
 import saeEditeur.graphe.noeud.NoeudGrapheNonOriente;
 
 /**
- *
+ * Représentation d'un graphe non orienté et ses fonctionnalités
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public class GrapheNonOriente extends Graphe {
@@ -88,7 +92,5 @@ public class GrapheNonOriente extends Graphe {
 
     public void setLiens(ArrayList<Lien> liens) {
         this.liens = liens;
-    }
-    
-    
+    }    
 }

@@ -1,13 +1,13 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * NoeudGraphePondere.java        16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe.noeud;
 
 import saeEditeur.graphe.typegraphe.Graphe;
-import java.io.Serializable;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -18,7 +18,12 @@ import saeEditeur.Point;
 import static saeEditeur.graphe.noeud.Noeud.RAYON;
 
 /**
- * 
+ * Représentation d'un noeud pour un graphe pondéré
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
+ * @author amine.daamouch
  */
 public class NoeudGraphePondere extends Noeud {
 
@@ -27,7 +32,6 @@ public class NoeudGraphePondere extends Noeud {
     }
     
     public NoeudGraphePondere() {
-        
     }
 
     public Point getPosition() {

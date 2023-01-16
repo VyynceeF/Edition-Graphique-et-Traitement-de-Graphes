@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * Arete.java                     16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe.lien;
 
@@ -12,11 +14,16 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
 /**
- *
+ * Représentation d'un lien pour un graphe non orienté
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public class Arete extends Lien {
     
+    /** Ligne représentant le lien */
     private Line line = null;
     
     public Arete(Noeud source , Noeud destinataire, Graphe g){
@@ -24,7 +31,6 @@ public class Arete extends Lien {
     }
     
     public Arete() {
-        
     }
     
     @Override
@@ -54,13 +60,7 @@ public class Arete extends Lien {
         zoneDessin.getChildren().add(line);
     }
     
-    /**
-     * Permet de deplacer l'extremite en position x, y
-     * @param x Nouvelle abscisse
-     * @param y Nouvelle ordonnee
-     * @param extremite 1 -> Premiere extremite | 2 -> Derniere extremite
-     * @param zoneDessin Zone de dessin
-     */
+    @Override
     public void modifierPosition(double x, double y, int extremite, AnchorPane zoneDessin){
         
         if (extremite == 1) {
@@ -81,6 +81,7 @@ public class Arete extends Lien {
         
     }
     
+    @Override
     public void remiseDefaut() {
         
         double distance = Math.sqrt(Math.pow(destinataire.position.x - source.position.x, 2) + Math.pow(destinataire.position.y - source.position.y, 2));

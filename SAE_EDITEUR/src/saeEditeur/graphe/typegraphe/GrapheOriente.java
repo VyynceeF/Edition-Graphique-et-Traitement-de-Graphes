@@ -1,12 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * GrapheOriente.java             16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe.typegraphe;
 
-import saeEditeur.graphe.typegraphe.Graphe;
-import java.io.Serializable;
 import java.util.ArrayList;
 import saeEditeur.graphe.lien.Arc;
 import saeEditeur.graphe.lien.Lien;
@@ -16,7 +16,11 @@ import saeEditeur.graphe.noeud.NoeudException;
 import saeEditeur.graphe.noeud.NoeudGrapheOriente;
 
 /**
- *
+ * Représentation d'un graphe orienté et ses fonctionnalités
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public class GrapheOriente extends Graphe {
@@ -63,6 +67,7 @@ public class GrapheOriente extends Graphe {
         return l;
     }
     
+    @Override
     public boolean estLienValide(Lien l)  {
         for (Lien aTester : liens) {
             if ((l.destinataire == aTester.destinataire

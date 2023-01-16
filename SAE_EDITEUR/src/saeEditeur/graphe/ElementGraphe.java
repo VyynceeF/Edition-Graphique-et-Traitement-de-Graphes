@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * ElementGraphe.java             16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe;
 
@@ -15,14 +17,21 @@ import saeEditeur.graphe.noeud.Noeud;
 import saeEditeur.graphe.typegraphe.Graphe;
 
 /**
- *
+ * Représentation d'un élément du graphe
+ * @author romain.courbaize
+ * @author thibauld.cosatti
  * @author vincent.faure
+ * @author jules.blanchard
+ * @author amine.daamouch
  */
 public class ElementGraphe {
     
-    /** Graphe de l'element */
+    /** Graphe auquel appartient l'élément */
     public Graphe g;
     
+    /**
+     * @return L'ensemble des propriétées de l'élément
+     */
     public Propriete[] getPropriete(){
         
         Propriete[] proprietees;

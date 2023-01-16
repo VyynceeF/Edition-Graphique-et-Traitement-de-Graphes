@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * Noeud.java                     16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe.noeud;
 
@@ -15,9 +17,12 @@ import saeEditeur.graphe.ElementGraphe;
 import saeEditeur.graphe.lien.Lien;
 import saeEditeur.Point;
 
-
 /**
- *
+ * Représentation d'un noeud pour un graphe
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public abstract class Noeud extends ElementGraphe {
@@ -72,11 +77,18 @@ public abstract class Noeud extends ElementGraphe {
         this.g = g;
     }
     
+    @Override
     public String toString() {
         
         return nom;
     }
     
+    /**
+     * Modifie la position d'un noeud et sa représentation
+     * @param x Abscisse du noeud
+     * @param y Ordonnée du noeud
+     * @param zoneDessin Zone de dessin
+     */
     public void modifierPosition(double x, double y, AnchorPane zoneDessin) {
         
         position.setX(x);
@@ -93,8 +105,20 @@ public abstract class Noeud extends ElementGraphe {
         dessiner(zoneDessin);
     }
     
+    /**
+     * Dessine le noeud avec un cercle et son nom à l'intérieur
+     * @param zoneDessin Zone de dessin
+     * @return Le cercle représentant le noeud
+     */
     public abstract Circle dessiner(AnchorPane zoneDessin);
     
+    /**
+     * Prédicat vérifiant si le point (x, y) est situé dans le cercle 
+     * représentant le noeud
+     * @param x Abscisse du point
+     * @param y Ordonnée du point
+     * @return true si le point est dans le cercle, false sinon
+     */
     public boolean estClique(double x, double y){
         return Math.sqrt((x - position.x )*(x - position.x )
                 + (y - position.y )*(y - position.y)) <= RAYON;
@@ -141,7 +165,7 @@ public abstract class Noeud extends ElementGraphe {
     }
     
     /**
-     * Augmente l'epaisseur du cercle representant le noeud
+     * Augmente l'epaisseur de la bordure du cercle représentant le noeud
      */
     public void noeudSelectionne() {
         
@@ -149,7 +173,7 @@ public abstract class Noeud extends ElementGraphe {
     }
     
     /**
-     * Remet l'epaisseur du cercle representant le noeud par defaut
+     * Remet l'epaisseur de la bordure du cercle representant le noeud par defaut
      */
     public void noeudDeselectionne() {
         

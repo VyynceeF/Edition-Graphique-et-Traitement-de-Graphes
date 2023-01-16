@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * Lien.java                      16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe.lien;
 
@@ -12,15 +14,19 @@ import javafx.scene.shape.Circle;
 import saeEditeur.graphe.ElementGraphe;
 
 /**
- *
+ * Représentation d'un lien pour un graphe
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public abstract class Lien extends ElementGraphe {
     
-    /** premier noeud partant du lien */
+    /** Premier noeud partant du lien */
     public Noeud source ;
 
-    /** deuxieme noeud partant du lien */
+    /** Deuxieme noeud partant du lien */
     public Noeud destinataire;
     
     /** Cercle représentant la premiere extremite du lien */
@@ -30,9 +36,9 @@ public abstract class Lien extends ElementGraphe {
     public Circle pointArrive;
     
     /**
-     * 
-     * @param source
-     * @param destinataire 
+     * @param source Noeud source du lien
+     * @param destinataire Noeud destinataire du lien
+     * @param g Graphe du lien
      */
     public Lien(Noeud source , Noeud destinataire, Graphe g){
         this.source = source;
@@ -51,6 +57,10 @@ public abstract class Lien extends ElementGraphe {
      */
     public abstract boolean estClique(double x, double y);
     
+    /**
+     * Augmentation de l'épaisseur du lien 
+     * @param zoneDessin Zone de dessin
+     */
     public abstract void lienSelectionne(AnchorPane zoneDessin);
     
     /**
@@ -63,10 +73,22 @@ public abstract class Lien extends ElementGraphe {
      */
     public abstract int estExtremite(double x, double y);
     
+    /**
+     * Remise par défaut de l'épaisseur du lien
+     * @param zoneDessin Zone de dessin
+     */
     public abstract void lienDeselectionne(AnchorPane zoneDessin);
   
+    /**
+     * Dessine le lien dans la zone de dessin en fonction de son type de graphe
+     * (ligne, courbe, ...)
+     * @param zoneDessin Zone de dessin
+     */
     public abstract void dessiner(AnchorPane zoneDessin);
     
+    /**
+     * Remise par défaut des extremités du lien
+     */
     public abstract void remiseDefaut();
     
     /**
@@ -109,6 +131,4 @@ public abstract class Lien extends ElementGraphe {
     public void setDestinataire(Noeud destinataire) {
         this.destinataire = destinataire;
     }
-        
-    
 }

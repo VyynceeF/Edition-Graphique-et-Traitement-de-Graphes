@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * GrapheProbabiliste.java        16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe.typegraphe;
 
@@ -12,13 +14,13 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -35,7 +37,11 @@ import saeEditeur.graphe.noeud.NoeudException;
 import saeEditeur.graphe.noeud.NoeudGrapheProbabiliste;
 
 /**
- *
+ * Représentation d'un graphe probabiliste et ses fonctionnalités
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public class GrapheProbabiliste extends Graphe {
@@ -54,9 +60,9 @@ public class GrapheProbabiliste extends Graphe {
         noeudsFinales = new ArrayList<>();
         noeudsTransitoires = new ArrayList<>();
         noeudsOrdones = new ArrayList<>();
-        
     }
     
+    @Override
     public String toString() {
         
         return "GrapheProbabiliste";
@@ -96,6 +102,7 @@ public class GrapheProbabiliste extends Graphe {
         return l; 
     }
     
+    @Override
     public boolean estLienValide(Lien l)  {
         for (Lien aTester : liens) {
             if ((l.destinataire == aTester.destinataire
@@ -112,6 +119,7 @@ public class GrapheProbabiliste extends Graphe {
      * @param pane Pane dans laquelle sera le bouton
      * @param zoneDessin Zone de dessin
      * @param g    Graphe que l'on souhaite verifier
+     * @return Le bouton de vérification
      */
     public static Button ajouterBoutonVerification(Pane pane, Pane zoneDessin, GrapheProbabiliste g) {
         
@@ -141,7 +149,7 @@ public class GrapheProbabiliste extends Graphe {
     /**
      * Ajout d'une pane pour afficher la légende des noeuds
      * @param menu Menu de l'application
-     * @return 
+     * @return La pane contenant la légende
      */
     public static Pane ajouterLegende(Pane menu) {
         
@@ -169,6 +177,14 @@ public class GrapheProbabiliste extends Graphe {
         return legende;
     }
     
+    /**
+     * Ajout d'un menu édition dans la navbar pour le traitement de graphe
+     * porbabiliste et associations de ces fonctionnalités à ce menu
+     * @param menuBar Navbar
+     * @param g Graphe probabiliste à traiter
+     * @param zoneDessin Zone de dessin
+     * @return Le menu de traitement
+     */
     public static Menu ajouterMenuNavBar(MenuBar menuBar, GrapheProbabiliste g, Pane zoneDessin) {
         
         Menu editMenu = new Menu("Edition");
@@ -182,6 +198,7 @@ public class GrapheProbabiliste extends Graphe {
                     if (g.verifierGraphe()) {   // Verifie si le graphe est probabiliste
                                                 // Et change les couleurs sur les noeuds errones
                         Stage popUp = new Stage();
+                        popUp.getIcons().add(new Image("/saeEditeur/logo.png"));
                         popUp.initModality(Modality.APPLICATION_MODAL);
                         popUp.setTitle("Matrice de transition");
                         StackPane pane = new StackPane();
@@ -232,6 +249,7 @@ public class GrapheProbabiliste extends Graphe {
                     if (g.verifierGraphe()) {   // Verifie si le graphe est probabiliste
                                             // Et change les couleurs sur les noeuds errones
                         Stage popUp = new Stage();
+                        popUp.getIcons().add(new Image("/saeEditeur/logo.png"));
                         popUp.setTitle("Probabilité de passer d’un sommet à un autre");
                         popUp.initModality(Modality.APPLICATION_MODAL);
                         StackPane pane = new StackPane();
@@ -325,6 +343,7 @@ public class GrapheProbabiliste extends Graphe {
                     g.matriceTransitoireCanonique();
 
                     Stage popUp = new Stage();
+                    popUp.getIcons().add(new Image("/saeEditeur/logo.png"));
                     popUp.initModality(Modality.APPLICATION_MODAL);
                     popUp.setTitle("Loi de probabilité atteinte après un nombre de transition(s) donné");
                     StackPane pane = new StackPane();
@@ -459,7 +478,6 @@ public class GrapheProbabiliste extends Graphe {
      * Verifie que le graphe est probabiliste,
      * Pour chaque sommet, la somme des valeurs des arcs ayant comme extrémité 
      * finale ce sommet doit être égale à 1
-     * @param g Graphe a verifier
      * @return true si le graphe respecte les conditions du grapghe probabiliste, 
      *         false sinon
      */
@@ -809,6 +827,10 @@ public class GrapheProbabiliste extends Graphe {
         }
     }
 
+    /**
+     * Ajouter les noeuds de la classe dans une grande liste de noeud transitoire
+     * @param classe Liste de noeuds transitoires
+     */
     private void ajouterListeTransitoire(ArrayList<Noeud> classe) {
         
         for (int aAjouter = 0 ; aAjouter < classe.size() ; aAjouter++) {
@@ -816,6 +838,10 @@ public class GrapheProbabiliste extends Graphe {
         }
     }
 
+    /**
+     * Ajouter les noeuds de la classe dans une grande liste de noeud finaux
+     * @param classe Liste de noeuds finaux
+     */
     private void ajouterListeFinale(ArrayList<Noeud> classe) {
         
         for (int aAjouter = 0 ; aAjouter < classe.size() ; aAjouter++) {
@@ -825,6 +851,10 @@ public class GrapheProbabiliste extends Graphe {
     
     /**
      * Creer la matice de transition du graphe sous la forme canonique
+     * @return La matrice de transition du graphe sous la forme canonique
+     *         [[N1, N2, N3]
+     *          [N1, N2, N3]
+     *          [N1, N2, N3]]
      */
     public double[][] matriceTransitoireCanonique() {
         
@@ -853,7 +883,7 @@ public class GrapheProbabiliste extends Graphe {
     
     /**
      * Renvoie la matice de transition du graphe sous la forme canonique en string
-     * @return la matice de transition
+     * @return La matice de transition sous forme canonique
      */
     public String matriceTransitoireCanoniqueToString() {
         
@@ -882,8 +912,12 @@ public class GrapheProbabiliste extends Graphe {
         return m;
     }
     
-    
-    
+    /**
+     * Recherche la valeur de l'arc entre le noeud n1 et n2
+     * @param n1 Noeud source
+     * @param n2 Noeud destinataire
+     * @return La valeur entre les 2 noeuds s'il y a, 0.0 sinon
+     */
     public double valeurEntreDeuxNoeud(NoeudGrapheProbabiliste n1, NoeudGrapheProbabiliste n2) {
         
         for (int i = 0; i < n1.successeurs.size() ; i++) {
@@ -942,6 +976,14 @@ public class GrapheProbabiliste extends Graphe {
         return resultat ;
     }
     
+    /**
+     * Calcul la probabilité de passer entre le noeud source et destinataire
+     * en nbTransition transition
+     * @param source Noeud source
+     * @param destinataire Noeud destinataire
+     * @param nbTransition Nombre de transition
+     * @return La probabilité de passer entre le noeud source et destinataire
+     */
     public double probaEntreNoeudEnNTransition(Noeud source, Noeud destinataire, int nbTransition) {
         
         regroupementEtat(regroupementClasse());  
@@ -972,7 +1014,12 @@ public class GrapheProbabiliste extends Graphe {
     }
     
     /**
-     * 
+     * Pour une loi de probabilité initiale sur l’ensemble des sommets du graphe, 
+     * détermine la loi de probabilité atteinte après 
+     * un nombre de transition(s) donné
+     * @param vecteur Loi de probabilité initiale sur l’ensemble des sommets du graphe
+     * @param nbTransition Nombre de transition
+     * @return loi de probabilité atteinte après un nombre de transition(s) donné
      */
     public double[][] loiDeProbabiliteeEnNTransition(double[][] vecteur, int nbTransition){
         
@@ -992,8 +1039,7 @@ public class GrapheProbabiliste extends Graphe {
     
     /**
      * Affiche une matrice dans une GridPane
-     * @param matrice
-     * @return matrice
+     * @return La matrice sous forme canonique dans un grid pane
      */
     public GridPane afficheMatrice(){
         

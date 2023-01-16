@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Edition graphique et traitement de graphe
+ * -----------------------------------------
+ * Graphe.java                    16/01/2023
+ * BUT Informatique - 2ème Année (S3)
+ * Pas de droit d'auteur ni de copy right
  */
 package saeEditeur.graphe.typegraphe;
 import java.beans.XMLDecoder;
@@ -10,15 +12,18 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.layout.AnchorPane;
 import saeEditeur.graphe.lien.Lien;
 import saeEditeur.graphe.lien.LienException;
 import saeEditeur.graphe.noeud.Noeud;
 import saeEditeur.graphe.noeud.NoeudException;
+
 /**
- *
+ * Représentation d'un graphe et ses fonctionnalités
+ * @author romain.courbaize
+ * @author thibauld.cosatti
+ * @author vincent.faure
+ * @author jules.blanchard
  * @author amine.daamouch
  */
 public abstract class Graphe {
@@ -58,10 +63,13 @@ public abstract class Graphe {
     /** Lien actuellement selectionne dans le graphe */
     public Lien lienSelectionne = null;
     
+    /** Liste des noeuds du graphe */
     public ArrayList<Noeud> noeuds ;
     
+    /** Décallage pour la superposition */
     final double DECALLAGE = Noeud.RAYON + 5 ;
     
+    /** Liste des liens */
     public ArrayList<Lien> liens ;
     
     public Graphe(){
@@ -73,16 +81,43 @@ public abstract class Graphe {
         stackRedo = new Stack<>();
     }
     
+    @Override
     public abstract String toString();
     
+    /**
+     * @return Le nom de la factory du type du graphe
+     */
     public abstract String getFactory();
     
+    /**
+     * Ajouter un noeud dans le graphe
+     * @param n Noeud à ajouter
+     * @throws NoeudException Si le noeud est invalide (impossible de créer 
+     *                        un noeud sur un noeud
+     */
     public abstract void ajouterNoeud(Noeud n) throws NoeudException;
     
+    /**
+     * Ajouter un lien dans le graphe
+     * @param l Lien à ajouter
+     * @return Le lien ajouté
+     * @throws LienException Si le lien existe déjà
+     */
     public abstract Lien ajouterLien(Lien l) throws LienException;
     
+    /**
+     * Prédicat vérifiant s'il existe un lien similaire dans le graphe
+     * @param l Lien à vérifier
+     * @return True si valide, false sinon
+     */
     public abstract boolean estLienValide(Lien l);
 
+    /**
+     * Prédicat vérifiant s'il y a un noeud sur la position (x, y)
+     * @param x Abscisse du point
+     * @param y Ordonné du point
+     * @return Le noeud en position (x, y) s'il y en a un, null sinon
+     */
     public Noeud estNoeud(double x, double y) {
         
         for (Noeud aTester : noeuds) {
@@ -333,8 +368,6 @@ public abstract class Graphe {
             }
         }
         
-        
-        
         // Lien => Suppression d'un lien
         if (ancienModification instanceof Lien) {
             
@@ -517,10 +550,7 @@ public abstract class Graphe {
         } catch (Exception e) {
             
             throw new FileNotFoundException();
-        }
-        
-        
-           
+        }    
     }
     
     /**
@@ -621,6 +651,11 @@ public abstract class Graphe {
         deselectionnerAll(zoneDessin);
     }
     
+    /**
+     * Supprime le noeud du graphe et supprime sa représentation
+     * @param noeudSelectionne Lien à supprimer
+     * @param zoneDessin Zone de dessin
+     */
     public void supprimerNoeud(Noeud noeudSelectionne, AnchorPane zoneDessin) {
         
         noeuds.remove(noeudSelectionne);
@@ -659,5 +694,4 @@ public abstract class Graphe {
         }
         return aVerifier;
     }
-    
 }
