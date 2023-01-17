@@ -171,7 +171,7 @@ public class GrapheProbabiliste extends Graphe {
         legende.getChildren().addAll(textAbsorbant, textErgodique, textTransitoire,
                                      circleAbsorbant, circleErgodique, circleTransitoire);
         legende.setLayoutX(0);
-        legende.setLayoutY(430);
+        legende.setLayoutY(450);
         menu.getChildren().add(legende);
         
         return legende;
@@ -354,24 +354,23 @@ public class GrapheProbabiliste extends Graphe {
 
                     //Recuperation du nombre de noeuds du graphe
                     int nbNoeuds = g.noeudsOrdones.size();
-                    System.out.println("Size noeudsOrdones pour Loi de Probabilité = " + nbNoeuds);
 
                     //Tableau contenant tous les textfield pour les noeuds
                     TextField[] tabField = new TextField[nbNoeuds];
-                    Text textNoeuds = new Text("Entrer une probabilité pour chaque Noeuds -");
+                    Text textNoeuds = new Text("Entrer une probabilité pour chaque Noeud -");
                     for (int i = 0 ; i <  nbNoeuds ; i++) {
                         Text noeuds = new Text();
                         noeuds.setText(g.noeudsOrdones.get(i).toString());
                         gridPane.add(noeuds,1,i);
                         noeuds.setId("noeuds" + i);
-                        TextField Field = new TextField("1");
+                        TextField Field = new TextField("0");
                         gridPane.add(Field,2,i);
                         tabField[i] = Field; // Ajout textField du noeuds i dans le tableau
                         Field.setId("Field" + i);
                     }
 
                     // Nombre de transition
-                    Text textTransition = new Text("Nombre de transition - ");
+                    Text textTransition = new Text("Nombre de transition(s) - ");
                     TextField inputTransition = new TextField("1");
 
                     // Button calcul
@@ -421,7 +420,7 @@ public class GrapheProbabiliste extends Graphe {
                             //Verifie que la somme des proba du vecteur initial est égal à 1.0
                             if(Math.abs(sommeProba - 1) >= 10e-10){
                                 tabErr = false;
-                                resultat.setText("Erreur ! La somme des probabilité du vecteur initial n'est pas égal à 1.0");
+                                resultat.setText("Erreur ! La somme des probabilités du vecteur initial n'est pas égale à 1.0");
                                 resultat.setFill(Color.RED);
                             }
 
@@ -436,7 +435,7 @@ public class GrapheProbabiliste extends Graphe {
                                 }
 
                                 //Affichage
-                                resultat.setText("Le vecteur de probabilité qui représente les probabilité d'etre sur chaque sommet apres " + nbTransition + " transitions :\n\n" 
+                                resultat.setText("Le vecteur de probabilité qui représente les probabilités d'etre sur chaque sommet après " + nbTransition + " transitions :\n\n" 
                                                 + afficher);
                                 resultat.setFill(Color.BLACK);
                             }

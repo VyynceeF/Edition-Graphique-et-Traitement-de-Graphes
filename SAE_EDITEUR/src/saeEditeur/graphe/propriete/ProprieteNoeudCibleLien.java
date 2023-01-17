@@ -17,6 +17,7 @@ import saeEditeur.graphe.typegraphe.GrapheNonOriente;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
 import saeEditeur.graphe.ElementGraphe;
+import saeEditeur.graphe.lien.ArcPondere;
 
 /**
  * Représentation des propriétés d'un Noeud
@@ -81,6 +82,11 @@ public class ProprieteNoeudCibleLien extends Propriete {
         
         if(l instanceof ArcProbabiliste){
             ArcProbabiliste a = new ArcProbabiliste(l.source, n, l.g);
+            lienExiste = l.g.estLienValide(a);
+        }
+        
+        if(l instanceof ArcPondere){
+            ArcPondere a = new ArcPondere(l.source, n, l.g);
             lienExiste = l.g.estLienValide(a);
         }
         
