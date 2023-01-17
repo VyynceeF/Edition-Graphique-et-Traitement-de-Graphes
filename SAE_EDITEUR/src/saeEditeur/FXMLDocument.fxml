@@ -63,6 +63,9 @@
                         <Font size="16.0" />
                      </font>
                   </Text>
+                  <Text layoutX="142.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Ctrl + N)" />
+                  <Text layoutX="142.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Ctrl + L)" />
+                  <Text layoutX="142.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Ctrl + A)" />
                </children>
             </Pane>
             <Pane layoutY="246.0" prefHeight="207.0" prefWidth="200.0">
