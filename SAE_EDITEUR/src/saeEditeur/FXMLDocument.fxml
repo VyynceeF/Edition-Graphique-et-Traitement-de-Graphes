@@ -101,7 +101,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Aide">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#ouvrirManuel" text="Manuel d'utilisation" />
             </items>
           </Menu>
         </menus>

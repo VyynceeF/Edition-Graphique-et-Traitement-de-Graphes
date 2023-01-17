@@ -7,6 +7,7 @@
  */
 package saeEditeur;
 
+import java.awt.Desktop;
 import saeEditeur.graphe.AbstractFactoryGraphe;
 import saeEditeur.graphe.FactoryManager;
 import saeEditeur.graphe.EditeurDeProprietes;
@@ -19,9 +20,12 @@ import saeEditeur.graphe.typegraphe.GrapheProbabiliste;
 import saeEditeur.graphe.typegraphe.Graphe;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -781,6 +785,20 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void deplacement(KeyEvent event) {
+    }
+
+    @FXML
+    private void ouvrirManuel(ActionEvent event) {
+        
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File manuel = new File("manuelUtilisation.pdf");  // ATTENTION
+                Desktop.getDesktop().open(manuel);                // NE PEUT S'OUVRIR
+            } catch (IOException ex) {                            // QUE DEPUIS LE .JAR
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }
     
 }
